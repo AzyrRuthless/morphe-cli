@@ -1,23 +1,23 @@
 package app.morphe.cli.command
 
-import app.revanced.patcher.patch.Package
-import app.revanced.patcher.patch.Patch
-import app.revanced.patcher.patch.loadPatchesFromJar
+import app.morphe.patcher.patch.Package
+import app.morphe.patcher.patch.Patch
+import app.morphe.patcher.patch.loadPatchesFromJar
 import picocli.CommandLine.*
 import picocli.CommandLine.Help.Visibility.ALWAYS
 import java.io.File
 import java.util.logging.Logger
-import app.revanced.patcher.patch.Option as PatchOption
+import app.morphe.patcher.patch.Option as PatchOption
 
 @Command(
     name = "list-patches",
-    description = ["List patches from supplied RVP files."],
+    description = ["List patches from supplied MPP files."],
 )
 internal object ListPatchesCommand : Runnable {
     private val logger = Logger.getLogger(this::class.java.name)
 
     @Parameters(
-        description = ["Paths to RVP files."],
+        description = ["Paths to MPP files."],
         arity = "1..*",
     )
     private lateinit var patchesFiles: Set<File>
@@ -59,7 +59,7 @@ internal object ListPatchesCommand : Runnable {
 
     @Option(
         names = ["-i", "--index"],
-        description = ["List the index of each patch in relation to the supplied RVP files."],
+        description = ["List the index of each patch in relation to the supplied MPP files."],
         showDefaultValue = ALWAYS,
     )
     private var withIndex: Boolean = true

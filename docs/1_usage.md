@@ -13,7 +13,7 @@ java -jar morphe-cli.jar -h
 ## 📃 List patches
 
 ```bash
-java -jar morphe-cli.jar list-patches --with-packages --with-versions --with-options patches.rvp
+java -jar morphe-cli.jar list-patches --with-packages --with-versions --with-options patches.mpp
 ```
 
 ## 💉 Patch an app
@@ -21,13 +21,13 @@ java -jar morphe-cli.jar list-patches --with-packages --with-versions --with-opt
 To patch an app using the default list of patches, use the `patch` command:
 
 ```bash
-java -jar morphe-cli.jar patch -p patches.rvp input.apk
+java -jar morphe-cli.jar patch -p patches.mpp input.apk
 ```
 
-You can also use multiple RVP files:
+You can also use multiple MPP files:
 
 ```bash
-java -jar morphe-cli.jar patch -p patches.rvp -p another-patches.rvp input.apk
+java -jar morphe-cli.jar patch -p patches.mpp -p another-patches.mpp input.apk
 ```
 
 To change the default set of enabled or disabled patches, use the option `-e` or `-d` to enable or disable specific patches.
@@ -37,7 +37,7 @@ To only enable specific patches, you can use the option `--exclusive` combined w
 Remember that the options `-e` and `-d` match the patch's name exactly. Here is an example:
 
 ```bash
-java -jar morphe-cli.jar patch -p patches.rvp --exclusive -e "Patch name" -e "Another patch name" input.apk
+java -jar morphe-cli.jar patch -p patches.mpp --exclusive -e "Patch name" -e "Another patch name" input.apk
 ```
 
 You can also use the options `--ei` or `--di` to enable or disable patches by their index.
@@ -45,19 +45,19 @@ This is useful, if two patches happen to have the same name, or if typing the na
 To know the indices of patches, use the command `list-patches`:
 
 ```bash
-java -jar morphe-cli.jar list-patches patches.rvp
+java -jar morphe-cli.jar list-patches patches.mpp
 ```
 
 Then you can use the indices to enable or disable patches:
 
 ```bash
-java -jar morphe-cli.jar patch -p patches.rvp --ei 123 --di 456 input.apk
+java -jar morphe-cli.jar patch -p patches.mpp --ei 123 --di 456 input.apk
 ```
 
 You can combine the option `-e`, `-d`, `--ei`, `--di` and `--exclusive`. Here is an example:
 
 ```bash
-java -jar morphe-cli.jar patch -p patches.rvp --exclusive -e "Patch name" --ei 123 input.apk
+java -jar morphe-cli.jar patch -p patches.mpp --exclusive -e "Patch name" --ei 123 input.apk
 ```
 
 
@@ -83,7 +83,7 @@ Patches can have options you can set using the option `-O` alongside the option 
 To know the options of a patch, use the option `--with-options` when listing patches:
 
 ```bash
-java -jar morphe-cli.jar list-patches --with-options patches.rvp
+java -jar morphe-cli.jar list-patches --with-options patches.mpp
 ```
 
 Each patch can have multiple options. You can set them using the option `-O`.
@@ -91,13 +91,13 @@ For example, to set the options for the patch with the name `Patch name`
 with the key `key1` and `key2` to `value1` and `value2` respectively, use the following command:
 
 ```bash
-java -jar morphe-cli.jar patch -p patches.rvp -e "Patch name" -Okey1=value1 -Okey2=value2 input.apk
+java -jar morphe-cli.jar patch -p patches.mpp -e "Patch name" -Okey1=value1 -Okey2=value2 input.apk
 ```
 
 If you want to set the option value to `null`, you can omit the value:
 
 ```bash
-java -jar morphe-cli.jar patch -p patches.rvp -i "Patch name" -Okey1 input.apk
+java -jar morphe-cli.jar patch -p patches.mpp -i "Patch name" -Okey1 input.apk
 ```
 
 > [!WARNING]
@@ -131,7 +131,7 @@ java -jar morphe-cli.jar patch -p patches.rvp -i "Patch name" -Okey1 input.apk
 > Example command with an escaped integer as a string:
 > 
 > ```bash
-> java -jar morphe-cli.jar -p patches.rvp -e "Patch name" -OstringKey=\'1\' input.apk
+> java -jar morphe-cli.jar -p patches.mpp -e "Patch name" -OstringKey=\'1\' input.apk
 > ```
 ## 📦 Install an app manually 
 

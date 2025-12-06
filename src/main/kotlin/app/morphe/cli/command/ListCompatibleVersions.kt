@@ -1,9 +1,9 @@
 package app.morphe.cli.command
 
-import app.revanced.library.PackageName
-import app.revanced.library.VersionMap
-import app.revanced.library.mostCommonCompatibleVersions
-import app.revanced.patcher.patch.loadPatchesFromJar
+import app.morphe.library.PackageName
+import app.morphe.library.VersionMap
+import app.morphe.library.mostCommonCompatibleVersions
+import app.morphe.patcher.patch.loadPatchesFromJar
 import picocli.CommandLine
 import java.io.File
 import java.util.logging.Logger
@@ -12,14 +12,14 @@ import java.util.logging.Logger
     name = "list-versions",
     description = [
         "List the most common compatible versions of apps that are compatible " +
-                "with the patches from RVP files.",
+                "with the patches from MPP files.",
     ],
 )
 internal class ListCompatibleVersions : Runnable {
     private val logger = Logger.getLogger(this::class.java.name)
 
     @CommandLine.Parameters(
-        description = ["Paths to RVP files."],
+        description = ["Paths to MPP files."],
         arity = "1..*",
     )
     private lateinit var patchesFiles: Set<File>

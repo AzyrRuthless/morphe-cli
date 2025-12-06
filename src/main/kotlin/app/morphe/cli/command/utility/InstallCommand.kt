@@ -1,6 +1,6 @@
 package app.morphe.cli.command.utility
 
-import app.revanced.library.installation.installer.*
+import app.morphe.library.installation.installer.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking

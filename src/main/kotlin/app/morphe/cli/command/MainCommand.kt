@@ -1,7 +1,7 @@
 package app.morphe.cli.command
 
 import app.morphe.cli.command.utility.UtilityCommand
-import app.revanced.library.logging.Logger
+import app.morphe.library.logging.Logger
 import picocli.CommandLine
 import picocli.CommandLine.Command
 import picocli.CommandLine.IVersionProvider

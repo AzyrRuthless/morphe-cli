@@ -1,13 +1,13 @@
 package app.morphe.cli.command
 
-import app.revanced.library.ApkUtils
-import app.revanced.library.ApkUtils.applyTo
-import app.revanced.library.installation.installer.*
-import app.revanced.library.setOptions
-import app.revanced.patcher.Patcher
-import app.revanced.patcher.PatcherConfig
-import app.revanced.patcher.patch.Patch
-import app.revanced.patcher.patch.loadPatchesFromJar
+import app.morphe.library.ApkUtils
+import app.morphe.library.ApkUtils.applyTo
+import app.morphe.library.installation.installer.*
+import app.morphe.library.setOptions
+import app.morphe.patcher.Patcher
+import app.morphe.patcher.PatcherConfig
+import app.morphe.patcher.patch.Patch
+import app.morphe.patcher.patch.loadPatchesFromJar
 import kotlinx.coroutines.runBlocking
 import picocli.CommandLine
 import picocli.CommandLine.ArgGroup
@@ -50,7 +50,7 @@ internal object PatchCommand : Runnable {
 
                 @CommandLine.Option(
                     names = ["--ei"],
-                    description = ["Index of the patch in the combined list of the supplied RVP files."],
+                    description = ["Index of the patch in the combined list of the supplied MPP files."],
                     required = true,
                 )
                 internal var index: Int? = null
@@ -82,7 +82,7 @@ internal object PatchCommand : Runnable {
 
                 @CommandLine.Option(
                     names = ["--di"],
-                    description = ["Index of the patch in the combined list of the supplied RVP files."],
+                    description = ["Index of the patch in the combined list of the supplied MPP files."],
                     required = true,
                 )
                 internal var index: Int? = null
@@ -200,7 +200,7 @@ internal object PatchCommand : Runnable {
 
     @CommandLine.Option(
         names = ["-p", "--patches"],
-        description = ["One or more path to RVP files."],
+        description = ["One or more path to MPP files."],
         required = true,
     )
     @Suppress("unused")

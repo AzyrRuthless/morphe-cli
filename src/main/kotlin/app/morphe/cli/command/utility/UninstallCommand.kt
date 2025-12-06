@@ -1,9 +1,9 @@
 package app.morphe.cli.command.utility
 
-import app.revanced.library.installation.installer.AdbInstaller
-import app.revanced.library.installation.installer.AdbInstallerResult
-import app.revanced.library.installation.installer.AdbRootInstaller
-import app.revanced.library.installation.installer.RootInstallerResult
+import app.morphe.library.installation.installer.AdbInstaller
+import app.morphe.library.installation.installer.AdbInstallerResult
+import app.morphe.library.installation.installer.AdbRootInstaller
+import app.morphe.library.installation.installer.RootInstallerResult
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
