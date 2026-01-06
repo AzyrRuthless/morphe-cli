@@ -24,6 +24,9 @@ Command-line application to use Morphe.
 
 Morphe CLI is a command-line application that uses [Morphe Patcher](https://github.com/MorpheApp/morphe-patcher) to patch Android apps.
 
+Morphe CLI is based off the prior work of [ReVanced](https://github.com/ReVanced/revanced-cli).
+All modifications made by Morphe, along with their dates, can be found in the Git history.
+
 ## 💪 Features
 
 Some of the features Morphe CLI provides are:
