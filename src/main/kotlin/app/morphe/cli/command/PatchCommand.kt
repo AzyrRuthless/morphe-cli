@@ -15,9 +15,15 @@ import picocli.CommandLine.Help.Visibility.ALWAYS
 import picocli.CommandLine.Model.CommandSpec
 import picocli.CommandLine.Spec
 import java.io.File
+import java.io.FileOutputStream
 import java.io.PrintWriter
 import java.io.StringWriter
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
 import java.util.logging.Logger
+import java.util.zip.ZipEntry
+import java.util.zip.ZipFile
+import java.util.zip.ZipOutputStream
 
 @CommandLine.Command(
     name = "patch",
@@ -175,11 +181,30 @@ internal object PatchCommand : Runnable {
     private var aaptBinaryPath: File? = null
 
     @CommandLine.Option(
+        names = ["--custom-zipalign-binary"],
+        description = ["Path to a custom zipalign binary."],
+    )
+    private var zipalignBinaryPath: File? = null
+
+    @CommandLine.Option(
         names = ["--purge"],
         description = ["Purge temporary files directory after patching."],
         showDefaultValue = ALWAYS,
     )
     private var purge: Boolean = false
+
+    @CommandLine.Option(
+        names = ["--rip-lib"],
+        description = ["Remove native libraries for specific architectures (e.g., x86, x86_64)."],
+    )
+    private var ripLibs: List<String> = emptyList()
+
+    @CommandLine.Option(
+        names = ["--unsigned"],
+        description = ["Don't sign the patched APK file."],
+        showDefaultValue = ALWAYS,
+    )
+    private var unsigned: Boolean = false
 
     @CommandLine.Parameters(
         description = ["APK file to patch."],
@@ -228,12 +253,6 @@ internal object PatchCommand : Runnable {
         this.aaptBinaryPath = aaptBinaryPath
     }
 
-    @CommandLine.Option(
-        names = ["--unsigned"],
-        description = ["Disable signing of the final apk."],
-    )
-    private var unsigned: Boolean = false
-    
     override fun run() {
         // region Setup
 
@@ -338,6 +357,36 @@ internal object PatchCommand : Runnable {
         apk.copyTo(temporaryFilesPath.resolve(apk.name), overwrite = true).apply {
             patcherResult.applyTo(this)
         }.let { patchedApkFile ->
+
+            if (ripLibs.isNotEmpty()) {
+                ripLibraries(patchedApkFile, ripLibs)
+            }
+
+            // zipalign logic start
+            if (!mount) {
+                logger.info("Running zipalign")
+                val alignedApk = File.createTempFile("aligned", ".apk", temporaryFilesPath)
+                val zipalign = zipalignBinaryPath?.absolutePath ?: "zipalign"
+
+                val process = ProcessBuilder(
+                    zipalign, "-p", "-f", "4",
+                    patchedApkFile.absolutePath,
+                    alignedApk.absolutePath
+                ).redirectErrorStream(true).start()
+
+                // Consume output to prevent buffer blocking and for debug logging
+                val output = process.inputStream.bufferedReader().use { it.readText() }
+                val exitCode = process.waitFor()
+
+                if (exitCode != 0) {
+                    throw RuntimeException("zipalign failed (exit code $exitCode):\n$output")
+                }
+
+                Files.move(alignedApk.toPath(), patchedApkFile.toPath(), StandardCopyOption.REPLACE_EXISTING)
+                logger.info("zipalign completed")
+            }
+            // zipalign logic end
+
             if (!mount && !unsigned) {
                 ApkUtils.signApk(
                     patchedApkFile,
@@ -455,5 +504,43 @@ internal object PatchCommand : Runnable {
                 "Failed to purge resource cache directory"
             }
         logger.info(result)
+    }
+
+    private fun ripLibraries(apkFile: File, archsToRemove: List<String>) {
+        if (archsToRemove.isEmpty()) return
+
+        logger.info("Ripping libraries for architectures: $archsToRemove")
+
+        val tempFile = File.createTempFile("temp-rip", ".apk", apkFile.parentFile)
+
+        ZipFile(apkFile).use { zip ->
+            ZipOutputStream(FileOutputStream(tempFile)).use { out ->
+                val entries = zip.entries()
+                while (entries.hasMoreElements()) {
+                    val entry = entries.nextElement()
+                    var shouldRemove = false
+
+                    for (arch in archsToRemove) {
+                        if (entry.name.startsWith("lib/$arch/")) {
+                            shouldRemove = true
+                            break
+                        }
+                    }
+
+                    if (!shouldRemove) {
+                        out.putNextEntry(ZipEntry(entry.name))
+                        zip.getInputStream(entry).copyTo(out)
+                        out.closeEntry()
+                    }
+                }
+            }
+        }
+
+        if (apkFile.delete()) {
+            tempFile.renameTo(apkFile)
+        } else {
+            tempFile.copyTo(apkFile, overwrite = true)
+            tempFile.delete()
+        }
     }
 }
