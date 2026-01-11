@@ -354,6 +354,32 @@ internal object PatchCommand : Runnable {
                 ripLibraries(patchedApkFile, ripLibs)
             }
 
+            // zipalign logic start
+            if (!mount) {
+                try {
+                    logger.info("Running zipalign...")
+                    val alignedApk = File.createTempFile("aligned", ".apk", temporaryFilesPath)
+                    val pb = ProcessBuilder(
+                        "zipalign", "-p", "-f", "4",
+                        patchedApkFile.absolutePath,
+                        alignedApk.absolutePath
+                    )
+                    val process = pb.start()
+                    if (process.waitFor() == 0) {
+                        if (patchedApkFile.delete()) {
+                            alignedApk.renameTo(patchedApkFile)
+                            logger.info("zipalign completed")
+                        }
+                    } else {
+                        logger.warning("zipalign failed (exit code ${process.exitValue()})")
+                        alignedApk.delete()
+                    }
+                } catch (e: Exception) {
+                    logger.warning("Failed to run zipalign: ${e.message}. Ensure it is in PATH.")
+                }
+            }
+            // zipalign logic end
+
             if (!mount && !unsigned) {
                 ApkUtils.signApk(
                     patchedApkFile,
