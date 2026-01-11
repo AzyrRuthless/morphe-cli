@@ -18,6 +18,8 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.PrintWriter
 import java.io.StringWriter
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
 import java.util.logging.Logger
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
@@ -177,6 +179,12 @@ internal object PatchCommand : Runnable {
     private var temporaryFilesPath: File? = null
 
     private var aaptBinaryPath: File? = null
+
+    @CommandLine.Option(
+        names = ["--custom-zipalign-binary"],
+        description = ["Path to a custom zipalign binary."],
+    )
+    private var zipalignBinaryPath: File? = null
 
     @CommandLine.Option(
         names = ["--purge"],
@@ -356,27 +364,26 @@ internal object PatchCommand : Runnable {
 
             // zipalign logic start
             if (!mount) {
-                try {
-                    logger.info("Running zipalign...")
-                    val alignedApk = File.createTempFile("aligned", ".apk", temporaryFilesPath)
-                    val pb = ProcessBuilder(
-                        "zipalign", "-p", "-f", "4",
-                        patchedApkFile.absolutePath,
-                        alignedApk.absolutePath
-                    )
-                    val process = pb.start()
-                    if (process.waitFor() == 0) {
-                        if (patchedApkFile.delete()) {
-                            alignedApk.renameTo(patchedApkFile)
-                            logger.info("zipalign completed")
-                        }
-                    } else {
-                        logger.warning("zipalign failed (exit code ${process.exitValue()})")
-                        alignedApk.delete()
-                    }
-                } catch (e: Exception) {
-                    logger.warning("Failed to run zipalign: ${e.message}. Ensure it is in PATH.")
+                logger.info("Running zipalign")
+                val alignedApk = File.createTempFile("aligned", ".apk", temporaryFilesPath)
+                val zipalign = zipalignBinaryPath?.absolutePath ?: "zipalign"
+
+                val process = ProcessBuilder(
+                    zipalign, "-p", "-f", "4",
+                    patchedApkFile.absolutePath,
+                    alignedApk.absolutePath
+                ).redirectErrorStream(true).start()
+
+                // Consume output to prevent buffer blocking and for debug logging
+                val output = process.inputStream.bufferedReader().use { it.readText() }
+                val exitCode = process.waitFor()
+
+                if (exitCode != 0) {
+                    throw RuntimeException("zipalign failed (exit code $exitCode):\n$output")
                 }
+
+                Files.move(alignedApk.toPath(), patchedApkFile.toPath(), StandardCopyOption.REPLACE_EXISTING)
+                logger.info("zipalign completed")
             }
             // zipalign logic end
 
