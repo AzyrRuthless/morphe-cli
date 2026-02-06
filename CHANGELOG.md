@@ -1,3 +1,12 @@
+# [1.1.0](https://github.com/AzyrRuthless/morphe-cli/compare/v1.0.0...v1.1.0) (2026-02-06)
+
+
+### Features
+
+* Add ability to write patching results to JSON file ([#25](https://github.com/AzyrRuthless/morphe-cli/issues/25)) ([ed0d1ef](https://github.com/AzyrRuthless/morphe-cli/commit/ed0d1ef4150411c8027156bad8338194480b4e88))
+* Update to Morphe patcher / library 1.1.0 ([2445b24](https://github.com/AzyrRuthless/morphe-cli/commit/2445b24656228dd5c487e18fe6e441d5b8b6204b))
+* Update to Morphe patcher 1.1.1 ([8fa5a83](https://github.com/AzyrRuthless/morphe-cli/commit/8fa5a83d18fa35668d1d07a852bda62a452c0ad7))
+
 # [1.1.0-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.0.0...v1.1.0-dev.1) (2026-02-06)
 
 
