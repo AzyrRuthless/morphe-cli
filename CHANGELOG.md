@@ -1,3 +1,10 @@
+## [1.1.1-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.1.0...v1.1.1-dev.1) (2026-02-06)
+
+
+### Bug Fixes
+
+* **cli:** skip zipalign when unsigned flag is set ([68259ea](https://github.com/AzyrRuthless/morphe-cli/commit/68259ea1116bcaa4fa5213144a8f59ebe59e595b))
+
 # [1.1.0](https://github.com/AzyrRuthless/morphe-cli/compare/v1.0.0...v1.1.0) (2026-02-06)
 
 

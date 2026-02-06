@@ -409,7 +409,7 @@ internal object PatchCommand : Runnable {
                         }
 
                         // 3. Zipalign (if not mounting)
-                        if (!mount) {
+                        if (!mount && !unsigned) {
                             logger.info("Running zipalign")
                             val alignedApk = File.createTempFile("aligned", ".apk", temporaryFilesPath)
                             val zipalign = zipalignBinaryPath?.absolutePath ?: "zipalign"
