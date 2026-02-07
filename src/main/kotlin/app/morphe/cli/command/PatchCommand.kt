@@ -14,6 +14,8 @@ import app.morphe.patcher.Patcher
 import app.morphe.patcher.PatcherConfig
 import app.morphe.patcher.patch.Patch
 import app.morphe.patcher.patch.loadPatchesFromJar
+import com.reandroid.apkeditor.merge.Merger
+import com.reandroid.apkeditor.merge.MergerOptions
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
@@ -279,7 +281,7 @@ internal object PatchCommand : Runnable {
 
         val outputFilePath =
             outputFilePath ?: File("").absoluteFile.resolve(
-                "${apk.nameWithoutExtension}-patched.${apk.extension}",
+                "${apk.nameWithoutExtension}-patched.apk",
             )
 
         val temporaryFilesPath =
@@ -331,12 +333,34 @@ internal object PatchCommand : Runnable {
 
         val patcherTemporaryFilesPath = temporaryFilesPath.resolve("patcher")
 
+        // Checking if the file is in apkm format (like reddit)
+        var mergedApkToCleanup: File? = null
+        val inputApk = if (apk.extension.equals("apkm", ignoreCase = true)) {
+            logger.info("Merging APKM bundle")
+
+            // Save merged APK to output directory (will be cleaned up after patching)
+            val outputApk = outputFilePath.parentFile.resolve("${apk.nameWithoutExtension}-merged.apk")
+
+            // Use APKEditor's Merger directly (handles extraction and merging)
+            val mergerOptions = MergerOptions().apply {
+                inputFile = apk  // Original APKM file
+                outputFile = outputApk
+                cleanMeta = true
+            }
+            Merger(mergerOptions).run()
+
+            mergedApkToCleanup = outputApk
+            outputApk
+        } else {
+            apk
+        }
+
         val patchingResult = PatchingResult()
 
         try {
             val (packageName, patcherResult) = Patcher(
                 PatcherConfig(
-                    apk,
+                    inputApk,
                     patcherTemporaryFilesPath,
                     aaptBinaryPath?.path,
                     patcherTemporaryFilesPath.absolutePath,
@@ -396,7 +420,7 @@ internal object PatchCommand : Runnable {
 
             // region Save.
 
-            apk.copyTo(temporaryFilesPath.resolve(apk.name), overwrite = true).apply {
+            inputApk.copyTo(temporaryFilesPath.resolve(inputApk.name), overwrite = true).apply {
                 patchingResult.addStepResult(
                     PatchingStep.REBUILDING,
                     {
@@ -455,6 +479,7 @@ internal object PatchCommand : Runnable {
                     patchedApkFile.copyTo(outputFilePath, overwrite = true)
                 }
             }
+
             logger.info("Saved to $outputFilePath")
 
             // endregion
@@ -496,6 +521,13 @@ internal object PatchCommand : Runnable {
         if (purge) {
             logger.info("Purging temporary files")
             purge(temporaryFilesPath)
+        }
+
+        // Clean up merged APK if we created one from APKM
+        mergedApkToCleanup?.let {
+            if (!it.delete()) {
+                logger.warning("Could not clean up merged APK: ${it.path}")
+            }
         }
     }
 
