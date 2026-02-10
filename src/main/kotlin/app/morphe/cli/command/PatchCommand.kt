@@ -3,7 +3,6 @@ package app.morphe.cli.command
 import app.morphe.cli.command.model.FailedPatch
 import app.morphe.cli.command.model.PatchingResult
 import app.morphe.cli.command.model.PatchingStep
-import app.morphe.cli.command.model.PatchingStepResult
 import app.morphe.cli.command.model.addStepResult
 import app.morphe.cli.command.model.toSerializablePatch
 import app.morphe.library.ApkUtils
@@ -617,33 +616,38 @@ internal object PatchCommand : Runnable {
         val tempFile = File.createTempFile("temp-rip", ".apk", apkFile.parentFile)
 
         ZipFile(apkFile).use { zip ->
-            ZipOutputStream(FileOutputStream(tempFile)).use { out ->
+            ZipOutputStream(FileOutputStream(tempFile).buffered()).use { out ->
                 val entries = zip.entries()
                 while (entries.hasMoreElements()) {
                     val entry = entries.nextElement()
-                    var shouldRemove = false
-
-                    for (arch in archsToRemove) {
-                        if (entry.name.startsWith("lib/$arch/")) {
-                            shouldRemove = true
-                            break
-                        }
+                    
+                    val shouldRemove = archsToRemove.any { arch -> 
+                        entry.name.startsWith("lib/$arch/") 
                     }
 
                     if (!shouldRemove) {
-                        out.putNextEntry(ZipEntry(entry.name))
-                        zip.getInputStream(entry).copyTo(out)
+                        val newEntry = ZipEntry(entry.name).apply {
+                            if (entry.method == ZipEntry.STORED) {
+                                method = ZipEntry.STORED
+                                size = entry.size
+                                compressedSize = entry.compressedSize
+                                crc = entry.crc
+                            }
+                            entry.extra?.let { extra = it }
+                        }
+                        out.putNextEntry(newEntry)
+                        zip.getInputStream(entry).use { it.copyTo(out) }
                         out.closeEntry()
                     }
                 }
             }
         }
 
-        if (apkFile.delete()) {
-            tempFile.renameTo(apkFile)
-        } else {
-            tempFile.copyTo(apkFile, overwrite = true)
-            tempFile.delete()
-        }
+        Files.move(
+            tempFile.toPath(), 
+            apkFile.toPath(), 
+            StandardCopyOption.REPLACE_EXISTING, 
+            StandardCopyOption.ATOMIC_MOVE
+        )
     }
 }
