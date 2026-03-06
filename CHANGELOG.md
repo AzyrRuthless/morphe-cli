@@ -1,3 +1,19 @@
+# [1.2.0](https://github.com/AzyrRuthless/morphe-cli/compare/v1.1.1...v1.2.0) (2026-03-06)
+
+
+### Bug Fixes
+
+* Allow enabling/disabling patches using case insensitive patch names ([#48](https://github.com/AzyrRuthless/morphe-cli/issues/48)) ([4c92751](https://github.com/AzyrRuthless/morphe-cli/commit/4c92751e1a698452c9220814ed9245a5e1a185ca))
+* Do not log patch name more than once if disabled ([#49](https://github.com/AzyrRuthless/morphe-cli/issues/49)) ([f88586b](https://github.com/AzyrRuthless/morphe-cli/commit/f88586b620ea31cb3114983a7f7d570f5300a310))
+
+
+### Features
+
+* Add `--continue-on-error` argument, return non zero exit code if patching fails ([#47](https://github.com/AzyrRuthless/morphe-cli/issues/47)) ([22d72c9](https://github.com/AzyrRuthless/morphe-cli/commit/22d72c909b8cca113390ba2d4cff9227271a1b69))
+* Add `--options-file` json patch/option configuration ([#53](https://github.com/AzyrRuthless/morphe-cli/issues/53)) ([5ca8afc](https://github.com/AzyrRuthless/morphe-cli/commit/5ca8afc65af1c3cb10c4eb69783178bc7d7afbd8))
+* Add `--striplibs` argument to strip unwanted architectures ([#46](https://github.com/AzyrRuthless/morphe-cli/issues/46)) ([cd902a6](https://github.com/AzyrRuthless/morphe-cli/commit/cd902a621f70fb1d81c89a5a7999459a0aa51c03))
+* Support patching APKM bundles ([#40](https://github.com/AzyrRuthless/morphe-cli/issues/40)) ([daffad5](https://github.com/AzyrRuthless/morphe-cli/commit/daffad531c6f0b61c1f07be053306d101d46f7c3))
+
 # [1.2.0-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.1.1...v1.2.0-dev.1) (2026-03-06)
 
 
