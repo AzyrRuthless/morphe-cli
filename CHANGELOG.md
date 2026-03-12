@@ -1,3 +1,24 @@
+# [1.3.0](https://github.com/AzyrRuthless/morphe-cli/compare/v1.2.0...v1.3.0) (2026-03-12)
+
+
+### Bug Fixes
+
+* Use latest library dev release ([20059fc](https://github.com/AzyrRuthless/morphe-cli/commit/20059fc76faee5430fe4a910575c91564eddc3a8))
+* Use latest patcher and library dev release ([272cb9d](https://github.com/AzyrRuthless/morphe-cli/commit/272cb9dbbcf66623fea36746353eb5bbaffc7479))
+* Use latest patcher dev release ([73b5a38](https://github.com/AzyrRuthless/morphe-cli/commit/73b5a38c40c325856215abdde2e9917f7be22a4b))
+* Use latest patcher dev release ([e6d61bd](https://github.com/AzyrRuthless/morphe-cli/commit/e6d61bd8d0787e274bf7ab1cd9ebd2942836a70b))
+* Use latest patcher dev release ([79f21bc](https://github.com/AzyrRuthless/morphe-cli/commit/79f21bc48b36f4c41f3ef48509d70beae26245ea))
+* Use latest patcher dev release ([1b9edb1](https://github.com/AzyrRuthless/morphe-cli/commit/1b9edb19708d5c8435515fd4a29be0c2d7e7e79e))
+* Use latest patcher dev release ([b8ef8e5](https://github.com/AzyrRuthless/morphe-cli/commit/b8ef8e52021291bfe738e46fac5e81d1ded24a0b))
+* Use latest patcher dev release ([3fc4d4f](https://github.com/AzyrRuthless/morphe-cli/commit/3fc4d4ff0c306a5a7b8611d3a86f08d51968747c))
+* Use latest patcher dev release ([088979d](https://github.com/AzyrRuthless/morphe-cli/commit/088979d163e963b1802d4864aa5325e0a30176aa))
+
+
+### Features
+
+* Add `--out` and `--patches` arguments to `list-patches` command ([#60](https://github.com/AzyrRuthless/morphe-cli/issues/60)) ([c4c1877](https://github.com/AzyrRuthless/morphe-cli/commit/c4c18777ccbc4201c98df187e57bb9ad822f37e2))
+* Add ARSCLib support ([#55](https://github.com/AzyrRuthless/morphe-cli/issues/55)) ([343985d](https://github.com/AzyrRuthless/morphe-cli/commit/343985da95dd12c08bdf0803c4983eea5dde19e2))
+
 # [1.3.0-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.2.0...v1.3.0-dev.1) (2026-03-12)
 
 
