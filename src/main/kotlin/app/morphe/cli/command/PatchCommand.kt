@@ -19,6 +19,7 @@ import app.morphe.cli.command.model.mergeWith
 import app.morphe.cli.command.model.toPatchBundle
 import app.morphe.cli.command.model.toSerializablePatch
 import app.morphe.cli.command.model.withUpdatedBundle
+import app.morphe.engine.UpdateChecker
 import app.morphe.patcher.apk.ApkUtils
 import app.morphe.patcher.apk.ApkUtils.applyTo
 import app.morphe.library.installation.installer.*
@@ -51,6 +52,7 @@ import java.util.logging.Logger
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
+import kotlin.concurrent.thread
 
 @OptIn(ExperimentalSerializationApi::class)
 @VisibleForTesting
@@ -330,6 +332,10 @@ internal object PatchCommand : Callable<Int> {
     private var forceApktool: Boolean = false
 
     override fun call(): Int {
+        thread(start = true, isDaemon = true) {
+            UpdateChecker.check()?.let { logger.info(it) }
+        }
+
         // region Setup
 
         val outputFilePath =
