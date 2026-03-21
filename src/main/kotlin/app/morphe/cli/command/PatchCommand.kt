@@ -333,7 +333,7 @@ internal object PatchCommand : Callable<Int> {
 
     override fun call(): Int {
         thread(start = true, isDaemon = true) {
-            UpdateChecker.check()?.let { logger.info(it) }
+            UpdateChecker.check(logger)?.let { logger.info(it) }
         }
 
         // region Setup
