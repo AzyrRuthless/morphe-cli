@@ -1,3 +1,26 @@
+# [1.4.0-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.3.0...v1.4.0-dev.1) (2026-03-24)
+
+
+### Bug Fixes
+
+* Bump arsclib version, remove APKEditor ([7db96f0](https://github.com/AzyrRuthless/morphe-cli/commit/7db96f090f4df1200a1bae9b4d4df4b0e8c2fc14))
+* Dispatch error when launching app ([#79](https://github.com/AzyrRuthless/morphe-cli/issues/79)) ([5a18f49](https://github.com/AzyrRuthless/morphe-cli/commit/5a18f49b939147a19ff2d8c25fda43407923a5f6))
+* Update to latest patcher dev ([0e0ccf0](https://github.com/AzyrRuthless/morphe-cli/commit/0e0ccf0c4ee24210174e2caf7026c6cae2414fd4))
+* Update to latest patcher dev ([df1b416](https://github.com/AzyrRuthless/morphe-cli/commit/df1b416db7dfefc86fa3f6cc1597dac489cc4c04))
+* Update to latest patcher dev ([0d6d9d8](https://github.com/AzyrRuthless/morphe-cli/commit/0d6d9d865fd3123bf6f597118c393a804318b66f))
+* Update to latest patcher dev ([e2bd02e](https://github.com/AzyrRuthless/morphe-cli/commit/e2bd02eebfc8500a936dff62dcea9e8dcd6da8e3))
+* Update to Patcher 1.3.0 ([42a0042](https://github.com/AzyrRuthless/morphe-cli/commit/42a00428b6cf6facfd0240ef37cd4c9c5678a1c5))
+* Update to Patcher 1.3.1 ([a808bf1](https://github.com/AzyrRuthless/morphe-cli/commit/a808bf1e2bfcbc10e2519c5f3f9111ca08e52202))
+* Update to Patcher 1.3.2 ([d935ad9](https://github.com/AzyrRuthless/morphe-cli/commit/d935ad9cdad78781618aa9429f5a379df035c6ce))
+* Use GitHub raw links for CLI update check ([#87](https://github.com/AzyrRuthless/morphe-cli/issues/87)) ([afd0cc3](https://github.com/AzyrRuthless/morphe-cli/commit/afd0cc3e2817049a3b05fb7ffa89b578289099b0))
+* Use more logging verbosity when updating options.json ([#72](https://github.com/AzyrRuthless/morphe-cli/issues/72)) ([bb00a53](https://github.com/AzyrRuthless/morphe-cli/commit/bb00a53c94188f6daff5b4f118fcc93b9ca5b238))
+
+
+### Features
+
+* Add desktop GUI ([#42](https://github.com/AzyrRuthless/morphe-cli/issues/42)) ([4e33491](https://github.com/AzyrRuthless/morphe-cli/commit/4e334918514109910d237bf65ff1c5b3c3b2c6e6))
+* Inform user if cli is outdated ([#81](https://github.com/AzyrRuthless/morphe-cli/issues/81)) ([093e068](https://github.com/AzyrRuthless/morphe-cli/commit/093e0681669edee5b266b9a3fdcd8ad9aa55f65a))
+
 # [1.3.0](https://github.com/AzyrRuthless/morphe-cli/compare/v1.2.0...v1.3.0) (2026-03-12)
 
 
