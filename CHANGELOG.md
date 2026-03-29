@@ -1,3 +1,13 @@
+## [1.4.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.4.0...v1.4.1) (2026-03-29)
+
+
+### Bug Fixes
+
+* Handle patching XAPK files ([#93](https://github.com/AzyrRuthless/morphe-cli/issues/93)) ([1dc7cfe](https://github.com/AzyrRuthless/morphe-cli/commit/1dc7cfe926deb45169e8f61608868428e80b8d08))
+* Handle running CLI in headless environment ([#95](https://github.com/AzyrRuthless/morphe-cli/issues/95)) ([1e30218](https://github.com/AzyrRuthless/morphe-cli/commit/1e30218ab28ba477fb8535b2d88d95fad90b1fb4))
+* Update to latest Patcher ([2414325](https://github.com/AzyrRuthless/morphe-cli/commit/241432513e546ee7e865a9e3379d8fb5c667fdcb))
+* Update to Patcher 1.3.3 ([ad7a0a0](https://github.com/AzyrRuthless/morphe-cli/commit/ad7a0a0312244e2d7e12ebec2c34c17b88887d2e))
+
 ## [1.4.1-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.4.0...v1.4.1-dev.1) (2026-03-29)
 
 
