@@ -473,7 +473,7 @@ internal object PatchCommand : Callable<Int> {
                     patcherTemporaryFilesPath,
                     aaptBinaryPath?.path,
                     patcherTemporaryFilesPath.absolutePath,
-                    if (aaptBinaryPath != null) { false } else { !forceApktool },
+                    if (aaptBinaryPath != null) { false } else { !forceApktool }
                 ),
             ).use { patcher ->
                 val packageName = patcher.context.packageMetadata.packageName
