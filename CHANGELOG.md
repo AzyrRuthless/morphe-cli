@@ -1,3 +1,16 @@
+# [1.5.0-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.4.1...v1.5.0-dev.1) (2026-04-22)
+
+
+### Bug Fixes
+
+* Use patcher implementation of strip libs ([#83](https://github.com/AzyrRuthless/morphe-cli/issues/83)) ([206fd70](https://github.com/AzyrRuthless/morphe-cli/commit/206fd70bddd9cc99f519c572e43fcd57c198438f)), closes [#80](https://github.com/AzyrRuthless/morphe-cli/issues/80) [#82](https://github.com/AzyrRuthless/morphe-cli/issues/82)
+* Use same default keystore values as Morphe Manager ([#96](https://github.com/AzyrRuthless/morphe-cli/issues/96)) ([0603a6d](https://github.com/AzyrRuthless/morphe-cli/commit/0603a6d387300b5b6d6c687cf397d770290b7a6b))
+
+
+### Features
+
+* Add GUI third party patch sources, add experimental app patching ([#98](https://github.com/AzyrRuthless/morphe-cli/issues/98)) ([a611751](https://github.com/AzyrRuthless/morphe-cli/commit/a611751c612810f591271f1c5e33c8e25bd2b346))
+
 ## [1.4.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.4.0...v1.4.1) (2026-03-29)
 
 

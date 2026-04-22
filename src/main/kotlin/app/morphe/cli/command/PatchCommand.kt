@@ -19,13 +19,24 @@ import app.morphe.cli.command.model.mergeWith
 import app.morphe.cli.command.model.toPatchBundle
 import app.morphe.cli.command.model.toSerializablePatch
 import app.morphe.cli.command.model.withUpdatedBundle
+import app.morphe.engine.PatchEngine
+import app.morphe.engine.PatchEngine.Config.Companion.DEFAULT_KEYSTORE_ALIAS
+import app.morphe.engine.PatchEngine.Config.Companion.DEFAULT_KEYSTORE_PASSWORD
+import app.morphe.engine.PatchEngine.Config.Companion.DEFAULT_SIGNER_NAME
+import app.morphe.engine.PatchEngine.Config.Companion.LEGACY_KEYSTORE_ALIAS
+import app.morphe.engine.PatchEngine.Config.Companion.LEGACY_KEYSTORE_PASSWORD
 import app.morphe.engine.UpdateChecker
-import app.morphe.patcher.apk.ApkUtils
-import app.morphe.patcher.apk.ApkUtils.applyTo
-import app.morphe.library.installation.installer.*
+import app.morphe.library.installation.installer.AdbInstaller
+import app.morphe.library.installation.installer.AdbInstallerResult
+import app.morphe.library.installation.installer.AdbRootInstaller
+import app.morphe.library.installation.installer.DeviceNotFoundException
+import app.morphe.library.installation.installer.Installer
+import app.morphe.library.installation.installer.RootInstallerResult
 import app.morphe.patcher.Patcher
 import app.morphe.patcher.PatcherConfig
 import app.morphe.patcher.apk.ApkMerger
+import app.morphe.patcher.apk.ApkUtils
+import app.morphe.patcher.apk.ApkUtils.applyTo
 import app.morphe.patcher.logging.toMorpheLogger
 import app.morphe.patcher.patch.Patch
 import app.morphe.patcher.patch.loadPatchesFromJar
@@ -203,20 +214,20 @@ internal object PatchCommand : Callable<Int> {
         description = ["Alias of the private key and certificate pair keystore entry."],
         showDefaultValue = ALWAYS,
     )
-    private var keyStoreEntryAlias = "Morphe Key"
+    private var keyStoreEntryAlias = PatchEngine.Config.DEFAULT_KEYSTORE_ALIAS
 
     @CommandLine.Option(
         names = ["--keystore-entry-password"],
         description = ["Password of the keystore entry."],
     )
-    private var keyStoreEntryPassword = "" // Empty password by default
+    private var keyStoreEntryPassword = PatchEngine.Config.DEFAULT_KEYSTORE_PASSWORD
 
     @CommandLine.Option(
         names = ["--signer"],
         description = ["The name of the signer to sign the patched APK file with."],
         showDefaultValue = ALWAYS,
     )
-    private var signer = "Morphe"
+    private var signer = DEFAULT_SIGNER_NAME
 
     @CommandLine.Option(
         names = ["-t", "--temporary-files-path"],
@@ -473,7 +484,7 @@ internal object PatchCommand : Callable<Int> {
                     patcherTemporaryFilesPath,
                     aaptBinaryPath?.path,
                     patcherTemporaryFilesPath.absolutePath,
-                    if (aaptBinaryPath != null) { false } else { !forceApktool },
+                    if (aaptBinaryPath != null) { false } else { !forceApktool }
                 ),
             ).use { patcher ->
                 val packageName = patcher.context.packageMetadata.packageName
@@ -695,17 +706,34 @@ internal object PatchCommand : Callable<Int> {
                     patchingResult.addStepResult(
                         PatchingStep.SIGNING,
                         {
-                            ApkUtils.signApk(
-                                patchedApkFile,
-                                outputFilePath,
-                                signer,
-                                ApkUtils.KeyStoreDetails(
-                                    keystoreFilePath,
-                                    keyStorePassword,
-                                    keyStoreEntryAlias,
-                                    keyStoreEntryPassword,
-                                ),
-                            )
+                            fun signApk(alias: String, password: String) {
+                                ApkUtils.signApk(
+                                    patchedApkFile,
+                                    outputFilePath,
+                                    signer,
+                                    ApkUtils.KeyStoreDetails(
+                                        keystoreFilePath,
+                                        keyStorePassword,
+                                        alias,
+                                        password,
+                                    )
+                                )
+                            }
+                            try {
+                                signApk(keyStoreEntryAlias, keyStoreEntryPassword)
+                            } catch (e: Exception){
+                                // Retry with legacy keystore defaults.
+                                if (keyStoreEntryAlias == DEFAULT_KEYSTORE_ALIAS &&
+                                    keyStoreEntryPassword == DEFAULT_KEYSTORE_PASSWORD &&
+                                    keystoreFilePath.exists()
+                                ) {
+                                    logger.info("Using legacy keystore credentials")
+
+                                    signApk(LEGACY_KEYSTORE_ALIAS, LEGACY_KEYSTORE_PASSWORD)
+                                } else {
+                                    throw e
+                                }
+                            }
                         }
                     )
                 } else {
