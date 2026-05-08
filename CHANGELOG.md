@@ -1,3 +1,26 @@
+# [1.6.0](https://github.com/AzyrRuthless/morphe-cli/compare/v1.5.0...v1.6.0) (2026-05-08)
+
+
+### Bug Fixes
+
+* ARSCLib libraries are excluded during minimization ([0d823e0](https://github.com/AzyrRuthless/morphe-cli/commit/0d823e059b4021b04406c75ec73294a6c1e8c1d0))
+* ARSCLib libraries are not included in minimized fat jar ([8050555](https://github.com/AzyrRuthless/morphe-cli/commit/805055542eb47529b6b2753dcae498c4579f0459))
+* continue-on-error fix + force windows to `FULL` ([#120](https://github.com/AzyrRuthless/morphe-cli/issues/120)) ([ecba109](https://github.com/AzyrRuthless/morphe-cli/commit/ecba109ef15322b892c4a7a8d6da71e902702b62))
+* Include Notice and License files in shadow jar release ([#113](https://github.com/AzyrRuthless/morphe-cli/issues/113)) ([e65a37d](https://github.com/AzyrRuthless/morphe-cli/commit/e65a37d0e05ef97a1c60c4b61b185c0659cce12c))
+* Re-enable strip libs feature ([#117](https://github.com/AzyrRuthless/morphe-cli/issues/117)) ([517cd7d](https://github.com/AzyrRuthless/morphe-cli/commit/517cd7d2d469c2e11d73d3fb3699855cafdc3236))
+* Update to latest patcher ([2492c5d](https://github.com/AzyrRuthless/morphe-cli/commit/2492c5d37dfbb24ebbb05595d71ac9232bcd5826))
+* Update to patcher 1.5.1 ([2af0af4](https://github.com/AzyrRuthless/morphe-cli/commit/2af0af437cf0569bfabef09e27d3b3f2632b1992))
+
+
+### Features
+
+* Add in-app dependency license viewer ([#114](https://github.com/AzyrRuthless/morphe-cli/issues/114)) ([5899161](https://github.com/AzyrRuthless/morphe-cli/commit/5899161176a5b573f485071b9edb777670e330b5))
+* Add search function to license viewer ([#124](https://github.com/AzyrRuthless/morphe-cli/issues/124)) ([72a9fae](https://github.com/AzyrRuthless/morphe-cli/commit/72a9fae92dfa22005ce9215fbf3a9c4759a23258))
+* Custom output path + better GUI scrollbars ([#127](https://github.com/AzyrRuthless/morphe-cli/issues/127)) ([b90c144](https://github.com/AzyrRuthless/morphe-cli/commit/b90c144b0c7fc72abfc3a135c8dc6b29bcda67dc))
+* Faster dex rebuilding + reduced memory requirements  ([#108](https://github.com/AzyrRuthless/morphe-cli/issues/108)) ([e7467ab](https://github.com/AzyrRuthless/morphe-cli/commit/e7467abeaca6eab4c3c0d6bade4949deadcc35d7))
+* Support GitHub repo urls with `--patches` argument ([#71](https://github.com/AzyrRuthless/morphe-cli/issues/71)) ([1429d72](https://github.com/AzyrRuthless/morphe-cli/commit/1429d72e22dbbbceed85771904059ae1796691bb))
+* UI improvements and fixes ([#128](https://github.com/AzyrRuthless/morphe-cli/issues/128)) ([ddbae19](https://github.com/AzyrRuthless/morphe-cli/commit/ddbae199947c2b59727d42a4005996a50353c286))
+
 # [1.6.0-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.5.0...v1.6.0-dev.1) (2026-05-08)
 
 
