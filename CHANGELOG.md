@@ -1,3 +1,10 @@
+## [1.6.1-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.6.0...v1.6.1-dev.1) (2026-05-13)
+
+
+### Bug Fixes
+
+* Update to latest patcher ([f023e71](https://github.com/AzyrRuthless/morphe-cli/commit/f023e714dee544bd43910d70a02f145161df881f))
+
 # [1.6.0](https://github.com/AzyrRuthless/morphe-cli/compare/v1.5.0...v1.6.0) (2026-05-08)
 
 
