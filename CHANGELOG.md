@@ -1,3 +1,16 @@
+# [1.7.0-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.6.1...v1.7.0-dev.1) (2026-05-30)
+
+
+### Bug Fixes
+
+* Close adb when app closes ([#153](https://github.com/AzyrRuthless/morphe-cli/issues/153)) ([569253b](https://github.com/AzyrRuthless/morphe-cli/commit/569253bf20fd0a01017b1b1cad3cdec3a748b4db))
+* Multi patch source minor network times out ([#155](https://github.com/AzyrRuthless/morphe-cli/issues/155)) ([8a62b73](https://github.com/AzyrRuthless/morphe-cli/commit/8a62b731d00cd4b0dcdb75759faf79f7da98ada8))
+
+
+### Features
+
+* Apply patches from multiple patch bundles, add GUI patch source selector  ([#145](https://github.com/AzyrRuthless/morphe-cli/issues/145)) ([d904c88](https://github.com/AzyrRuthless/morphe-cli/commit/d904c88e163fc34e437d216b2cf809f0cab24543))
+
 ## [1.6.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.6.0...v1.6.1) (2026-05-13)
 
 
