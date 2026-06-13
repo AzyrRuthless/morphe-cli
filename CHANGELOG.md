@@ -1,3 +1,12 @@
+## [1.7.1-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.7.0...v1.7.1-dev.1) (2026-06-13)
+
+
+### Bug Fixes
+
+* signing improvements ([#160](https://github.com/AzyrRuthless/morphe-cli/issues/160)) ([ac690ac](https://github.com/AzyrRuthless/morphe-cli/commit/ac690acc05045fce8757c77cee776dcdcb496f72))
+* Update dependencies ([de56ce0](https://github.com/AzyrRuthless/morphe-cli/commit/de56ce09cd29a9c0d2e05c39eeadbbdf791b7d36))
+* Update to latest ARSCLib ([8f69d17](https://github.com/AzyrRuthless/morphe-cli/commit/8f69d17f50d671f9e0da348d54dd76f84b79e661))
+
 # [1.7.0](https://github.com/AzyrRuthless/morphe-cli/compare/v1.6.1...v1.7.0) (2026-05-30)
 
 
