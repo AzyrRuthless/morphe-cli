@@ -1,6 +1,12 @@
+/*
+ * Copyright 2026 Morphe.
+ * https://github.com/MorpheApp/morphe-desktop
+ */
+
 package app.morphe.engine
 
 import java.net.HttpURLConnection
+import java.net.URI
 import java.net.URL
 import java.util.Properties
 import java.util.logging.Logger
@@ -40,27 +46,26 @@ object UpdateChecker {
                 // dev branch tracks main after every stable release, so probing
                 // dev also catches new stables for users on dev builds.
                 ReleaseChannel.DEV ->
-                    "https://raw.githubusercontent.com/MorpheApp/morphe-cli/refs/heads/dev/gradle.properties"
+                    "https://raw.githubusercontent.com/MorpheApp/morphe-desktop/refs/heads/dev/gradle.properties"
                 ReleaseChannel.STABLE ->
-                    "https://raw.githubusercontent.com/MorpheApp/morphe-cli/refs/heads/main/gradle.properties"
+                    "https://raw.githubusercontent.com/MorpheApp/morphe-desktop/refs/heads/main/gradle.properties"
             }
 
-            val connection = URL(url).openConnection() as HttpURLConnection
+            val connection = URI(url).toURL().openConnection() as HttpURLConnection
             connection.connectTimeout = 3000
             connection.readTimeout = 3000
 
-            val response = connection.inputStream.bufferedReader().use { it.readText() }
-            connection.disconnect()
+            val response = connection.getInputStream().bufferedReader().use { it.readText() }
 
             val latestVersion = Properties().apply {
                 load(response.byteInputStream())
             }.getProperty("version") ?: return null
 
-            if (!isNewerVersion(currentVersion, latestVersion)) return null
+            if (latestVersion == currentVersion) return null
 
             val downloadLink = when (resolvedChannel) {
-                ReleaseChannel.DEV -> "https://github.com/MorpheApp/morphe-cli/releases/"
-                ReleaseChannel.STABLE -> "https://github.com/MorpheApp/morphe-cli/releases/latest"
+                ReleaseChannel.DEV -> "https://github.com/MorpheApp/morphe-desktop/releases/"
+                ReleaseChannel.STABLE -> "https://github.com/MorpheApp/morphe-desktop/releases/latest"
             }
 
             return UpdateInfo(
@@ -73,28 +78,6 @@ object UpdateChecker {
             logger.fine("Could not check for CLI update: $ex")
             return null
         }
-    }
-
-    private fun isNewerVersion(current: String, latest: String): Boolean {
-        // Strip trailing "-dev" or similar suffixes for numeric comparison
-        val cleanCurrent = current.substringBefore("-")
-        val cleanLatest = latest.substringBefore("-")
-
-        val currentParts = cleanCurrent.split(".").mapNotNull { it.toIntOrNull() }
-        val latestParts = cleanLatest.split(".").mapNotNull { it.toIntOrNull() }
-
-        val length = maxOf(currentParts.size, latestParts.size)
-        for (i in 0 until length) {
-            val c = currentParts.getOrNull(i) ?: 0
-            val l = latestParts.getOrNull(i) ?: 0
-            if (l > c) return true
-            if (l < c) return false
-        }
-        
-        // If numeric versions are identical, standard release is "newer" than dev release
-        if (current.contains("dev") && !latest.contains("dev")) return true
-        
-        return false
     }
 
     /**
@@ -110,7 +93,7 @@ object UpdateChecker {
 
     /**
      * Legacy formatter — returns the same multi-line string the CLI prints.
-     * Kept byte-identical so [app.morphe.cli.command.PatchCommand]'s logger
+     * Kept byte-identical so [app.morphe.desktop.command.PatchCommand]'s logger
      * output doesn't change.
      */
     fun check(logger: Logger): String? {

@@ -1,6 +1,6 @@
 /*
  * Copyright 2026 Morphe.
- * https://github.com/MorpheApp/morphe-cli
+ * https://github.com/MorpheApp/morphe-desktop
  */
 
 package app.morphe.gui.ui.screens.patches
@@ -25,6 +25,8 @@ import app.morphe.patcher.resource.CpuArchitecture
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.File
 
 /**
@@ -63,6 +65,16 @@ class PatchSelectionViewModel(
     /** Parallel to [patchesFilePaths] — display name of each source. Used as the
      *  per-bundle label AND persistence key. */
     private val patchSourceNames: List<String> = emptyList(),
+    /** One-click repatch seed: source/bundle name → set of patch uniqueIds to
+     *  pre-select. Empty = normal flow (saved prefs / .mpp defaults). */
+    private val initialSelectionByBundle: Map<String, Set<String>> = emptyMap(),
+    /** One-click repatch seed: "patchName.optionKey" → option value. */
+    private val initialPatchOptions: Map<String, String> = emptyMap(),
+    /** The app's versionName (parsed from the APK upstream). Threaded here so the output
+     *  filename stays unique by app version even for renamed bundles the engine can't
+     *  re-read a version from. Blank falls back to the engine's manifest/filename resolution.
+     *  Non-null (rather than String?) so no null flows through the Koin parametersOf chain. */
+    private val apkVersion: String = "",
 ) : ScreenModel {
 
     // Actual path to use for the primary file — may differ from patchesFilePath
@@ -93,8 +105,18 @@ class PatchSelectionViewModel(
             // Store the resolved absolute path so the lookup at line ~487 can
             // pass it straight into File(...) without re-resolving.
             defaultOutputDirectory = config.resolvedDefaultOutputDirectory()?.absolutePath
+            // Architectures arrive empty from a repatch/update (the caller didn't
+            // pre-analyze the APK) — derive them from the APK itself so the strip-libs
+            // option isn't lost. Also correct for an Update's freshly-downloaded APK.
+            val arches = apkArchitectures.ifEmpty {
+                withContext(Dispatchers.IO) {
+                    runCatching { app.morphe.gui.util.FileUtils.extractArchitectures(File(apkPath)) }
+                        .getOrDefault(emptyList())
+                }
+            }
             _uiState.value = _uiState.value.copy(
-                stripLibsStatus = computeStripLibsStatus(apkArchitectures, config.keepArchitectures)
+                apkArchitectures = arches,
+                stripLibsStatus = computeStripLibsStatus(arches, config.keepArchitectures),
             )
         }
     }
@@ -151,24 +173,46 @@ class PatchSelectionViewModel(
                     val savedByBundle = mutableMapOf<String, Set<String>>()
                     val initialOptions = mutableMapOf<String, String>()
                     var anyBundleHasSaved = false
-                    for (bundle in bundles) {
-                        val saved = preferencesRepository.get(bundle.bundleName, packageName)
-                        if (saved != null) {
-                            anyBundleHasSaved = true
-                            val byName = bundle.patches.associateBy { it.name }
-                            val selected = saved.patches
-                                .filter { (_, entry) -> entry.enabled }
-                                .keys
-                                .mapNotNull { byName[it]?.uniqueId }
-                                .toSet()
-                            savedByBundle[bundle.bundleId] = selected
-                            // Materialize saved option values ("patchName.optionKey" → string).
-                            // Options are per-patch-name so they're naturally global here;
-                            // identical patches in two bundles share option values, which
-                            // is fine — same option means same thing.
-                            for ((patchName, entry) in saved.patches) {
-                                for ((optKey, jsonValue) in entry.options) {
-                                    initialOptions["$patchName.$optKey"] = jsonValue.toString().trim('"')
+
+                    if (initialSelectionByBundle.isNotEmpty()) {
+                        // One-click repatch: seed selection + options from the
+                        // PatchedAppRecord (keyed by source/bundle name). Takes
+                        // precedence over saved prefs; keep only ids that still
+                        // exist in the current (possibly newer) bundle.
+                        anyBundleHasSaved = true
+                        for (bundle in bundles) {
+                            val seed = initialSelectionByBundle[bundle.bundleName] ?: continue
+                            val validIds = bundle.patches.mapTo(mutableSetOf()) { it.uniqueId }
+                            savedByBundle[bundle.bundleId] = seed.intersect(validIds)
+                        }
+                        initialOptions.putAll(initialPatchOptions)
+                        Logger.info("Repatch: seeded selection for $packageName from record")
+                    } else {
+                        for (bundle in bundles) {
+                            val saved = preferencesRepository.get(bundle.bundleName, packageName)
+                            if (saved != null) {
+                                anyBundleHasSaved = true
+                                val byName = bundle.patches.associateBy { it.name }
+                                val selected = saved.patches
+                                    .filter { (_, entry) -> entry.enabled }
+                                    .keys
+                                    .mapNotNull { byName[it]?.uniqueId }
+                                    .toSet()
+                                savedByBundle[bundle.bundleId] = selected
+                                // Materialize saved option values ("patchName.optionKey" → string).
+                                // Options are per-patch-name so they're naturally global here;
+                                // identical patches in two bundles share option values, which
+                                // is fine — same option means same thing.
+                                for ((patchName, entry) in saved.patches) {
+                                    for ((optKey, jsonValue) in entry.options) {
+                                        val optValue = jsonValue.toString().trim('"')
+                                        // Drop a stale customIcon whose folder no longer exists (e.g.
+                                        // the user deleted the icon) so it doesn't reappear as "ready".
+                                        if (optKey.equals("customIcon", ignoreCase = true) &&
+                                            (optValue.isBlank() || !java.io.File(optValue).exists())
+                                        ) continue
+                                        initialOptions["$patchName.$optKey"] = optValue
+                                    }
                                 }
                             }
                         }
@@ -227,7 +271,7 @@ class PatchSelectionViewModel(
             BundlePatches(
                 bundleId = "bundle-$idx-${File(path).nameWithoutExtension}",
                 bundleName = displayName,
-                patches = patches,
+                patches = patches.sortedBy { it.name.lowercase() },
             )
         }
 
@@ -414,6 +458,9 @@ class PatchSelectionViewModel(
         return _uiState.value.patchOptionValues[key] ?: default ?: ""
     }
 
+    /** Target app package being patched — used to key per-app storage (e.g. Icon Studio output). */
+    fun targetPackage(): String = packageName
+
     /** Total count of patches across all bundles that ship disabled by default. */
     fun getDefaultDisabledCount(): Int =
         _uiState.value.bundles.sumOf { bundle -> bundle.patches.count { !it.isEnabled } }
@@ -488,6 +535,7 @@ class PatchSelectionViewModel(
             patchesFile = File(actualPatchesFilePath),
             baseOutputDir = defaultOutputDirectory?.let { File(it) },
             appDisplayName = apkName,
+            appVersion = apkVersion,
         ).absolutePath
 
         // Flatten across bundles: the engine takes a single flat enable/disable
@@ -501,6 +549,21 @@ class PatchSelectionViewModel(
             ?.toSet()
             ?: emptySet()
 
+        // Recall metadata: capture per-bundle selection and the source+version
+        // snapshot so the patching success path can record a PatchedAppRecord.
+        val state = _uiState.value
+        val selectionByBundle = state.bundles.associate { bundle ->
+            bundle.bundleName to state.selectedByBundle[bundle.bundleId].orEmpty()
+        }
+        val sourcesSnapshot = actualPatchesFilePaths.mapIndexed { i, path ->
+            val name = patchSourceNames.getOrNull(i) ?: File(path).nameWithoutExtension
+            app.morphe.engine.model.PatchedAppRecord.PatchedSourceSnapshot(
+                sourceId = name,
+                sourceName = name,
+                version = extractPatchesVersion(File(path).name) ?: "unknown",
+            )
+        }
+
         return PatchConfig(
             inputApkPath = apkPath,
             outputApkPath = outputPath,
@@ -511,6 +574,10 @@ class PatchSelectionViewModel(
             useExclusiveMode = true,
             keepArchitectures = keepArches,
             continueOnError = continueOnError,
+            packageName = packageName,
+            appDisplayName = apkName,
+            patchSelectionByBundle = selectionByBundle,
+            sourcesSnapshot = sourcesSnapshot,
         )
     }
 
@@ -578,7 +645,7 @@ class PatchSelectionViewModel(
             buildString {
                 appendLine(
                     """
-                        java -jar morphe-cli.jar patch \
+                        java -jar morphe-desktop.jar patch \
                           -p ${patchesFile.name} \
                           -o $outputFileName \
                           --force \
@@ -619,7 +686,7 @@ class PatchSelectionViewModel(
                 if (keystoreEntryPassword != null && keystoreEntryPassword != "Morphe") parts.add("--keystore-entry-password \"$keystoreEntryPassword\"")
                 parts.joinToString(" ")
             } else ""
-            "java -jar morphe-cli.jar patch -p ${patchesFile.name} -o $outputFileName --force$continueOnErrorPart$exclusivePart$striplibsPart$keystorePart $patches ${inputFile.name}"
+            "java -jar morphe-desktop.jar patch -p ${patchesFile.name} -o $outputFileName --force$continueOnErrorPart$exclusivePart$striplibsPart$keystorePart $patches ${inputFile.name}"
         }
     }
 
@@ -640,21 +707,23 @@ class PatchSelectionViewModel(
 
         Logger.info("Looking for patches version: ${expectedVersion ?: "latest"}")
 
-        val releasesResult = patchRepository.fetchReleases()
-        if (releasesResult.isFailure) {
-            return Result.failure(
-                releasesResult.exceptionOrNull() ?: Exception("Failed to fetch releases")
-            )
-        }
-        val releases = releasesResult.getOrNull() ?: emptyList()
-        if (releases.isEmpty()) return Result.failure(Exception("No releases found"))
-
         val targetRelease = if (expectedVersion != null) {
+            // A specific version is expected (repatch/update) → the full release list
+            // (API) is the only way to locate that exact tag.
+            val releasesResult = patchRepository.fetchReleases()
+            if (releasesResult.isFailure) {
+                return Result.failure(releasesResult.exceptionOrNull() ?: Exception("Failed to fetch releases"))
+            }
+            val releases = releasesResult.getOrNull() ?: emptyList()
+            if (releases.isEmpty()) return Result.failure(Exception("No releases found"))
             releases.find { it.tagName.contains(expectedVersion) }
                 ?: releases.firstOrNull { !it.isDevRelease() }
+                ?: return Result.failure(Exception("No suitable release found"))
         } else {
-            releases.firstOrNull { !it.isDevRelease() }
-        } ?: return Result.failure(Exception("No suitable release found"))
+            // Just need the latest stable → resolve via the raw manifest (no API call).
+            patchRepository.getLatestStableRelease().getOrNull()
+                ?: return Result.failure(Exception("No suitable release found"))
+        }
 
         Logger.info("Downloading patches from release: ${targetRelease.tagName}")
         return patchRepository.downloadPatches(targetRelease)

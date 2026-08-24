@@ -1,7 +1,9 @@
 /*
  * Copyright 2026 Morphe.
- * https://github.com/MorpheApp/morphe-cli
+ * https://github.com/MorpheApp/morphe-desktop
  */
+
+@file:Suppress("DEPRECATION")
 
 package app.morphe.gui.ui.components
 

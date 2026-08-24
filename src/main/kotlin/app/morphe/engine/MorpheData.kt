@@ -1,6 +1,6 @@
 /*
  * Copyright 2026 Morphe.
- * https://github.com/MorpheApp/morphe-cli
+ * https://github.com/MorpheApp/morphe-desktop
  */
 
 package app.morphe.engine
@@ -27,6 +27,7 @@ import java.util.logging.Logger
  * morphe-data/
  *   patches/{owner}-{repo}/v1.5.0__patches.mpp   # downloaded .mpp files
  *   logs/                                        # app logs
+ *   icons/{packageName}/                         # user-created custom app icons (persistent)
  *   config.json                                  # GUI preferences + sources
  *   tmp/patching-{timestamp}/                    # per-session patcher scratch
  *   morphe.keystore                              # shared default signing key
@@ -70,6 +71,10 @@ object MorpheData {
     /** App logs. */
     val logsDir: File by lazy { File(root, "logs").also { it.mkdirs() } }
 
+    /** User-created custom app icons (Icon Studio output), organized per package.
+     *  Persistent USER CONTENT. Deliberately NOT wiped by clear-cache. */
+    val iconsDir: File by lazy { File(root, "icons").also { it.mkdirs() } }
+
     /** Patcher scratch space. Each patching session gets its own subfolder
      *  here (see Phase 6 of the unified-data-location plan). */
     val tmpDir: File by lazy { File(root, "tmp").also { it.mkdirs() } }
@@ -85,6 +90,16 @@ object MorpheData {
     val defaultKeystoreFile: File get() = File(root, "morphe.keystore")
 
     /**
+     * Destination for keystores the user imports in non-BKS formats
+     * (PKCS12 / JKS). The original source file is left untouched; we write
+     * the BKS-converted bytes here and point the user's keystore config
+     * at this path. Distinct from [defaultKeystoreFile] so the import flow
+     * doesn't clobber the auto-generated default — clearing the configured
+     * path reverts patching to that default.
+     */
+    val importedKeystoreFile: File get() = File(root, "imported.keystore")
+
+    /**
      * Reason the primary (JAR-adjacent) location was rejected. Drives the
      * fallback log message so a user reporting "where's my cache?" can
      * tell from logs alone which branch ran.
@@ -97,6 +112,14 @@ object MorpheData {
     }
 
     private fun resolveRoot(): Resolution {
+        // Explicit override (MORPHE_DATA_DIR): highest priority, so a read-only /
+        // package-manager install can point the data root at a writable, XDG-compliant
+        // location. No portable-bundle concept here for now (maybe change in the future?), paths stay absolute.
+        envOverrideRoot()?.let { override ->
+            logger.info("Morphe data root: ${override.absolutePath} (MORPHE_DATA_DIR override)")
+            override.mkdirs()
+            return Resolution(root = override, bundleRoot = null)
+        }
         val (jarAdjacent, fallbackReason) = tryJarAdjacent()
         if (jarAdjacent != null) {
             logger.info("Morphe data root: ${jarAdjacent.absolutePath} (JAR-adjacent)")
@@ -150,9 +173,43 @@ object MorpheData {
         return candidate to null
     }
 
+    /**
+     * Explicit data-root override via the `MORPHE_DATA_DIR` environment variable.
+     * Lets read-only / package-manager installs point the data root at a writable
+     * (e.g. XDG) location. Returns null when unset; a set-but-unusable value is
+     * logged and ignored so the app still starts on the normal resolution.
+     */
+    private fun envOverrideRoot(): File? {
+        val raw = System.getenv("MORPHE_DATA_DIR")?.trim()?.takeIf { it.isNotEmpty() } ?: return null
+        val dir = File(raw)
+        val usable = runCatching { dir.mkdirs(); dir.isDirectory && dir.canWrite() }.getOrDefault(false)
+        if (!usable) {
+            logger.warning("MORPHE_DATA_DIR is set to '$raw' but it isn't a writable directory — ignoring.")
+            return null
+        }
+        return dir
+    }
+
     private fun userHomeFallback(): File {
         val userHome = System.getProperty("user.home")
-        return File(userHome, "morphe")
+        val legacy = File(userHome, "morphe")
+        // Don't strand an existing ~/morphe install by silently moving it to XDG.
+        if (legacy.isDirectory) return legacy
+        // On Linux, honor an explicitly-set XDG_DATA_HOME; otherwise ~/morphe.
+        return xdgDataRoot() ?: legacy
+    }
+
+    /**
+     * XDG data root on Linux: `$XDG_DATA_HOME/morphe`, only when XDG_DATA_HOME is
+     * explicitly set. Null otherwise (unset, or macOS/Windows) so the caller uses
+     * `~/morphe`.
+     */
+    private fun xdgDataRoot(): File? {
+        val os = System.getProperty("os.name")?.lowercase().orEmpty()
+        val isLinux = "linux" in os || "nix" in os || "nux" in os
+        if (!isLinux) return null
+        val base = System.getenv("XDG_DATA_HOME")?.trim()?.takeIf { it.isNotEmpty() } ?: return null
+        return File(base, "morphe")
     }
 
     private fun isWritable(dir: File): Boolean {

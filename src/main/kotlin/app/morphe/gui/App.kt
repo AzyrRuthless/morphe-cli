@@ -1,6 +1,6 @@
 /*
  * Copyright 2026 Morphe.
- * https://github.com/MorpheApp/morphe-cli
+ * https://github.com/MorpheApp/morphe-desktop
  */
 
 package app.morphe.gui
@@ -29,6 +29,7 @@ import app.morphe.gui.di.appModule
 import kotlinx.coroutines.launch
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
+import org.koin.dsl.koinConfiguration
 import app.morphe.gui.ui.screens.home.HomeScreen
 import app.morphe.gui.ui.screens.quick.QuickPatchContent
 import app.morphe.gui.ui.screens.quick.QuickPatchViewModel
@@ -75,7 +76,7 @@ fun App(
         Logger.init()
     }
 
-    KoinApplication(application = {
+    KoinApplication(koinConfiguration {
         modules(appModule)
     }) {
         AppContent(initialSimplifiedMode = initialSimplifiedMode)
@@ -101,6 +102,7 @@ private fun AppContent(
         val config = configRepository.loadConfig()
         themePreference = config.getThemePreference()
         isSimplifiedMode = config.useSimplifiedMode
+      
         autoStartAdb = config.autoStartAdb
         // Publish the initial active mode BEFORE the VMs subscribe so their
         // activeMode listener fires with the correct value on first emit.
