@@ -1,319 +1,942 @@
-## [1.7.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.7.0...v1.7.1) (2026-06-13)
+# [1.8.0-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.7.1...v1.8.0-dev.1) (2026-08-24)
 
 
 ### Bug Fixes
 
-* signing improvements ([#160](https://github.com/AzyrRuthless/morphe-cli/issues/160)) ([ac690ac](https://github.com/AzyrRuthless/morphe-cli/commit/ac690acc05045fce8757c77cee776dcdcb496f72))
-* Update dependencies ([de56ce0](https://github.com/AzyrRuthless/morphe-cli/commit/de56ce09cd29a9c0d2e05c39eeadbbdf791b7d36))
-* Update to latest ARSCLib ([8f69d17](https://github.com/AzyrRuthless/morphe-cli/commit/8f69d17f50d671f9e0da348d54dd76f84b79e661))
-
-## [1.7.1-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.7.0...v1.7.1-dev.1) (2026-06-13)
-
-
-### Bug Fixes
-
-* signing improvements ([#160](https://github.com/AzyrRuthless/morphe-cli/issues/160)) ([ac690ac](https://github.com/AzyrRuthless/morphe-cli/commit/ac690acc05045fce8757c77cee776dcdcb496f72))
-* Update dependencies ([de56ce0](https://github.com/AzyrRuthless/morphe-cli/commit/de56ce09cd29a9c0d2e05c39eeadbbdf791b7d36))
-* Update to latest ARSCLib ([8f69d17](https://github.com/AzyrRuthless/morphe-cli/commit/8f69d17f50d671f9e0da348d54dd76f84b79e661))
-
-# [1.7.0](https://github.com/AzyrRuthless/morphe-cli/compare/v1.6.1...v1.7.0) (2026-05-30)
-
-
-### Bug Fixes
-
-* Close adb when app closes ([#153](https://github.com/AzyrRuthless/morphe-cli/issues/153)) ([569253b](https://github.com/AzyrRuthless/morphe-cli/commit/569253bf20fd0a01017b1b1cad3cdec3a748b4db))
-* Multi patch source minor network times out ([#155](https://github.com/AzyrRuthless/morphe-cli/issues/155)) ([8a62b73](https://github.com/AzyrRuthless/morphe-cli/commit/8a62b731d00cd4b0dcdb75759faf79f7da98ada8))
+* Add Enable-Native-Access attribute to jar manifest ([#249](https://github.com/AzyrRuthless/morphe-cli/issues/249)) ([d70a4c2](https://github.com/AzyrRuthless/morphe-cli/commit/d70a4c2d0de96088c0cb9c7d3a2d341c78e8247a))
+* Added progress bar to first time GUI download + Switched from materials icon to materials symbol + Cleaned up home screen code ([#234](https://github.com/AzyrRuthless/morphe-cli/issues/234)) ([39e948e](https://github.com/AzyrRuthless/morphe-cli/commit/39e948e750814707ac2a378f0c40f3751e373520))
+* Allow enabling/disabling patches using case insensitive patch names ([#48](https://github.com/AzyrRuthless/morphe-cli/issues/48)) ([03a280a](https://github.com/AzyrRuthless/morphe-cli/commit/03a280abea6c9187eec22548707eb889b0252c3f))
+* Allow patches with empty targets to apply automatically ([#207](https://github.com/AzyrRuthless/morphe-cli/issues/207)) ([5a07bf7](https://github.com/AzyrRuthless/morphe-cli/commit/5a07bf7d6fe34d42e2dd1b95e601386e6e214f83))
+* ARSCLib libraries are excluded during minimization ([2714ab5](https://github.com/AzyrRuthless/morphe-cli/commit/2714ab52d934380b665c396b02b079bc6e3d89be))
+* ARSCLib libraries are not included in minimized fat jar ([5dce038](https://github.com/AzyrRuthless/morphe-cli/commit/5dce03815fea09525a992ce2cc1df30b421a818f))
+* Bump arsclib version, remove APKEditor ([412847e](https://github.com/AzyrRuthless/morphe-cli/commit/412847e5a0b990321b7443fe774f7420189035d6))
+* clean up libs.versions.toml and build.gradle.kts configuration ([431bd82](https://github.com/AzyrRuthless/morphe-cli/commit/431bd825781591bed4db0c3855562b48cda2bcc3))
+* Clean up obsolete GUI dependencies ([#233](https://github.com/AzyrRuthless/morphe-cli/issues/233)) ([0d6816c](https://github.com/AzyrRuthless/morphe-cli/commit/0d6816c6a031afd20a225444776fbc075118aa3b))
+* CLI --purge command does not cleanup temp APK ([#169](https://github.com/AzyrRuthless/morphe-cli/issues/169)) ([6163e9c](https://github.com/AzyrRuthless/morphe-cli/commit/6163e9c29070e5013274792437d05f8ed2c20853))
+* Close adb when app closes ([#153](https://github.com/AzyrRuthless/morphe-cli/issues/153)) ([a43de5a](https://github.com/AzyrRuthless/morphe-cli/commit/a43de5a61ee30b7484b534cb6cc74e03bb297fa1))
+* continue-on-error fix + force windows to `FULL` ([#120](https://github.com/AzyrRuthless/morphe-cli/issues/120)) ([036faba](https://github.com/AzyrRuthless/morphe-cli/commit/036faba68f8f0c1f683f3c6222f08d0377217266))
+* Dispatch error when launching app ([#79](https://github.com/AzyrRuthless/morphe-cli/issues/79)) ([989e72a](https://github.com/AzyrRuthless/morphe-cli/commit/989e72a04c9ea1b512d556ff8db48b99a4817d98))
+* Do not log patch name more than once if disabled ([#49](https://github.com/AzyrRuthless/morphe-cli/issues/49)) ([b980bb8](https://github.com/AzyrRuthless/morphe-cli/commit/b980bb8e0b3bf8eb4c7af1fe289ff1b63c437fa3))
+* fix patch repo rate limiting by switching to raw links + stream downloads to disk ([#214](https://github.com/AzyrRuthless/morphe-cli/issues/214)) ([e21646c](https://github.com/AzyrRuthless/morphe-cli/commit/e21646cb4e184ca8a5efb9ecc3ea2b280f2a1cc7))
+* Handle GUI patching xapk / apks, add distinct patch-source channel colors, improve patch loading errors ([#180](https://github.com/AzyrRuthless/morphe-cli/issues/180)) ([d8245f0](https://github.com/AzyrRuthless/morphe-cli/commit/d8245f081b507cac74b06e16120e4271ce0e1f96))
+* Handle patching XAPK files ([#93](https://github.com/AzyrRuthless/morphe-cli/issues/93)) ([5d18490](https://github.com/AzyrRuthless/morphe-cli/commit/5d18490305f10949bf5407bc7167549e3a1cc8f4))
+* Handle running CLI in headless environment ([#95](https://github.com/AzyrRuthless/morphe-cli/issues/95)) ([70f2952](https://github.com/AzyrRuthless/morphe-cli/commit/70f2952b09de57ad7c06bd92365025d38164ed26))
+* Include Notice and License files in shadow jar release ([#113](https://github.com/AzyrRuthless/morphe-cli/issues/113)) ([a9a2402](https://github.com/AzyrRuthless/morphe-cli/commit/a9a2402209bd0ddd273c0aa5185888b74c69d118))
+* move both HTTP clients to OkHttp for parity with manager ([#254](https://github.com/AzyrRuthless/morphe-cli/issues/254)) ([e8379be](https://github.com/AzyrRuthless/morphe-cli/commit/e8379beee35350ad261282118d76ecb9201f2c9a))
+* Multi patch source minor network times out ([#155](https://github.com/AzyrRuthless/morphe-cli/issues/155)) ([06e5788](https://github.com/AzyrRuthless/morphe-cli/commit/06e57889c460cfa334af67c2910dbcb8633191f8))
+* Preserve manifest attributes in minimized jar ([#255](https://github.com/AzyrRuthless/morphe-cli/issues/255)) ([e5684d9](https://github.com/AzyrRuthless/morphe-cli/commit/e5684d99abf36b0b651708b81919ac2b0571b31c))
+* Re-enable strip libs feature ([#117](https://github.com/AzyrRuthless/morphe-cli/issues/117)) ([6d2bb94](https://github.com/AzyrRuthless/morphe-cli/commit/6d2bb94425e3fa040cc0d00261b77559d69e4470))
+* Resilient patch bundle loading + quieter ADB logging + unique version output naming ([#224](https://github.com/AzyrRuthless/morphe-cli/issues/224)) ([8cb5250](https://github.com/AzyrRuthless/morphe-cli/commit/8cb5250ed1562b9882cef47497b7edd4c0f64d2d))
+* resolve deprecation warnings and fix `list-versions` accuracy ([#225](https://github.com/AzyrRuthless/morphe-cli/issues/225)) ([9b79d69](https://github.com/AzyrRuthless/morphe-cli/commit/9b79d69895f89760e465b63d0b9d9d23c8ba738f))
+* signing improvements ([#160](https://github.com/AzyrRuthless/morphe-cli/issues/160)) ([166f940](https://github.com/AzyrRuthless/morphe-cli/commit/166f9409b1cbe00af7663545c41548ead2c189c5))
+* Update dependencies ([83d3969](https://github.com/AzyrRuthless/morphe-cli/commit/83d39692541ca81b7bb555dfd60a001fbb97b3f1))
+* Update patcher dependency ([7ba5e1c](https://github.com/AzyrRuthless/morphe-cli/commit/7ba5e1ca6fbda3e0a78cca978bff0c464bdd6256))
+* Update to latest ARSCLib ([f62a179](https://github.com/AzyrRuthless/morphe-cli/commit/f62a1793601fcfc489f54c558265115530ab6b8d))
+* Update to latest patcher ([2c89128](https://github.com/AzyrRuthless/morphe-cli/commit/2c891284460762e15115f21c83036ac544549372))
+* Update to latest patcher ([a0bea3d](https://github.com/AzyrRuthless/morphe-cli/commit/a0bea3d7d308d992a637fb13d1f7c62b20340f9d))
+* Update to latest patcher ([efd0cf1](https://github.com/AzyrRuthless/morphe-cli/commit/efd0cf16dbac6625a54e2f82881bbe16c9e8acce))
+* Update to latest Patcher ([fa1aa30](https://github.com/AzyrRuthless/morphe-cli/commit/fa1aa308c35fe752810b8123d1a0e2b917d1cf11))
+* Update to latest Patcher ([fbc6c9e](https://github.com/AzyrRuthless/morphe-cli/commit/fbc6c9e2dbab2db9b46f442feeec1a2df565114e))
+* Update to latest patcher dev ([496d8e9](https://github.com/AzyrRuthless/morphe-cli/commit/496d8e9d2d1e402f7246b6f3adb85c4c6c1865ca))
+* Update to latest patcher dev ([1356259](https://github.com/AzyrRuthless/morphe-cli/commit/135625917a54eb5e0a9464c40d0ce504619b4845))
+* Update to latest patcher dev ([fb8a4ff](https://github.com/AzyrRuthless/morphe-cli/commit/fb8a4ffe70ae24c74c497608b9eb9aa2d76f2a8a))
+* Update to latest patcher dev ([1551c8e](https://github.com/AzyrRuthless/morphe-cli/commit/1551c8ef81bd4d267833c1dc543d13c1d1def29f))
+* Update to Patcher 1.3.0 ([19c0846](https://github.com/AzyrRuthless/morphe-cli/commit/19c084612310cb590c90b809403450abf6a81560))
+* Update to Patcher 1.3.1 ([39bdd44](https://github.com/AzyrRuthless/morphe-cli/commit/39bdd44d13cf99b855d4e8501a47283f0681cbe7))
+* Update to Patcher 1.3.2 ([f4c00bb](https://github.com/AzyrRuthless/morphe-cli/commit/f4c00bbea80997c816f40f5dcf0a17f771d80b43))
+* Update to Patcher 1.3.3 ([ca579fb](https://github.com/AzyrRuthless/morphe-cli/commit/ca579fbc8afa32b98a77475ae4db0792d1165a3d))
+* Update to patcher 1.5.1 ([d7c5036](https://github.com/AzyrRuthless/morphe-cli/commit/d7c5036398867cd037a4d116d71b5162fc17d65a))
+* Use GitHub raw links for CLI update check ([#87](https://github.com/AzyrRuthless/morphe-cli/issues/87)) ([2aa6263](https://github.com/AzyrRuthless/morphe-cli/commit/2aa62637098fa52dcc79422116b91487aed5600a))
+* Use latest library dev release ([b60ea86](https://github.com/AzyrRuthless/morphe-cli/commit/b60ea86c72b8a62e2220b3a76dba01d47c494750))
+* use latest patcher ([d7e9b62](https://github.com/AzyrRuthless/morphe-cli/commit/d7e9b625ae0571f2bafa082a3716138a2d7e2e8e))
+* Use latest patcher and library dev release ([2f21880](https://github.com/AzyrRuthless/morphe-cli/commit/2f21880c49705b3e5153b7e636f01cf578d7b1c0))
+* Use latest patcher dev release ([ea6e231](https://github.com/AzyrRuthless/morphe-cli/commit/ea6e2313268a8111c8a21faf425bda1eda534f35))
+* Use latest patcher dev release ([2b33a6c](https://github.com/AzyrRuthless/morphe-cli/commit/2b33a6cc0523be29cb7dcd86990de7e0e08c0c87))
+* Use latest patcher dev release ([baf34de](https://github.com/AzyrRuthless/morphe-cli/commit/baf34de0857f1c94b044aedbac33485b51ab3f2c))
+* Use latest patcher dev release ([9cf07f9](https://github.com/AzyrRuthless/morphe-cli/commit/9cf07f922fb5129aeeee2de0a3e990fecadae4fb))
+* Use latest patcher dev release ([791257c](https://github.com/AzyrRuthless/morphe-cli/commit/791257c48983c1a006eca87abd458331141252f1))
+* Use latest patcher dev release ([7cc195a](https://github.com/AzyrRuthless/morphe-cli/commit/7cc195a59d37521751fcbe5f15d267b3efbeeb0a))
+* Use latest patcher dev release ([f8bd235](https://github.com/AzyrRuthless/morphe-cli/commit/f8bd2354438dd3a1e969610d43dca224e9d3ef63))
+* Use more logging verbosity when updating options.json ([#72](https://github.com/AzyrRuthless/morphe-cli/issues/72)) ([4d223f2](https://github.com/AzyrRuthless/morphe-cli/commit/4d223f299b690c100ff74ece7e4415f562c6ac96))
+* Use patcher implementation of strip libs ([#83](https://github.com/AzyrRuthless/morphe-cli/issues/83)) ([43f50ea](https://github.com/AzyrRuthless/morphe-cli/commit/43f50ea133088090648fa318047626f3166b8639)), closes [#80](https://github.com/AzyrRuthless/morphe-cli/issues/80) [#82](https://github.com/AzyrRuthless/morphe-cli/issues/82)
+* Use same default keystore values as Morphe Manager ([#96](https://github.com/AzyrRuthless/morphe-cli/issues/96)) ([2d70c01](https://github.com/AzyrRuthless/morphe-cli/commit/2d70c016f293ba382266fb5c800073f763d633d8))
 
 
 ### Features
 
-* Apply patches from multiple patch bundles, add GUI patch source selector  ([#145](https://github.com/AzyrRuthless/morphe-cli/issues/145)) ([d904c88](https://github.com/AzyrRuthless/morphe-cli/commit/d904c88e163fc34e437d216b2cf809f0cab24543))
+* "your apps" section + settings and tools split + re-orderable patch sources + block play store updates for patched apps ([#176](https://github.com/AzyrRuthless/morphe-cli/issues/176)) ([d865abd](https://github.com/AzyrRuthless/morphe-cli/commit/d865abdbbe2258cf24476add02a361b05f3fdf7e))
+* Add `--continue-on-error` argument, return non zero exit code if patching fails ([#47](https://github.com/AzyrRuthless/morphe-cli/issues/47)) ([255646b](https://github.com/AzyrRuthless/morphe-cli/commit/255646b250237087ab7d7f9733daa6751b7e4016))
+* Add `--include-experimental` flag to `list-patches` and `list-versions` ([#189](https://github.com/AzyrRuthless/morphe-cli/issues/189)) ([8ef916c](https://github.com/AzyrRuthless/morphe-cli/commit/8ef916cdaab28e51c244906341a32d9434126ccf))
+* Add `--options-file` json patch/option configuration ([#53](https://github.com/AzyrRuthless/morphe-cli/issues/53)) ([44943da](https://github.com/AzyrRuthless/morphe-cli/commit/44943da5f40f8ec37364d4f67b9d2e82d2b5e98f))
+* Add `--out` and `--patches` arguments to `list-patches` command ([#60](https://github.com/AzyrRuthless/morphe-cli/issues/60)) ([ef9fc48](https://github.com/AzyrRuthless/morphe-cli/commit/ef9fc482fcc6de2e51741b23ce12729991d6b36d))
+* Add `--striplibs` argument to strip unwanted architectures ([#46](https://github.com/AzyrRuthless/morphe-cli/issues/46)) ([7442d94](https://github.com/AzyrRuthless/morphe-cli/commit/7442d942d392b3e1e9ce959c30db8460bffee8d6))
+* Add ability to write patching results to JSON file ([#25](https://github.com/AzyrRuthless/morphe-cli/issues/25)) ([304b3ea](https://github.com/AzyrRuthless/morphe-cli/commit/304b3ea4a9ed266d4a02f290dfda24218f3b098a))
+* Add ARSCLib support ([#55](https://github.com/AzyrRuthless/morphe-cli/issues/55)) ([07c3f7e](https://github.com/AzyrRuthless/morphe-cli/commit/07c3f7ec50d52739ee2695f52c3c7182f2287ecf))
+* Add desktop GUI ([#42](https://github.com/AzyrRuthless/morphe-cli/issues/42)) ([cd627e6](https://github.com/AzyrRuthless/morphe-cli/commit/cd627e6a4320084403beacd414278b3b75f469da))
+* Add GUI third party patch sources, add experimental app patching ([#98](https://github.com/AzyrRuthless/morphe-cli/issues/98)) ([da5ec1c](https://github.com/AzyrRuthless/morphe-cli/commit/da5ec1c7e2165a35f8d42b88401a19a958ee25d4))
+* Add icon studio ([#211](https://github.com/AzyrRuthless/morphe-cli/issues/211)) ([16e5cb3](https://github.com/AzyrRuthless/morphe-cli/commit/16e5cb397e31b663a8f184f028e6c7cb7b57c580))
+* Add in-app dependency license viewer ([#114](https://github.com/AzyrRuthless/morphe-cli/issues/114)) ([77a1dde](https://github.com/AzyrRuthless/morphe-cli/commit/77a1ddea595dd83331c9d0ce246620ebd64bcd22))
+* Add ProGuard jar shrinking ([#227](https://github.com/AzyrRuthless/morphe-cli/issues/227)) ([0e6ae05](https://github.com/AzyrRuthless/morphe-cli/commit/0e6ae05523126132449488e80c5f7fcf920948fb))
+* Add search function to license viewer ([#124](https://github.com/AzyrRuthless/morphe-cli/issues/124)) ([d3d9feb](https://github.com/AzyrRuthless/morphe-cli/commit/d3d9feb477d5b5c3281e066efc7a935573a47090))
+* Add setting menu to save patched app crash logs to file ([#143](https://github.com/AzyrRuthless/morphe-cli/issues/143)) ([90836b5](https://github.com/AzyrRuthless/morphe-cli/commit/90836b5cedbd6d0642a819abde7c33901a7e81a1))
+* Apply patches from multiple patch bundles, add GUI patch source selector  ([#145](https://github.com/AzyrRuthless/morphe-cli/issues/145)) ([44ed6c6](https://github.com/AzyrRuthless/morphe-cli/commit/44ed6c6efe5d7f97624557056b2caca23278eebf))
+* Array GUI patches alphabetically, improve error logging, use separate class loader for multiple patch bundles ([#187](https://github.com/AzyrRuthless/morphe-cli/issues/187)) ([755909c](https://github.com/AzyrRuthless/morphe-cli/commit/755909ca2ab8735ffe99b3ad200a80316e6ec0c9))
+* cli ignores unknown keys (fix) + unify CLI/GUI patch cache + add clear-cache + make purge opt-out ([#192](https://github.com/AzyrRuthless/morphe-cli/issues/192)) ([70d16f0](https://github.com/AzyrRuthless/morphe-cli/commit/70d16f0e105f6362ee45e5e600c9ded01ab6c09e))
+* Custom output path + better GUI scrollbars ([#127](https://github.com/AzyrRuthless/morphe-cli/issues/127)) ([70e2721](https://github.com/AzyrRuthless/morphe-cli/commit/70e27218a87a09c26edc96fd7cb7c38dcba9c79c))
+* developer mode +  configurable data directory ([#220](https://github.com/AzyrRuthless/morphe-cli/issues/220)) ([a1ba3a2](https://github.com/AzyrRuthless/morphe-cli/commit/a1ba3a2f7e4d2793c0371fc77df2241bc8c828da))
+* dynamically download GUI dependencies to reduce jar size ([#232](https://github.com/AzyrRuthless/morphe-cli/issues/232)) ([d74a3c2](https://github.com/AzyrRuthless/morphe-cli/commit/d74a3c2eec569c620d98d3c1a28693a03f5c76f8))
+* Faster dex rebuilding + reduced memory requirements  ([#108](https://github.com/AzyrRuthless/morphe-cli/issues/108)) ([ed8918e](https://github.com/AzyrRuthless/morphe-cli/commit/ed8918eb8d26634f717e09b58aa174c1d1353a07))
+* Inform user if cli is outdated ([#81](https://github.com/AzyrRuthless/morphe-cli/issues/81)) ([5bcd4f7](https://github.com/AzyrRuthless/morphe-cli/commit/5bcd4f7c612ec3aad732e83ea131a019424b3bb8))
+* Patch sources follows latest (stable/dev) instead of to last used version ([#185](https://github.com/AzyrRuthless/morphe-cli/issues/185)) ([5d34993](https://github.com/AzyrRuthless/morphe-cli/commit/5d349931b283f62f617e7a1ceb10009cf2639a8e))
+* Rename project to "Morphe Desktop" ([#181](https://github.com/AzyrRuthless/morphe-cli/issues/181)) ([66a6de7](https://github.com/AzyrRuthless/morphe-cli/commit/66a6de7bb2d3cbc27c32de16b0ec138aaacc960e))
+* route links through patched app + uninstall from "Your Apps" section's cards ([#179](https://github.com/AzyrRuthless/morphe-cli/issues/179)) ([1626ce5](https://github.com/AzyrRuthless/morphe-cli/commit/1626ce5ffe3300de2299443ed9b7587ebd1cdcb6))
+* Support GitHub repo urls with `--patches` argument ([#71](https://github.com/AzyrRuthless/morphe-cli/issues/71)) ([2cc09a9](https://github.com/AzyrRuthless/morphe-cli/commit/2cc09a9fc6c61ddb210a023941b7cf528705d8cb))
+* Support patching APKM bundles ([#40](https://github.com/AzyrRuthless/morphe-cli/issues/40)) ([bfe43d0](https://github.com/AzyrRuthless/morphe-cli/commit/bfe43d0b747d0e336a3f36f048e85907a140f1fc))
+* UI improvements and fixes ([#128](https://github.com/AzyrRuthless/morphe-cli/issues/128)) ([980ebac](https://github.com/AzyrRuthless/morphe-cli/commit/980ebacceb073a00ea4b6b011550b73c94f9cc30))
+* Update to Morphe patcher / library 1.1.0 ([ef8e95d](https://github.com/AzyrRuthless/morphe-cli/commit/ef8e95debbcd29ecfed76b4a740d7c05ffa01709))
+* Update to Morphe patcher 1.1.1 ([6162983](https://github.com/AzyrRuthless/morphe-cli/commit/616298302dfa922226acf1135c0583a094dac5ea))
 
-# [1.7.0-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.6.1...v1.7.0-dev.1) (2026-05-30)
+## [1.13.2](https://github.com/MorpheApp/morphe-desktop/compare/v1.13.1...v1.13.2) (2026-08-22)
 
 
 ### Bug Fixes
 
-* Close adb when app closes ([#153](https://github.com/AzyrRuthless/morphe-cli/issues/153)) ([569253b](https://github.com/AzyrRuthless/morphe-cli/commit/569253bf20fd0a01017b1b1cad3cdec3a748b4db))
-* Multi patch source minor network times out ([#155](https://github.com/AzyrRuthless/morphe-cli/issues/155)) ([8a62b73](https://github.com/AzyrRuthless/morphe-cli/commit/8a62b731d00cd4b0dcdb75759faf79f7da98ada8))
+* Update to latest Patcher ([fa1aa30](https://github.com/MorpheApp/morphe-desktop/commit/fa1aa308c35fe752810b8123d1a0e2b917d1cf11))
+
+## [1.13.2-dev.1](https://github.com/MorpheApp/morphe-desktop/compare/v1.13.1...v1.13.2-dev.1) (2026-08-21)
+
+
+### Bug Fixes
+
+* Update to latest Patcher ([fa1aa30](https://github.com/MorpheApp/morphe-desktop/commit/fa1aa308c35fe752810b8123d1a0e2b917d1cf11))
+
+## [1.13.1](https://github.com/MorpheApp/morphe-desktop/compare/v1.13.0...v1.13.1) (2026-08-18)
+
+
+### Bug Fixes
+
+* Preserve manifest attributes in minimized jar ([#255](https://github.com/MorpheApp/morphe-desktop/issues/255)) ([e5684d9](https://github.com/MorpheApp/morphe-desktop/commit/e5684d99abf36b0b651708b81919ac2b0571b31c))
+* Update patcher dependency ([7ba5e1c](https://github.com/MorpheApp/morphe-desktop/commit/7ba5e1ca6fbda3e0a78cca978bff0c464bdd6256))
+
+## [1.13.1-dev.2](https://github.com/MorpheApp/morphe-desktop/compare/v1.13.1-dev.1...v1.13.1-dev.2) (2026-08-18)
+
+
+### Bug Fixes
+
+* Update patcher dependency ([7ba5e1c](https://github.com/MorpheApp/morphe-desktop/commit/7ba5e1ca6fbda3e0a78cca978bff0c464bdd6256))
+
+## [1.13.1-dev.1](https://github.com/MorpheApp/morphe-desktop/compare/v1.13.0...v1.13.1-dev.1) (2026-08-07)
+
+
+### Bug Fixes
+
+* Preserve manifest attributes in minimized jar ([#255](https://github.com/MorpheApp/morphe-desktop/issues/255)) ([e5684d9](https://github.com/MorpheApp/morphe-desktop/commit/e5684d99abf36b0b651708b81919ac2b0571b31c))
+
+# [1.13.0](https://github.com/MorpheApp/morphe-desktop/compare/v1.12.0...v1.13.0) (2026-08-06)
+
+
+### Bug Fixes
+
+* Add Enable-Native-Access attribute to jar manifest ([#249](https://github.com/MorpheApp/morphe-desktop/issues/249)) ([d70a4c2](https://github.com/MorpheApp/morphe-desktop/commit/d70a4c2d0de96088c0cb9c7d3a2d341c78e8247a))
+* Added progress bar to first time GUI download + Switched from materials icon to materials symbol + Cleaned up home screen code ([#234](https://github.com/MorpheApp/morphe-desktop/issues/234)) ([39e948e](https://github.com/MorpheApp/morphe-desktop/commit/39e948e750814707ac2a378f0c40f3751e373520))
+* Clean up obsolete GUI dependencies ([#233](https://github.com/MorpheApp/morphe-desktop/issues/233)) ([0d6816c](https://github.com/MorpheApp/morphe-desktop/commit/0d6816c6a031afd20a225444776fbc075118aa3b))
+* move both HTTP clients to OkHttp for parity with manager ([#254](https://github.com/MorpheApp/morphe-desktop/issues/254)) ([e8379be](https://github.com/MorpheApp/morphe-desktop/commit/e8379beee35350ad261282118d76ecb9201f2c9a))
+* Resilient patch bundle loading + quieter ADB logging + unique version output naming ([#224](https://github.com/MorpheApp/morphe-desktop/issues/224)) ([8cb5250](https://github.com/MorpheApp/morphe-desktop/commit/8cb5250ed1562b9882cef47497b7edd4c0f64d2d))
+* resolve deprecation warnings and fix `list-versions` accuracy ([#225](https://github.com/MorpheApp/morphe-desktop/issues/225)) ([9b79d69](https://github.com/MorpheApp/morphe-desktop/commit/9b79d69895f89760e465b63d0b9d9d23c8ba738f))
 
 
 ### Features
 
-* Apply patches from multiple patch bundles, add GUI patch source selector  ([#145](https://github.com/AzyrRuthless/morphe-cli/issues/145)) ([d904c88](https://github.com/AzyrRuthless/morphe-cli/commit/d904c88e163fc34e437d216b2cf809f0cab24543))
+* Add ProGuard jar shrinking ([#227](https://github.com/MorpheApp/morphe-desktop/issues/227)) ([0e6ae05](https://github.com/MorpheApp/morphe-desktop/commit/0e6ae05523126132449488e80c5f7fcf920948fb))
+* developer mode +  configurable data directory ([#220](https://github.com/MorpheApp/morphe-desktop/issues/220)) ([a1ba3a2](https://github.com/MorpheApp/morphe-desktop/commit/a1ba3a2f7e4d2793c0371fc77df2241bc8c828da))
+* dynamically download GUI dependencies to reduce jar size ([#232](https://github.com/MorpheApp/morphe-desktop/issues/232)) ([d74a3c2](https://github.com/MorpheApp/morphe-desktop/commit/d74a3c2eec569c620d98d3c1a28693a03f5c76f8))
 
-## [1.6.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.6.0...v1.6.1) (2026-05-13)
-
-
-### Bug Fixes
-
-* Update to latest patcher ([f023e71](https://github.com/AzyrRuthless/morphe-cli/commit/f023e714dee544bd43910d70a02f145161df881f))
-
-## [1.6.1-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.6.0...v1.6.1-dev.1) (2026-05-13)
+# [1.13.0-dev.9](https://github.com/MorpheApp/morphe-desktop/compare/v1.13.0-dev.8...v1.13.0-dev.9) (2026-08-05)
 
 
 ### Bug Fixes
 
-* Update to latest patcher ([f023e71](https://github.com/AzyrRuthless/morphe-cli/commit/f023e714dee544bd43910d70a02f145161df881f))
+* move both HTTP clients to OkHttp for parity with manager ([#254](https://github.com/MorpheApp/morphe-desktop/issues/254)) ([e8379be](https://github.com/MorpheApp/morphe-desktop/commit/e8379beee35350ad261282118d76ecb9201f2c9a))
 
-# [1.6.0](https://github.com/AzyrRuthless/morphe-cli/compare/v1.5.0...v1.6.0) (2026-05-08)
+# [1.13.0-dev.8](https://github.com/MorpheApp/morphe-desktop/compare/v1.13.0-dev.7...v1.13.0-dev.8) (2026-08-04)
 
 
 ### Bug Fixes
 
-* ARSCLib libraries are excluded during minimization ([0d823e0](https://github.com/AzyrRuthless/morphe-cli/commit/0d823e059b4021b04406c75ec73294a6c1e8c1d0))
-* ARSCLib libraries are not included in minimized fat jar ([8050555](https://github.com/AzyrRuthless/morphe-cli/commit/805055542eb47529b6b2753dcae498c4579f0459))
-* continue-on-error fix + force windows to `FULL` ([#120](https://github.com/AzyrRuthless/morphe-cli/issues/120)) ([ecba109](https://github.com/AzyrRuthless/morphe-cli/commit/ecba109ef15322b892c4a7a8d6da71e902702b62))
-* Include Notice and License files in shadow jar release ([#113](https://github.com/AzyrRuthless/morphe-cli/issues/113)) ([e65a37d](https://github.com/AzyrRuthless/morphe-cli/commit/e65a37d0e05ef97a1c60c4b61b185c0659cce12c))
-* Re-enable strip libs feature ([#117](https://github.com/AzyrRuthless/morphe-cli/issues/117)) ([517cd7d](https://github.com/AzyrRuthless/morphe-cli/commit/517cd7d2d469c2e11d73d3fb3699855cafdc3236))
-* Update to latest patcher ([2492c5d](https://github.com/AzyrRuthless/morphe-cli/commit/2492c5d37dfbb24ebbb05595d71ac9232bcd5826))
-* Update to patcher 1.5.1 ([2af0af4](https://github.com/AzyrRuthless/morphe-cli/commit/2af0af437cf0569bfabef09e27d3b3f2632b1992))
+* Added progress bar to first time GUI download + Switched from materials icon to materials symbol + Cleaned up home screen code ([#234](https://github.com/MorpheApp/morphe-desktop/issues/234)) ([39e948e](https://github.com/MorpheApp/morphe-desktop/commit/39e948e750814707ac2a378f0c40f3751e373520))
+
+# [1.13.0-dev.7](https://github.com/MorpheApp/morphe-desktop/compare/v1.13.0-dev.6...v1.13.0-dev.7) (2026-08-02)
+
+
+### Bug Fixes
+
+* Resilient patch bundle loading + quieter ADB logging + unique version output naming ([#224](https://github.com/MorpheApp/morphe-desktop/issues/224)) ([8cb5250](https://github.com/MorpheApp/morphe-desktop/commit/8cb5250ed1562b9882cef47497b7edd4c0f64d2d))
+
+# [1.13.0-dev.6](https://github.com/MorpheApp/morphe-desktop/compare/v1.13.0-dev.5...v1.13.0-dev.6) (2026-08-02)
 
 
 ### Features
 
-* Add in-app dependency license viewer ([#114](https://github.com/AzyrRuthless/morphe-cli/issues/114)) ([5899161](https://github.com/AzyrRuthless/morphe-cli/commit/5899161176a5b573f485071b9edb777670e330b5))
-* Add search function to license viewer ([#124](https://github.com/AzyrRuthless/morphe-cli/issues/124)) ([72a9fae](https://github.com/AzyrRuthless/morphe-cli/commit/72a9fae92dfa22005ce9215fbf3a9c4759a23258))
-* Custom output path + better GUI scrollbars ([#127](https://github.com/AzyrRuthless/morphe-cli/issues/127)) ([b90c144](https://github.com/AzyrRuthless/morphe-cli/commit/b90c144b0c7fc72abfc3a135c8dc6b29bcda67dc))
-* Faster dex rebuilding + reduced memory requirements  ([#108](https://github.com/AzyrRuthless/morphe-cli/issues/108)) ([e7467ab](https://github.com/AzyrRuthless/morphe-cli/commit/e7467abeaca6eab4c3c0d6bade4949deadcc35d7))
-* Support GitHub repo urls with `--patches` argument ([#71](https://github.com/AzyrRuthless/morphe-cli/issues/71)) ([1429d72](https://github.com/AzyrRuthless/morphe-cli/commit/1429d72e22dbbbceed85771904059ae1796691bb))
-* UI improvements and fixes ([#128](https://github.com/AzyrRuthless/morphe-cli/issues/128)) ([ddbae19](https://github.com/AzyrRuthless/morphe-cli/commit/ddbae199947c2b59727d42a4005996a50353c286))
+* developer mode +  configurable data directory ([#220](https://github.com/MorpheApp/morphe-desktop/issues/220)) ([a1ba3a2](https://github.com/MorpheApp/morphe-desktop/commit/a1ba3a2f7e4d2793c0371fc77df2241bc8c828da))
 
-# [1.6.0-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.5.0...v1.6.0-dev.1) (2026-05-08)
+# [1.13.0-dev.5](https://github.com/MorpheApp/morphe-desktop/compare/v1.13.0-dev.4...v1.13.0-dev.5) (2026-08-02)
 
 
 ### Bug Fixes
 
-* ARSCLib libraries are excluded during minimization ([0d823e0](https://github.com/AzyrRuthless/morphe-cli/commit/0d823e059b4021b04406c75ec73294a6c1e8c1d0))
-* ARSCLib libraries are not included in minimized fat jar ([8050555](https://github.com/AzyrRuthless/morphe-cli/commit/805055542eb47529b6b2753dcae498c4579f0459))
-* continue-on-error fix + force windows to `FULL` ([#120](https://github.com/AzyrRuthless/morphe-cli/issues/120)) ([ecba109](https://github.com/AzyrRuthless/morphe-cli/commit/ecba109ef15322b892c4a7a8d6da71e902702b62))
-* Include Notice and License files in shadow jar release ([#113](https://github.com/AzyrRuthless/morphe-cli/issues/113)) ([e65a37d](https://github.com/AzyrRuthless/morphe-cli/commit/e65a37d0e05ef97a1c60c4b61b185c0659cce12c))
-* Re-enable strip libs feature ([#117](https://github.com/AzyrRuthless/morphe-cli/issues/117)) ([517cd7d](https://github.com/AzyrRuthless/morphe-cli/commit/517cd7d2d469c2e11d73d3fb3699855cafdc3236))
-* Update to latest patcher ([2492c5d](https://github.com/AzyrRuthless/morphe-cli/commit/2492c5d37dfbb24ebbb05595d71ac9232bcd5826))
-* Update to patcher 1.5.1 ([2af0af4](https://github.com/AzyrRuthless/morphe-cli/commit/2af0af437cf0569bfabef09e27d3b3f2632b1992))
+* Add Enable-Native-Access attribute to jar manifest ([#249](https://github.com/MorpheApp/morphe-desktop/issues/249)) ([d70a4c2](https://github.com/MorpheApp/morphe-desktop/commit/d70a4c2d0de96088c0cb9c7d3a2d341c78e8247a))
+
+# [1.13.0-dev.4](https://github.com/MorpheApp/morphe-desktop/compare/v1.13.0-dev.3...v1.13.0-dev.4) (2026-07-29)
+
+
+### Bug Fixes
+
+* Clean up obsolete GUI dependencies ([#233](https://github.com/MorpheApp/morphe-desktop/issues/233)) ([0d6816c](https://github.com/MorpheApp/morphe-desktop/commit/0d6816c6a031afd20a225444776fbc075118aa3b))
+
+# [1.13.0-dev.3](https://github.com/MorpheApp/morphe-desktop/compare/v1.13.0-dev.2...v1.13.0-dev.3) (2026-07-29)
 
 
 ### Features
 
-* Add in-app dependency license viewer ([#114](https://github.com/AzyrRuthless/morphe-cli/issues/114)) ([5899161](https://github.com/AzyrRuthless/morphe-cli/commit/5899161176a5b573f485071b9edb777670e330b5))
-* Add search function to license viewer ([#124](https://github.com/AzyrRuthless/morphe-cli/issues/124)) ([72a9fae](https://github.com/AzyrRuthless/morphe-cli/commit/72a9fae92dfa22005ce9215fbf3a9c4759a23258))
-* Custom output path + better GUI scrollbars ([#127](https://github.com/AzyrRuthless/morphe-cli/issues/127)) ([b90c144](https://github.com/AzyrRuthless/morphe-cli/commit/b90c144b0c7fc72abfc3a135c8dc6b29bcda67dc))
-* Faster dex rebuilding + reduced memory requirements  ([#108](https://github.com/AzyrRuthless/morphe-cli/issues/108)) ([e7467ab](https://github.com/AzyrRuthless/morphe-cli/commit/e7467abeaca6eab4c3c0d6bade4949deadcc35d7))
-* Support GitHub repo urls with `--patches` argument ([#71](https://github.com/AzyrRuthless/morphe-cli/issues/71)) ([1429d72](https://github.com/AzyrRuthless/morphe-cli/commit/1429d72e22dbbbceed85771904059ae1796691bb))
-* UI improvements and fixes ([#128](https://github.com/AzyrRuthless/morphe-cli/issues/128)) ([ddbae19](https://github.com/AzyrRuthless/morphe-cli/commit/ddbae199947c2b59727d42a4005996a50353c286))
+* dynamically download GUI dependencies to reduce jar size ([#232](https://github.com/MorpheApp/morphe-desktop/issues/232)) ([d74a3c2](https://github.com/MorpheApp/morphe-desktop/commit/d74a3c2eec569c620d98d3c1a28693a03f5c76f8))
 
-# [1.5.0](https://github.com/AzyrRuthless/morphe-cli/compare/v1.4.1...v1.5.0) (2026-04-22)
+# [1.13.0-dev.2](https://github.com/MorpheApp/morphe-desktop/compare/v1.13.0-dev.1...v1.13.0-dev.2) (2026-07-29)
 
 
 ### Bug Fixes
 
-* Use patcher implementation of strip libs ([#83](https://github.com/AzyrRuthless/morphe-cli/issues/83)) ([206fd70](https://github.com/AzyrRuthless/morphe-cli/commit/206fd70bddd9cc99f519c572e43fcd57c198438f)), closes [#80](https://github.com/AzyrRuthless/morphe-cli/issues/80) [#82](https://github.com/AzyrRuthless/morphe-cli/issues/82)
-* Use same default keystore values as Morphe Manager ([#96](https://github.com/AzyrRuthless/morphe-cli/issues/96)) ([0603a6d](https://github.com/AzyrRuthless/morphe-cli/commit/0603a6d387300b5b6d6c687cf397d770290b7a6b))
+* resolve deprecation warnings and fix `list-versions` accuracy ([#225](https://github.com/MorpheApp/morphe-desktop/issues/225)) ([9b79d69](https://github.com/MorpheApp/morphe-desktop/commit/9b79d69895f89760e465b63d0b9d9d23c8ba738f))
+
+# [1.13.0-dev.1](https://github.com/MorpheApp/morphe-desktop/compare/v1.12.0...v1.13.0-dev.1) (2026-07-27)
 
 
 ### Features
 
-* Add GUI third party patch sources, add experimental app patching ([#98](https://github.com/AzyrRuthless/morphe-cli/issues/98)) ([a611751](https://github.com/AzyrRuthless/morphe-cli/commit/a611751c612810f591271f1c5e33c8e25bd2b346))
+* Add ProGuard jar shrinking ([#227](https://github.com/MorpheApp/morphe-desktop/issues/227)) ([0e6ae05](https://github.com/MorpheApp/morphe-desktop/commit/0e6ae05523126132449488e80c5f7fcf920948fb))
 
-# [1.5.0-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.4.1...v1.5.0-dev.1) (2026-04-22)
-
-
-### Bug Fixes
-
-* Use patcher implementation of strip libs ([#83](https://github.com/AzyrRuthless/morphe-cli/issues/83)) ([206fd70](https://github.com/AzyrRuthless/morphe-cli/commit/206fd70bddd9cc99f519c572e43fcd57c198438f)), closes [#80](https://github.com/AzyrRuthless/morphe-cli/issues/80) [#82](https://github.com/AzyrRuthless/morphe-cli/issues/82)
-* Use same default keystore values as Morphe Manager ([#96](https://github.com/AzyrRuthless/morphe-cli/issues/96)) ([0603a6d](https://github.com/AzyrRuthless/morphe-cli/commit/0603a6d387300b5b6d6c687cf397d770290b7a6b))
+# [1.12.0](https://github.com/MorpheApp/morphe-desktop/compare/v1.11.0...v1.12.0) (2026-07-23)
 
 
 ### Features
 
-* Add GUI third party patch sources, add experimental app patching ([#98](https://github.com/AzyrRuthless/morphe-cli/issues/98)) ([a611751](https://github.com/AzyrRuthless/morphe-cli/commit/a611751c612810f591271f1c5e33c8e25bd2b346))
+* Add icon studio ([#211](https://github.com/MorpheApp/morphe-desktop/issues/211)) ([16e5cb3](https://github.com/MorpheApp/morphe-desktop/commit/16e5cb397e31b663a8f184f028e6c7cb7b57c580))
 
-## [1.4.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.4.0...v1.4.1) (2026-03-29)
-
-
-### Bug Fixes
-
-* Handle patching XAPK files ([#93](https://github.com/AzyrRuthless/morphe-cli/issues/93)) ([1dc7cfe](https://github.com/AzyrRuthless/morphe-cli/commit/1dc7cfe926deb45169e8f61608868428e80b8d08))
-* Handle running CLI in headless environment ([#95](https://github.com/AzyrRuthless/morphe-cli/issues/95)) ([1e30218](https://github.com/AzyrRuthless/morphe-cli/commit/1e30218ab28ba477fb8535b2d88d95fad90b1fb4))
-* Update to latest Patcher ([2414325](https://github.com/AzyrRuthless/morphe-cli/commit/241432513e546ee7e865a9e3379d8fb5c667fdcb))
-* Update to Patcher 1.3.3 ([ad7a0a0](https://github.com/AzyrRuthless/morphe-cli/commit/ad7a0a0312244e2d7e12ebec2c34c17b88887d2e))
-
-## [1.4.1-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.4.0...v1.4.1-dev.1) (2026-03-29)
-
-
-### Bug Fixes
-
-* Handle patching XAPK files ([#93](https://github.com/AzyrRuthless/morphe-cli/issues/93)) ([1dc7cfe](https://github.com/AzyrRuthless/morphe-cli/commit/1dc7cfe926deb45169e8f61608868428e80b8d08))
-* Handle running CLI in headless environment ([#95](https://github.com/AzyrRuthless/morphe-cli/issues/95)) ([1e30218](https://github.com/AzyrRuthless/morphe-cli/commit/1e30218ab28ba477fb8535b2d88d95fad90b1fb4))
-* Update to latest Patcher ([2414325](https://github.com/AzyrRuthless/morphe-cli/commit/241432513e546ee7e865a9e3379d8fb5c667fdcb))
-* Update to Patcher 1.3.3 ([ad7a0a0](https://github.com/AzyrRuthless/morphe-cli/commit/ad7a0a0312244e2d7e12ebec2c34c17b88887d2e))
-
-# [1.4.0](https://github.com/AzyrRuthless/morphe-cli/compare/v1.3.0...v1.4.0) (2026-03-24)
-
-
-### Bug Fixes
-
-* Bump arsclib version, remove APKEditor ([7db96f0](https://github.com/AzyrRuthless/morphe-cli/commit/7db96f090f4df1200a1bae9b4d4df4b0e8c2fc14))
-* Dispatch error when launching app ([#79](https://github.com/AzyrRuthless/morphe-cli/issues/79)) ([5a18f49](https://github.com/AzyrRuthless/morphe-cli/commit/5a18f49b939147a19ff2d8c25fda43407923a5f6))
-* Update to latest patcher dev ([0e0ccf0](https://github.com/AzyrRuthless/morphe-cli/commit/0e0ccf0c4ee24210174e2caf7026c6cae2414fd4))
-* Update to latest patcher dev ([df1b416](https://github.com/AzyrRuthless/morphe-cli/commit/df1b416db7dfefc86fa3f6cc1597dac489cc4c04))
-* Update to latest patcher dev ([0d6d9d8](https://github.com/AzyrRuthless/morphe-cli/commit/0d6d9d865fd3123bf6f597118c393a804318b66f))
-* Update to latest patcher dev ([e2bd02e](https://github.com/AzyrRuthless/morphe-cli/commit/e2bd02eebfc8500a936dff62dcea9e8dcd6da8e3))
-* Update to Patcher 1.3.0 ([42a0042](https://github.com/AzyrRuthless/morphe-cli/commit/42a00428b6cf6facfd0240ef37cd4c9c5678a1c5))
-* Update to Patcher 1.3.1 ([a808bf1](https://github.com/AzyrRuthless/morphe-cli/commit/a808bf1e2bfcbc10e2519c5f3f9111ca08e52202))
-* Update to Patcher 1.3.2 ([d935ad9](https://github.com/AzyrRuthless/morphe-cli/commit/d935ad9cdad78781618aa9429f5a379df035c6ce))
-* Use GitHub raw links for CLI update check ([#87](https://github.com/AzyrRuthless/morphe-cli/issues/87)) ([afd0cc3](https://github.com/AzyrRuthless/morphe-cli/commit/afd0cc3e2817049a3b05fb7ffa89b578289099b0))
-* Use more logging verbosity when updating options.json ([#72](https://github.com/AzyrRuthless/morphe-cli/issues/72)) ([bb00a53](https://github.com/AzyrRuthless/morphe-cli/commit/bb00a53c94188f6daff5b4f118fcc93b9ca5b238))
+# [1.12.0-dev.1](https://github.com/MorpheApp/morphe-desktop/compare/v1.11.0...v1.12.0-dev.1) (2026-07-18)
 
 
 ### Features
 
-* Add desktop GUI ([#42](https://github.com/AzyrRuthless/morphe-cli/issues/42)) ([4e33491](https://github.com/AzyrRuthless/morphe-cli/commit/4e334918514109910d237bf65ff1c5b3c3b2c6e6))
-* Inform user if cli is outdated ([#81](https://github.com/AzyrRuthless/morphe-cli/issues/81)) ([093e068](https://github.com/AzyrRuthless/morphe-cli/commit/093e0681669edee5b266b9a3fdcd8ad9aa55f65a))
+* Add icon studio ([#211](https://github.com/MorpheApp/morphe-desktop/issues/211)) ([16e5cb3](https://github.com/MorpheApp/morphe-desktop/commit/16e5cb397e31b663a8f184f028e6c7cb7b57c580))
 
-# [1.4.0-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.3.0...v1.4.0-dev.1) (2026-03-24)
-
-
-### Bug Fixes
-
-* Bump arsclib version, remove APKEditor ([7db96f0](https://github.com/AzyrRuthless/morphe-cli/commit/7db96f090f4df1200a1bae9b4d4df4b0e8c2fc14))
-* Dispatch error when launching app ([#79](https://github.com/AzyrRuthless/morphe-cli/issues/79)) ([5a18f49](https://github.com/AzyrRuthless/morphe-cli/commit/5a18f49b939147a19ff2d8c25fda43407923a5f6))
-* Update to latest patcher dev ([0e0ccf0](https://github.com/AzyrRuthless/morphe-cli/commit/0e0ccf0c4ee24210174e2caf7026c6cae2414fd4))
-* Update to latest patcher dev ([df1b416](https://github.com/AzyrRuthless/morphe-cli/commit/df1b416db7dfefc86fa3f6cc1597dac489cc4c04))
-* Update to latest patcher dev ([0d6d9d8](https://github.com/AzyrRuthless/morphe-cli/commit/0d6d9d865fd3123bf6f597118c393a804318b66f))
-* Update to latest patcher dev ([e2bd02e](https://github.com/AzyrRuthless/morphe-cli/commit/e2bd02eebfc8500a936dff62dcea9e8dcd6da8e3))
-* Update to Patcher 1.3.0 ([42a0042](https://github.com/AzyrRuthless/morphe-cli/commit/42a00428b6cf6facfd0240ef37cd4c9c5678a1c5))
-* Update to Patcher 1.3.1 ([a808bf1](https://github.com/AzyrRuthless/morphe-cli/commit/a808bf1e2bfcbc10e2519c5f3f9111ca08e52202))
-* Update to Patcher 1.3.2 ([d935ad9](https://github.com/AzyrRuthless/morphe-cli/commit/d935ad9cdad78781618aa9429f5a379df035c6ce))
-* Use GitHub raw links for CLI update check ([#87](https://github.com/AzyrRuthless/morphe-cli/issues/87)) ([afd0cc3](https://github.com/AzyrRuthless/morphe-cli/commit/afd0cc3e2817049a3b05fb7ffa89b578289099b0))
-* Use more logging verbosity when updating options.json ([#72](https://github.com/AzyrRuthless/morphe-cli/issues/72)) ([bb00a53](https://github.com/AzyrRuthless/morphe-cli/commit/bb00a53c94188f6daff5b4f118fcc93b9ca5b238))
+# [1.11.0](https://github.com/MorpheApp/morphe-desktop/compare/v1.10.0...v1.11.0) (2026-07-14)
 
 
 ### Features
 
-* Add desktop GUI ([#42](https://github.com/AzyrRuthless/morphe-cli/issues/42)) ([4e33491](https://github.com/AzyrRuthless/morphe-cli/commit/4e334918514109910d237bf65ff1c5b3c3b2c6e6))
-* Inform user if cli is outdated ([#81](https://github.com/AzyrRuthless/morphe-cli/issues/81)) ([093e068](https://github.com/AzyrRuthless/morphe-cli/commit/093e0681669edee5b266b9a3fdcd8ad9aa55f65a))
+* Rename project to "Morphe Desktop" ([#181](https://github.com/MorpheApp/morphe-desktop/issues/181)) ([66a6de7](https://github.com/MorpheApp/morphe-desktop/commit/66a6de7bb2d3cbc27c32de16b0ec138aaacc960e))
 
-# [1.3.0](https://github.com/AzyrRuthless/morphe-cli/compare/v1.2.0...v1.3.0) (2026-03-12)
-
-
-### Bug Fixes
-
-* Use latest library dev release ([20059fc](https://github.com/AzyrRuthless/morphe-cli/commit/20059fc76faee5430fe4a910575c91564eddc3a8))
-* Use latest patcher and library dev release ([272cb9d](https://github.com/AzyrRuthless/morphe-cli/commit/272cb9dbbcf66623fea36746353eb5bbaffc7479))
-* Use latest patcher dev release ([73b5a38](https://github.com/AzyrRuthless/morphe-cli/commit/73b5a38c40c325856215abdde2e9917f7be22a4b))
-* Use latest patcher dev release ([e6d61bd](https://github.com/AzyrRuthless/morphe-cli/commit/e6d61bd8d0787e274bf7ab1cd9ebd2942836a70b))
-* Use latest patcher dev release ([79f21bc](https://github.com/AzyrRuthless/morphe-cli/commit/79f21bc48b36f4c41f3ef48509d70beae26245ea))
-* Use latest patcher dev release ([1b9edb1](https://github.com/AzyrRuthless/morphe-cli/commit/1b9edb19708d5c8435515fd4a29be0c2d7e7e79e))
-* Use latest patcher dev release ([b8ef8e5](https://github.com/AzyrRuthless/morphe-cli/commit/b8ef8e52021291bfe738e46fac5e81d1ded24a0b))
-* Use latest patcher dev release ([3fc4d4f](https://github.com/AzyrRuthless/morphe-cli/commit/3fc4d4ff0c306a5a7b8611d3a86f08d51968747c))
-* Use latest patcher dev release ([088979d](https://github.com/AzyrRuthless/morphe-cli/commit/088979d163e963b1802d4864aa5325e0a30176aa))
+# [1.11.0-dev.1](https://github.com/MorpheApp/morphe-desktop/compare/v1.10.0...v1.11.0-dev.1) (2026-07-14)
 
 
 ### Features
 
-* Add `--out` and `--patches` arguments to `list-patches` command ([#60](https://github.com/AzyrRuthless/morphe-cli/issues/60)) ([c4c1877](https://github.com/AzyrRuthless/morphe-cli/commit/c4c18777ccbc4201c98df187e57bb9ad822f37e2))
-* Add ARSCLib support ([#55](https://github.com/AzyrRuthless/morphe-cli/issues/55)) ([343985d](https://github.com/AzyrRuthless/morphe-cli/commit/343985da95dd12c08bdf0803c4983eea5dde19e2))
+* Rename project to "Morphe Desktop" ([#181](https://github.com/MorpheApp/morphe-desktop/issues/181)) ([66a6de7](https://github.com/MorpheApp/morphe-desktop/commit/66a6de7bb2d3cbc27c32de16b0ec138aaacc960e))
 
-# [1.3.0-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.2.0...v1.3.0-dev.1) (2026-03-12)
-
-
-### Bug Fixes
-
-* Use latest library dev release ([20059fc](https://github.com/AzyrRuthless/morphe-cli/commit/20059fc76faee5430fe4a910575c91564eddc3a8))
-* Use latest patcher and library dev release ([272cb9d](https://github.com/AzyrRuthless/morphe-cli/commit/272cb9dbbcf66623fea36746353eb5bbaffc7479))
-* Use latest patcher dev release ([73b5a38](https://github.com/AzyrRuthless/morphe-cli/commit/73b5a38c40c325856215abdde2e9917f7be22a4b))
-* Use latest patcher dev release ([e6d61bd](https://github.com/AzyrRuthless/morphe-cli/commit/e6d61bd8d0787e274bf7ab1cd9ebd2942836a70b))
-* Use latest patcher dev release ([79f21bc](https://github.com/AzyrRuthless/morphe-cli/commit/79f21bc48b36f4c41f3ef48509d70beae26245ea))
-* Use latest patcher dev release ([1b9edb1](https://github.com/AzyrRuthless/morphe-cli/commit/1b9edb19708d5c8435515fd4a29be0c2d7e7e79e))
-* Use latest patcher dev release ([b8ef8e5](https://github.com/AzyrRuthless/morphe-cli/commit/b8ef8e52021291bfe738e46fac5e81d1ded24a0b))
-* Use latest patcher dev release ([3fc4d4f](https://github.com/AzyrRuthless/morphe-cli/commit/3fc4d4ff0c306a5a7b8611d3a86f08d51968747c))
-* Use latest patcher dev release ([088979d](https://github.com/AzyrRuthless/morphe-cli/commit/088979d163e963b1802d4864aa5325e0a30176aa))
-
-
-### Features
-
-* Add `--out` and `--patches` arguments to `list-patches` command ([#60](https://github.com/AzyrRuthless/morphe-cli/issues/60)) ([c4c1877](https://github.com/AzyrRuthless/morphe-cli/commit/c4c18777ccbc4201c98df187e57bb9ad822f37e2))
-* Add ARSCLib support ([#55](https://github.com/AzyrRuthless/morphe-cli/issues/55)) ([343985d](https://github.com/AzyrRuthless/morphe-cli/commit/343985da95dd12c08bdf0803c4983eea5dde19e2))
-
-# [1.2.0](https://github.com/AzyrRuthless/morphe-cli/compare/v1.1.1...v1.2.0) (2026-03-06)
+# [1.10.0](https://github.com/MorpheApp/morphe-cli/compare/v1.9.1...v1.10.0) (2026-07-14)
 
 
 ### Bug Fixes
 
-* Allow enabling/disabling patches using case insensitive patch names ([#48](https://github.com/AzyrRuthless/morphe-cli/issues/48)) ([4c92751](https://github.com/AzyrRuthless/morphe-cli/commit/4c92751e1a698452c9220814ed9245a5e1a185ca))
-* Do not log patch name more than once if disabled ([#49](https://github.com/AzyrRuthless/morphe-cli/issues/49)) ([f88586b](https://github.com/AzyrRuthless/morphe-cli/commit/f88586b620ea31cb3114983a7f7d570f5300a310))
+* Allow patches with empty targets to apply automatically ([#207](https://github.com/MorpheApp/morphe-cli/issues/207)) ([5a07bf7](https://github.com/MorpheApp/morphe-cli/commit/5a07bf7d6fe34d42e2dd1b95e601386e6e214f83))
+* CLI --purge command does not cleanup temp APK ([#169](https://github.com/MorpheApp/morphe-cli/issues/169)) ([6163e9c](https://github.com/MorpheApp/morphe-cli/commit/6163e9c29070e5013274792437d05f8ed2c20853))
+* fix patch repo rate limiting by switching to raw links + stream downloads to disk ([#214](https://github.com/MorpheApp/morphe-cli/issues/214)) ([e21646c](https://github.com/MorpheApp/morphe-cli/commit/e21646cb4e184ca8a5efb9ecc3ea2b280f2a1cc7))
+* Handle GUI patching xapk / apks, add distinct patch-source channel colors, improve patch loading errors ([#180](https://github.com/MorpheApp/morphe-cli/issues/180)) ([d8245f0](https://github.com/MorpheApp/morphe-cli/commit/d8245f081b507cac74b06e16120e4271ce0e1f96))
+* Update to latest patcher ([2c89128](https://github.com/MorpheApp/morphe-cli/commit/2c891284460762e15115f21c83036ac544549372))
+* use latest patcher ([d7e9b62](https://github.com/MorpheApp/morphe-cli/commit/d7e9b625ae0571f2bafa082a3716138a2d7e2e8e))
 
 
 ### Features
 
-* Add `--continue-on-error` argument, return non zero exit code if patching fails ([#47](https://github.com/AzyrRuthless/morphe-cli/issues/47)) ([22d72c9](https://github.com/AzyrRuthless/morphe-cli/commit/22d72c909b8cca113390ba2d4cff9227271a1b69))
-* Add `--options-file` json patch/option configuration ([#53](https://github.com/AzyrRuthless/morphe-cli/issues/53)) ([5ca8afc](https://github.com/AzyrRuthless/morphe-cli/commit/5ca8afc65af1c3cb10c4eb69783178bc7d7afbd8))
-* Add `--striplibs` argument to strip unwanted architectures ([#46](https://github.com/AzyrRuthless/morphe-cli/issues/46)) ([cd902a6](https://github.com/AzyrRuthless/morphe-cli/commit/cd902a621f70fb1d81c89a5a7999459a0aa51c03))
-* Support patching APKM bundles ([#40](https://github.com/AzyrRuthless/morphe-cli/issues/40)) ([daffad5](https://github.com/AzyrRuthless/morphe-cli/commit/daffad531c6f0b61c1f07be053306d101d46f7c3))
+* "your apps" section + settings and tools split + re-orderable patch sources + block play store updates for patched apps ([#176](https://github.com/MorpheApp/morphe-cli/issues/176)) ([d865abd](https://github.com/MorpheApp/morphe-cli/commit/d865abdbbe2258cf24476add02a361b05f3fdf7e))
+* Add `--include-experimental` flag to `list-patches` and `list-versions` ([#189](https://github.com/MorpheApp/morphe-cli/issues/189)) ([8ef916c](https://github.com/MorpheApp/morphe-cli/commit/8ef916cdaab28e51c244906341a32d9434126ccf))
+* Array GUI patches alphabetically, improve error logging, use separate class loader for multiple patch bundles ([#187](https://github.com/MorpheApp/morphe-cli/issues/187)) ([755909c](https://github.com/MorpheApp/morphe-cli/commit/755909ca2ab8735ffe99b3ad200a80316e6ec0c9))
+* cli ignores unknown keys (fix) + unify CLI/GUI patch cache + add clear-cache + make purge opt-out ([#192](https://github.com/MorpheApp/morphe-cli/issues/192)) ([70d16f0](https://github.com/MorpheApp/morphe-cli/commit/70d16f0e105f6362ee45e5e600c9ded01ab6c09e))
+* Patch sources follows latest (stable/dev) instead of to last used version ([#185](https://github.com/MorpheApp/morphe-cli/issues/185)) ([5d34993](https://github.com/MorpheApp/morphe-cli/commit/5d349931b283f62f617e7a1ceb10009cf2639a8e))
+* route links through patched app + uninstall from "Your Apps" section's cards ([#179](https://github.com/MorpheApp/morphe-cli/issues/179)) ([1626ce5](https://github.com/MorpheApp/morphe-cli/commit/1626ce5ffe3300de2299443ed9b7587ebd1cdcb6))
 
-# [1.2.0-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.1.1...v1.2.0-dev.1) (2026-03-06)
+# [1.10.0-dev.11](https://github.com/MorpheApp/morphe-cli/compare/v1.10.0-dev.10...v1.10.0-dev.11) (2026-07-13)
 
 
 ### Bug Fixes
 
-* Allow enabling/disabling patches using case insensitive patch names ([#48](https://github.com/AzyrRuthless/morphe-cli/issues/48)) ([4c92751](https://github.com/AzyrRuthless/morphe-cli/commit/4c92751e1a698452c9220814ed9245a5e1a185ca))
-* Do not log patch name more than once if disabled ([#49](https://github.com/AzyrRuthless/morphe-cli/issues/49)) ([f88586b](https://github.com/AzyrRuthless/morphe-cli/commit/f88586b620ea31cb3114983a7f7d570f5300a310))
+* fix patch repo rate limiting by switching to raw links + stream downloads to disk ([#214](https://github.com/MorpheApp/morphe-cli/issues/214)) ([e21646c](https://github.com/MorpheApp/morphe-cli/commit/e21646cb4e184ca8a5efb9ecc3ea2b280f2a1cc7))
 
-
-### Features
-
-* Add `--continue-on-error` argument, return non zero exit code if patching fails ([#47](https://github.com/AzyrRuthless/morphe-cli/issues/47)) ([22d72c9](https://github.com/AzyrRuthless/morphe-cli/commit/22d72c909b8cca113390ba2d4cff9227271a1b69))
-* Add `--options-file` json patch/option configuration ([#53](https://github.com/AzyrRuthless/morphe-cli/issues/53)) ([5ca8afc](https://github.com/AzyrRuthless/morphe-cli/commit/5ca8afc65af1c3cb10c4eb69783178bc7d7afbd8))
-* Add `--striplibs` argument to strip unwanted architectures ([#46](https://github.com/AzyrRuthless/morphe-cli/issues/46)) ([cd902a6](https://github.com/AzyrRuthless/morphe-cli/commit/cd902a621f70fb1d81c89a5a7999459a0aa51c03))
-* Support patching APKM bundles ([#40](https://github.com/AzyrRuthless/morphe-cli/issues/40)) ([daffad5](https://github.com/AzyrRuthless/morphe-cli/commit/daffad531c6f0b61c1f07be053306d101d46f7c3))
-
-## [1.1.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.1.0...v1.1.1) (2026-02-06)
+# [1.10.0-dev.10](https://github.com/MorpheApp/morphe-cli/compare/v1.10.0-dev.9...v1.10.0-dev.10) (2026-07-09)
 
 
 ### Bug Fixes
 
-* **cli:** skip zipalign when unsigned flag is set ([68259ea](https://github.com/AzyrRuthless/morphe-cli/commit/68259ea1116bcaa4fa5213144a8f59ebe59e595b))
+* use latest patcher ([d7e9b62](https://github.com/MorpheApp/morphe-cli/commit/d7e9b625ae0571f2bafa082a3716138a2d7e2e8e))
 
-## [1.1.1-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.1.0...v1.1.1-dev.1) (2026-02-06)
+# [1.10.0-dev.9](https://github.com/MorpheApp/morphe-cli/compare/v1.10.0-dev.8...v1.10.0-dev.9) (2026-07-02)
+
+
+### Features
+
+* cli ignores unknown keys (fix) + unify CLI/GUI patch cache + add clear-cache + make purge opt-out ([#192](https://github.com/MorpheApp/morphe-cli/issues/192)) ([70d16f0](https://github.com/MorpheApp/morphe-cli/commit/70d16f0e105f6362ee45e5e600c9ded01ab6c09e))
+
+# [1.10.0-dev.8](https://github.com/MorpheApp/morphe-cli/compare/v1.10.0-dev.7...v1.10.0-dev.8) (2026-07-02)
 
 
 ### Bug Fixes
 
-* **cli:** skip zipalign when unsigned flag is set ([68259ea](https://github.com/AzyrRuthless/morphe-cli/commit/68259ea1116bcaa4fa5213144a8f59ebe59e595b))
+* Allow patches with empty targets to apply automatically ([#207](https://github.com/MorpheApp/morphe-cli/issues/207)) ([5a07bf7](https://github.com/MorpheApp/morphe-cli/commit/5a07bf7d6fe34d42e2dd1b95e601386e6e214f83))
 
-# [1.1.0](https://github.com/AzyrRuthless/morphe-cli/compare/v1.0.0...v1.1.0) (2026-02-06)
-
-
-### Features
-
-* Add ability to write patching results to JSON file ([#25](https://github.com/AzyrRuthless/morphe-cli/issues/25)) ([ed0d1ef](https://github.com/AzyrRuthless/morphe-cli/commit/ed0d1ef4150411c8027156bad8338194480b4e88))
-* Update to Morphe patcher / library 1.1.0 ([2445b24](https://github.com/AzyrRuthless/morphe-cli/commit/2445b24656228dd5c487e18fe6e441d5b8b6204b))
-* Update to Morphe patcher 1.1.1 ([8fa5a83](https://github.com/AzyrRuthless/morphe-cli/commit/8fa5a83d18fa35668d1d07a852bda62a452c0ad7))
-
-# [1.1.0-dev.1](https://github.com/AzyrRuthless/morphe-cli/compare/v1.0.0...v1.1.0-dev.1) (2026-02-06)
+# [1.10.0-dev.7](https://github.com/MorpheApp/morphe-cli/compare/v1.10.0-dev.6...v1.10.0-dev.7) (2026-06-29)
 
 
 ### Features
 
-* Add ability to write patching results to JSON file ([#25](https://github.com/AzyrRuthless/morphe-cli/issues/25)) ([ed0d1ef](https://github.com/AzyrRuthless/morphe-cli/commit/ed0d1ef4150411c8027156bad8338194480b4e88))
-* Update to Morphe patcher / library 1.1.0 ([2445b24](https://github.com/AzyrRuthless/morphe-cli/commit/2445b24656228dd5c487e18fe6e441d5b8b6204b))
-* Update to Morphe patcher 1.1.1 ([8fa5a83](https://github.com/AzyrRuthless/morphe-cli/commit/8fa5a83d18fa35668d1d07a852bda62a452c0ad7))
+* Add `--include-experimental` flag to `list-patches` and `list-versions` ([#189](https://github.com/MorpheApp/morphe-cli/issues/189)) ([8ef916c](https://github.com/MorpheApp/morphe-cli/commit/8ef916cdaab28e51c244906341a32d9434126ccf))
 
-# 1.0.0-dev.1 (2026-01-11)
+# [1.10.0-dev.6](https://github.com/MorpheApp/morphe-cli/compare/v1.10.0-dev.5...v1.10.0-dev.6) (2026-06-29)
 
 
 ### Bug Fixes
 
-* Migrate to new package, use maven patcher dependency ([0b50811](https://github.com/AzyrRuthless/morphe-cli/commit/0b50811a5a2a0a574538b2fbffe027c04613db6c))
-* Use patcher / library 1.0.1 release ([0ca02e9](https://github.com/AzyrRuthless/morphe-cli/commit/0ca02e920b9e3189ac2b3a18587f0fb9efd0de4e))
-* Use repo library release ([0e4fae1](https://github.com/AzyrRuthless/morphe-cli/commit/0e4fae1b24bb21baa5004126df364b736d84270b))
+* Update to latest patcher ([2c89128](https://github.com/MorpheApp/morphe-cli/commit/2c891284460762e15115f21c83036ac544549372))
+
+# [1.10.0-dev.5](https://github.com/MorpheApp/morphe-cli/compare/v1.10.0-dev.4...v1.10.0-dev.5) (2026-06-28)
 
 
 ### Features
 
-* add command option `unsigned` ([#20](https://github.com/AzyrRuthless/morphe-cli/issues/20)) ([4505091](https://github.com/AzyrRuthless/morphe-cli/commit/4505091624b854706b39656bae642e5dc1132dcd))
-* Initial release ([874ecbc](https://github.com/AzyrRuthless/morphe-cli/commit/874ecbce34d6499882f7a5cf648bd828c823935a))
+* Patch sources follows latest (stable/dev) instead of to last used version ([#185](https://github.com/MorpheApp/morphe-cli/issues/185)) ([5d34993](https://github.com/MorpheApp/morphe-cli/commit/5d349931b283f62f617e7a1ceb10009cf2639a8e))
+
+# [1.10.0-dev.4](https://github.com/MorpheApp/morphe-cli/compare/v1.10.0-dev.3...v1.10.0-dev.4) (2026-06-27)
+
+
+### Features
+
+* Array GUI patches alphabetically, improve error logging, use separate class loader for multiple patch bundles ([#187](https://github.com/MorpheApp/morphe-cli/issues/187)) ([755909c](https://github.com/MorpheApp/morphe-cli/commit/755909ca2ab8735ffe99b3ad200a80316e6ec0c9))
+
+# [1.10.0-dev.3](https://github.com/MorpheApp/morphe-cli/compare/v1.10.0-dev.2...v1.10.0-dev.3) (2026-06-23)
+
+
+### Bug Fixes
+
+* Handle GUI patching xapk / apks, add distinct patch-source channel colors, improve patch loading errors ([#180](https://github.com/MorpheApp/morphe-cli/issues/180)) ([d8245f0](https://github.com/MorpheApp/morphe-cli/commit/d8245f081b507cac74b06e16120e4271ce0e1f96))
+
+# [1.10.0-dev.2](https://github.com/MorpheApp/morphe-cli/compare/v1.10.0-dev.1...v1.10.0-dev.2) (2026-06-23)
+
+
+### Features
+
+* route links through patched app + uninstall from "Your Apps" section's cards ([#179](https://github.com/MorpheApp/morphe-cli/issues/179)) ([1626ce5](https://github.com/MorpheApp/morphe-cli/commit/1626ce5ffe3300de2299443ed9b7587ebd1cdcb6))
+
+# [1.10.0-dev.1](https://github.com/MorpheApp/morphe-cli/compare/v1.9.2-dev.1...v1.10.0-dev.1) (2026-06-15)
+
+
+### Features
+
+* "your apps" section + settings and tools split + re-orderable patch sources + block play store updates for patched apps ([#176](https://github.com/MorpheApp/morphe-cli/issues/176)) ([d865abd](https://github.com/MorpheApp/morphe-cli/commit/d865abdbbe2258cf24476add02a361b05f3fdf7e))
+
+## [1.9.2-dev.1](https://github.com/MorpheApp/morphe-cli/compare/v1.9.1...v1.9.2-dev.1) (2026-06-15)
+
+
+### Bug Fixes
+
+* CLI --purge command does not cleanup temp APK ([#169](https://github.com/MorpheApp/morphe-cli/issues/169)) ([6163e9c](https://github.com/MorpheApp/morphe-cli/commit/6163e9c29070e5013274792437d05f8ed2c20853))
+
+## [1.9.1](https://github.com/MorpheApp/morphe-cli/compare/v1.9.0...v1.9.1) (2026-06-08)
+
+
+### Bug Fixes
+
+* signing improvements ([#160](https://github.com/MorpheApp/morphe-cli/issues/160)) ([166f940](https://github.com/MorpheApp/morphe-cli/commit/166f9409b1cbe00af7663545c41548ead2c189c5))
+* Update dependencies ([83d3969](https://github.com/MorpheApp/morphe-cli/commit/83d39692541ca81b7bb555dfd60a001fbb97b3f1))
+* Update to latest ARSCLib ([f62a179](https://github.com/MorpheApp/morphe-cli/commit/f62a1793601fcfc489f54c558265115530ab6b8d))
+
+## [1.9.1-dev.3](https://github.com/MorpheApp/morphe-cli/compare/v1.9.1-dev.2...v1.9.1-dev.3) (2026-06-02)
+
+
+### Bug Fixes
+
+* signing improvements ([#160](https://github.com/MorpheApp/morphe-cli/issues/160)) ([166f940](https://github.com/MorpheApp/morphe-cli/commit/166f9409b1cbe00af7663545c41548ead2c189c5))
+
+## [1.9.1-dev.2](https://github.com/MorpheApp/morphe-cli/compare/v1.9.1-dev.1...v1.9.1-dev.2) (2026-05-31)
+
+
+### Bug Fixes
+
+* Update dependencies ([83d3969](https://github.com/MorpheApp/morphe-cli/commit/83d39692541ca81b7bb555dfd60a001fbb97b3f1))
+
+## [1.9.1-dev.1](https://github.com/MorpheApp/morphe-cli/compare/v1.9.0...v1.9.1-dev.1) (2026-05-31)
+
+
+### Bug Fixes
+
+* Update to latest ARSCLib ([f62a179](https://github.com/MorpheApp/morphe-cli/commit/f62a1793601fcfc489f54c558265115530ab6b8d))
+
+# [1.9.0](https://github.com/MorpheApp/morphe-cli/compare/v1.8.1...v1.9.0) (2026-05-29)
+
+
+### Bug Fixes
+
+* Close adb when app closes ([#153](https://github.com/MorpheApp/morphe-cli/issues/153)) ([a43de5a](https://github.com/MorpheApp/morphe-cli/commit/a43de5a61ee30b7484b534cb6cc74e03bb297fa1))
+* Multi patch source minor network times out ([#155](https://github.com/MorpheApp/morphe-cli/issues/155)) ([06e5788](https://github.com/MorpheApp/morphe-cli/commit/06e57889c460cfa334af67c2910dbcb8633191f8))
+
+
+### Features
+
+* Add setting menu to save patched app crash logs to file ([#143](https://github.com/MorpheApp/morphe-cli/issues/143)) ([90836b5](https://github.com/MorpheApp/morphe-cli/commit/90836b5cedbd6d0642a819abde7c33901a7e81a1))
+* Apply patches from multiple patch bundles, add GUI patch source selector  ([#145](https://github.com/MorpheApp/morphe-cli/issues/145)) ([44ed6c6](https://github.com/MorpheApp/morphe-cli/commit/44ed6c6efe5d7f97624557056b2caca23278eebf))
+
+# [1.9.0-dev.4](https://github.com/MorpheApp/morphe-cli/compare/v1.9.0-dev.3...v1.9.0-dev.4) (2026-05-26)
+
+
+### Bug Fixes
+
+* Multi patch source minor network times out ([#155](https://github.com/MorpheApp/morphe-cli/issues/155)) ([06e5788](https://github.com/MorpheApp/morphe-cli/commit/06e57889c460cfa334af67c2910dbcb8633191f8))
+
+# [1.9.0-dev.3](https://github.com/MorpheApp/morphe-cli/compare/v1.9.0-dev.2...v1.9.0-dev.3) (2026-05-25)
+
+
+### Bug Fixes
+
+* Close adb when app closes ([#153](https://github.com/MorpheApp/morphe-cli/issues/153)) ([a43de5a](https://github.com/MorpheApp/morphe-cli/commit/a43de5a61ee30b7484b534cb6cc74e03bb297fa1))
+
+# [1.9.0-dev.2](https://github.com/MorpheApp/morphe-cli/compare/v1.9.0-dev.1...v1.9.0-dev.2) (2026-05-20)
+
+
+### Features
+
+* Apply patches from multiple patch bundles, add GUI patch source selector  ([#145](https://github.com/MorpheApp/morphe-cli/issues/145)) ([44ed6c6](https://github.com/MorpheApp/morphe-cli/commit/44ed6c6efe5d7f97624557056b2caca23278eebf))
+
+# [1.9.0-dev.1](https://github.com/MorpheApp/morphe-cli/compare/v1.8.1...v1.9.0-dev.1) (2026-05-11)
+
+
+### Features
+
+* Add setting menu to save patched app crash logs to file ([#143](https://github.com/MorpheApp/morphe-cli/issues/143)) ([90836b5](https://github.com/MorpheApp/morphe-cli/commit/90836b5cedbd6d0642a819abde7c33901a7e81a1))
+
+## [1.8.1](https://github.com/MorpheApp/morphe-cli/compare/v1.8.0...v1.8.1) (2026-05-11)
+
+
+### Bug Fixes
+
+* Update to latest patcher ([a0bea3d](https://github.com/MorpheApp/morphe-cli/commit/a0bea3d7d308d992a637fb13d1f7c62b20340f9d))
+
+## [1.8.1-dev.1](https://github.com/MorpheApp/morphe-cli/compare/v1.8.0...v1.8.1-dev.1) (2026-05-09)
+
+
+### Bug Fixes
+
+* Update to latest patcher ([a0bea3d](https://github.com/MorpheApp/morphe-cli/commit/a0bea3d7d308d992a637fb13d1f7c62b20340f9d))
+
+# [1.8.0](https://github.com/MorpheApp/morphe-cli/compare/v1.7.0...v1.8.0) (2026-05-04)
+
+
+### Bug Fixes
+
+* ARSCLib libraries are excluded during minimization ([2714ab5](https://github.com/MorpheApp/morphe-cli/commit/2714ab52d934380b665c396b02b079bc6e3d89be))
+* ARSCLib libraries are not included in minimized fat jar ([5dce038](https://github.com/MorpheApp/morphe-cli/commit/5dce03815fea09525a992ce2cc1df30b421a818f))
+* continue-on-error fix + force windows to `FULL` ([#120](https://github.com/MorpheApp/morphe-cli/issues/120)) ([036faba](https://github.com/MorpheApp/morphe-cli/commit/036faba68f8f0c1f683f3c6222f08d0377217266))
+* Include Notice and License files in shadow jar release ([#113](https://github.com/MorpheApp/morphe-cli/issues/113)) ([a9a2402](https://github.com/MorpheApp/morphe-cli/commit/a9a2402209bd0ddd273c0aa5185888b74c69d118))
+* Re-enable strip libs feature ([#117](https://github.com/MorpheApp/morphe-cli/issues/117)) ([6d2bb94](https://github.com/MorpheApp/morphe-cli/commit/6d2bb94425e3fa040cc0d00261b77559d69e4470))
+* Update to latest patcher ([efd0cf1](https://github.com/MorpheApp/morphe-cli/commit/efd0cf16dbac6625a54e2f82881bbe16c9e8acce))
+* Update to patcher 1.5.1 ([d7c5036](https://github.com/MorpheApp/morphe-cli/commit/d7c5036398867cd037a4d116d71b5162fc17d65a))
+
+
+### Features
+
+* Add in-app dependency license viewer ([#114](https://github.com/MorpheApp/morphe-cli/issues/114)) ([77a1dde](https://github.com/MorpheApp/morphe-cli/commit/77a1ddea595dd83331c9d0ce246620ebd64bcd22))
+* Add search function to license viewer ([#124](https://github.com/MorpheApp/morphe-cli/issues/124)) ([d3d9feb](https://github.com/MorpheApp/morphe-cli/commit/d3d9feb477d5b5c3281e066efc7a935573a47090))
+* Custom output path + better GUI scrollbars ([#127](https://github.com/MorpheApp/morphe-cli/issues/127)) ([70e2721](https://github.com/MorpheApp/morphe-cli/commit/70e27218a87a09c26edc96fd7cb7c38dcba9c79c))
+* Faster dex rebuilding + reduced memory requirements  ([#108](https://github.com/MorpheApp/morphe-cli/issues/108)) ([ed8918e](https://github.com/MorpheApp/morphe-cli/commit/ed8918eb8d26634f717e09b58aa174c1d1353a07))
+* Support GitHub repo urls with `--patches` argument ([#71](https://github.com/MorpheApp/morphe-cli/issues/71)) ([2cc09a9](https://github.com/MorpheApp/morphe-cli/commit/2cc09a9fc6c61ddb210a023941b7cf528705d8cb))
+* UI improvements and fixes ([#128](https://github.com/MorpheApp/morphe-cli/issues/128)) ([980ebac](https://github.com/MorpheApp/morphe-cli/commit/980ebacceb073a00ea4b6b011550b73c94f9cc30))
+
+# [1.8.0-dev.13](https://github.com/MorpheApp/morphe-cli/compare/v1.8.0-dev.12...v1.8.0-dev.13) (2026-05-04)
+
+
+### Bug Fixes
+
+* ARSCLib libraries are excluded during minimization ([2714ab5](https://github.com/MorpheApp/morphe-cli/commit/2714ab52d934380b665c396b02b079bc6e3d89be))
+
+# [1.8.0-dev.12](https://github.com/MorpheApp/morphe-cli/compare/v1.8.0-dev.11...v1.8.0-dev.12) (2026-05-04)
+
+
+### Bug Fixes
+
+* ARSCLib libraries are not included in minimized fat jar ([5dce038](https://github.com/MorpheApp/morphe-cli/commit/5dce03815fea09525a992ce2cc1df30b421a818f))
+
+# [1.8.0-dev.11](https://github.com/MorpheApp/morphe-cli/compare/v1.8.0-dev.10...v1.8.0-dev.11) (2026-05-03)
+
+
+### Bug Fixes
+
+* Update to patcher 1.5.1 ([d7c5036](https://github.com/MorpheApp/morphe-cli/commit/d7c5036398867cd037a4d116d71b5162fc17d65a))
+
+# [1.8.0-dev.10](https://github.com/MorpheApp/morphe-cli/compare/v1.8.0-dev.9...v1.8.0-dev.10) (2026-05-02)
+
+
+### Features
+
+* UI improvements and fixes ([#128](https://github.com/MorpheApp/morphe-cli/issues/128)) ([980ebac](https://github.com/MorpheApp/morphe-cli/commit/980ebacceb073a00ea4b6b011550b73c94f9cc30))
+
+# [1.8.0-dev.9](https://github.com/MorpheApp/morphe-cli/compare/v1.8.0-dev.8...v1.8.0-dev.9) (2026-04-29)
+
+
+### Features
+
+* Custom output path + better GUI scrollbars ([#127](https://github.com/MorpheApp/morphe-cli/issues/127)) ([70e2721](https://github.com/MorpheApp/morphe-cli/commit/70e27218a87a09c26edc96fd7cb7c38dcba9c79c))
+
+# [1.8.0-dev.8](https://github.com/MorpheApp/morphe-cli/compare/v1.8.0-dev.7...v1.8.0-dev.8) (2026-04-25)
+
+
+### Features
+
+* Support GitHub repo urls with `--patches` argument ([#71](https://github.com/MorpheApp/morphe-cli/issues/71)) ([2cc09a9](https://github.com/MorpheApp/morphe-cli/commit/2cc09a9fc6c61ddb210a023941b7cf528705d8cb))
+
+# [1.8.0-dev.7](https://github.com/MorpheApp/morphe-cli/compare/v1.8.0-dev.6...v1.8.0-dev.7) (2026-04-24)
+
+
+### Features
+
+* Add search function to license viewer ([#124](https://github.com/MorpheApp/morphe-cli/issues/124)) ([d3d9feb](https://github.com/MorpheApp/morphe-cli/commit/d3d9feb477d5b5c3281e066efc7a935573a47090))
+
+# [1.8.0-dev.6](https://github.com/MorpheApp/morphe-cli/compare/v1.8.0-dev.5...v1.8.0-dev.6) (2026-04-21)
+
+
+### Bug Fixes
+
+* continue-on-error fix + force windows to `FULL` ([#120](https://github.com/MorpheApp/morphe-cli/issues/120)) ([036faba](https://github.com/MorpheApp/morphe-cli/commit/036faba68f8f0c1f683f3c6222f08d0377217266))
+
+# [1.8.0-dev.5](https://github.com/MorpheApp/morphe-cli/compare/v1.8.0-dev.4...v1.8.0-dev.5) (2026-04-20)
+
+
+### Bug Fixes
+
+* Re-enable strip libs feature ([#117](https://github.com/MorpheApp/morphe-cli/issues/117)) ([6d2bb94](https://github.com/MorpheApp/morphe-cli/commit/6d2bb94425e3fa040cc0d00261b77559d69e4470))
+
+# [1.8.0-dev.4](https://github.com/MorpheApp/morphe-cli/compare/v1.8.0-dev.3...v1.8.0-dev.4) (2026-04-19)
+
+
+### Bug Fixes
+
+* Update to latest patcher ([efd0cf1](https://github.com/MorpheApp/morphe-cli/commit/efd0cf16dbac6625a54e2f82881bbe16c9e8acce))
+
+# [1.8.0-dev.3](https://github.com/MorpheApp/morphe-cli/compare/v1.8.0-dev.2...v1.8.0-dev.3) (2026-04-18)
+
+
+### Features
+
+* Add in-app dependency license viewer ([#114](https://github.com/MorpheApp/morphe-cli/issues/114)) ([77a1dde](https://github.com/MorpheApp/morphe-cli/commit/77a1ddea595dd83331c9d0ce246620ebd64bcd22))
+
+# [1.8.0-dev.2](https://github.com/MorpheApp/morphe-cli/compare/v1.8.0-dev.1...v1.8.0-dev.2) (2026-04-18)
+
+
+### Bug Fixes
+
+* Include Notice and License files in shadow jar release ([#113](https://github.com/MorpheApp/morphe-cli/issues/113)) ([a9a2402](https://github.com/MorpheApp/morphe-cli/commit/a9a2402209bd0ddd273c0aa5185888b74c69d118))
+
+# [1.8.0-dev.1](https://github.com/MorpheApp/morphe-cli/compare/v1.7.0...v1.8.0-dev.1) (2026-04-18)
+
+
+### Features
+
+* Faster dex rebuilding + reduced memory requirements  ([#108](https://github.com/MorpheApp/morphe-cli/issues/108)) ([ed8918e](https://github.com/MorpheApp/morphe-cli/commit/ed8918eb8d26634f717e09b58aa174c1d1353a07))
+
+# [1.7.0](https://github.com/MorpheApp/morphe-cli/compare/v1.6.3...v1.7.0) (2026-04-16)
+
+
+### Bug Fixes
+
+* Use patcher implementation of strip libs ([#83](https://github.com/MorpheApp/morphe-cli/issues/83)) ([43f50ea](https://github.com/MorpheApp/morphe-cli/commit/43f50ea133088090648fa318047626f3166b8639)), closes [#80](https://github.com/MorpheApp/morphe-cli/issues/80) [#82](https://github.com/MorpheApp/morphe-cli/issues/82)
+* Use same default keystore values as Morphe Manager ([#96](https://github.com/MorpheApp/morphe-cli/issues/96)) ([2d70c01](https://github.com/MorpheApp/morphe-cli/commit/2d70c016f293ba382266fb5c800073f763d633d8))
+
+
+### Features
+
+* Add GUI third party patch sources, add experimental app patching ([#98](https://github.com/MorpheApp/morphe-cli/issues/98)) ([da5ec1c](https://github.com/MorpheApp/morphe-cli/commit/da5ec1c7e2165a35f8d42b88401a19a958ee25d4))
+
+# [1.7.0-dev.1](https://github.com/MorpheApp/morphe-cli/compare/v1.6.4-dev.2...v1.7.0-dev.1) (2026-04-15)
+
+
+### Features
+
+* Add GUI third party patch sources, add experimental app patching ([#98](https://github.com/MorpheApp/morphe-cli/issues/98)) ([da5ec1c](https://github.com/MorpheApp/morphe-cli/commit/da5ec1c7e2165a35f8d42b88401a19a958ee25d4))
+
+## [1.6.4-dev.2](https://github.com/MorpheApp/morphe-cli/compare/v1.6.4-dev.1...v1.6.4-dev.2) (2026-03-31)
+
+
+### Bug Fixes
+
+* Use same default keystore values as Morphe Manager ([#96](https://github.com/MorpheApp/morphe-cli/issues/96)) ([2d70c01](https://github.com/MorpheApp/morphe-cli/commit/2d70c016f293ba382266fb5c800073f763d633d8))
+
+## [1.6.4-dev.1](https://github.com/MorpheApp/morphe-cli/compare/v1.6.3...v1.6.4-dev.1) (2026-03-30)
+
+
+### Bug Fixes
+
+* Use patcher implementation of strip libs ([#83](https://github.com/MorpheApp/morphe-cli/issues/83)) ([43f50ea](https://github.com/MorpheApp/morphe-cli/commit/43f50ea133088090648fa318047626f3166b8639)), closes [#80](https://github.com/MorpheApp/morphe-cli/issues/80) [#82](https://github.com/MorpheApp/morphe-cli/issues/82)
+
+## [1.6.3](https://github.com/MorpheApp/morphe-cli/compare/v1.6.2...v1.6.3) (2026-03-28)
+
+
+### Bug Fixes
+
+* Handle patching XAPK files ([#93](https://github.com/MorpheApp/morphe-cli/issues/93)) ([5d18490](https://github.com/MorpheApp/morphe-cli/commit/5d18490305f10949bf5407bc7167549e3a1cc8f4))
+* Handle running CLI in headless environment ([#95](https://github.com/MorpheApp/morphe-cli/issues/95)) ([70f2952](https://github.com/MorpheApp/morphe-cli/commit/70f2952b09de57ad7c06bd92365025d38164ed26))
+* Update to latest Patcher ([fbc6c9e](https://github.com/MorpheApp/morphe-cli/commit/fbc6c9e2dbab2db9b46f442feeec1a2df565114e))
+* Update to Patcher 1.3.3 ([ca579fb](https://github.com/MorpheApp/morphe-cli/commit/ca579fbc8afa32b98a77475ae4db0792d1165a3d))
+
+## [1.6.3-dev.4](https://github.com/MorpheApp/morphe-cli/compare/v1.6.3-dev.3...v1.6.3-dev.4) (2026-03-28)
+
+
+### Bug Fixes
+
+* Handle patching XAPK files ([#93](https://github.com/MorpheApp/morphe-cli/issues/93)) ([5d18490](https://github.com/MorpheApp/morphe-cli/commit/5d18490305f10949bf5407bc7167549e3a1cc8f4))
+
+## [1.6.3-dev.3](https://github.com/MorpheApp/morphe-cli/compare/v1.6.3-dev.2...v1.6.3-dev.3) (2026-03-28)
+
+
+### Bug Fixes
+
+* Handle running CLI in headless environment ([#95](https://github.com/MorpheApp/morphe-cli/issues/95)) ([70f2952](https://github.com/MorpheApp/morphe-cli/commit/70f2952b09de57ad7c06bd92365025d38164ed26))
+
+## [1.6.3-dev.2](https://github.com/MorpheApp/morphe-cli/compare/v1.6.3-dev.1...v1.6.3-dev.2) (2026-03-24)
+
+
+### Bug Fixes
+
+* Update to latest Patcher ([fbc6c9e](https://github.com/MorpheApp/morphe-cli/commit/fbc6c9e2dbab2db9b46f442feeec1a2df565114e))
+
+## [1.6.3-dev.1](https://github.com/MorpheApp/morphe-cli/compare/v1.6.2...v1.6.3-dev.1) (2026-03-23)
+
+
+### Bug Fixes
+
+* Update to Patcher 1.3.3 ([ca579fb](https://github.com/MorpheApp/morphe-cli/commit/ca579fbc8afa32b98a77475ae4db0792d1165a3d))
+
+## [1.6.2](https://github.com/MorpheApp/morphe-cli/compare/v1.6.1...v1.6.2) (2026-03-22)
+
+
+### Bug Fixes
+
+* Update to Patcher 1.3.2 ([f4c00bb](https://github.com/MorpheApp/morphe-cli/commit/f4c00bbea80997c816f40f5dcf0a17f771d80b43))
+
+## [1.6.2-dev.1](https://github.com/MorpheApp/morphe-cli/compare/v1.6.1...v1.6.2-dev.1) (2026-03-22)
+
+
+### Bug Fixes
+
+* Update to Patcher 1.3.2 ([f4c00bb](https://github.com/MorpheApp/morphe-cli/commit/f4c00bbea80997c816f40f5dcf0a17f771d80b43))
+
+## [1.6.1](https://github.com/MorpheApp/morphe-cli/compare/v1.6.0...v1.6.1) (2026-03-22)
+
+
+### Bug Fixes
+
+* Update to Patcher 1.3.1 ([39bdd44](https://github.com/MorpheApp/morphe-cli/commit/39bdd44d13cf99b855d4e8501a47283f0681cbe7))
+
+## [1.6.1-dev.1](https://github.com/MorpheApp/morphe-cli/compare/v1.6.0...v1.6.1-dev.1) (2026-03-22)
+
+
+### Bug Fixes
+
+* Update to Patcher 1.3.1 ([39bdd44](https://github.com/MorpheApp/morphe-cli/commit/39bdd44d13cf99b855d4e8501a47283f0681cbe7))
+
+# [1.6.0](https://github.com/MorpheApp/morphe-cli/compare/v1.5.0...v1.6.0) (2026-03-22)
+
+
+### Bug Fixes
+
+* Bump arsclib version, remove APKEditor ([412847e](https://github.com/MorpheApp/morphe-cli/commit/412847e5a0b990321b7443fe774f7420189035d6))
+* Dispatch error when launching app ([#79](https://github.com/MorpheApp/morphe-cli/issues/79)) ([989e72a](https://github.com/MorpheApp/morphe-cli/commit/989e72a04c9ea1b512d556ff8db48b99a4817d98))
+* Update to latest patcher dev ([496d8e9](https://github.com/MorpheApp/morphe-cli/commit/496d8e9d2d1e402f7246b6f3adb85c4c6c1865ca))
+* Update to latest patcher dev ([1356259](https://github.com/MorpheApp/morphe-cli/commit/135625917a54eb5e0a9464c40d0ce504619b4845))
+* Update to latest patcher dev ([fb8a4ff](https://github.com/MorpheApp/morphe-cli/commit/fb8a4ffe70ae24c74c497608b9eb9aa2d76f2a8a))
+* Update to latest patcher dev ([1551c8e](https://github.com/MorpheApp/morphe-cli/commit/1551c8ef81bd4d267833c1dc543d13c1d1def29f))
+* Update to Patcher 1.3.0 ([19c0846](https://github.com/MorpheApp/morphe-cli/commit/19c084612310cb590c90b809403450abf6a81560))
+* Use GitHub raw links for CLI update check ([#87](https://github.com/MorpheApp/morphe-cli/issues/87)) ([2aa6263](https://github.com/MorpheApp/morphe-cli/commit/2aa62637098fa52dcc79422116b91487aed5600a))
+* Use more logging verbosity when updating options.json ([#72](https://github.com/MorpheApp/morphe-cli/issues/72)) ([4d223f2](https://github.com/MorpheApp/morphe-cli/commit/4d223f299b690c100ff74ece7e4415f562c6ac96))
+
+
+### Features
+
+* Add desktop GUI ([#42](https://github.com/MorpheApp/morphe-cli/issues/42)) ([cd627e6](https://github.com/MorpheApp/morphe-cli/commit/cd627e6a4320084403beacd414278b3b75f469da))
+* Inform user if cli is outdated ([#81](https://github.com/MorpheApp/morphe-cli/issues/81)) ([5bcd4f7](https://github.com/MorpheApp/morphe-cli/commit/5bcd4f7c612ec3aad732e83ea131a019424b3bb8))
+
+# [1.6.0-dev.8](https://github.com/MorpheApp/morphe-cli/compare/v1.6.0-dev.7...v1.6.0-dev.8) (2026-03-21)
+
+
+### Bug Fixes
+
+* Use GitHub raw links for CLI update check ([#87](https://github.com/MorpheApp/morphe-cli/issues/87)) ([2aa6263](https://github.com/MorpheApp/morphe-cli/commit/2aa62637098fa52dcc79422116b91487aed5600a))
+
+# [1.6.0-dev.7](https://github.com/MorpheApp/morphe-cli/compare/v1.6.0-dev.6...v1.6.0-dev.7) (2026-03-20)
+
+
+### Bug Fixes
+
+* Update to latest patcher dev ([496d8e9](https://github.com/MorpheApp/morphe-cli/commit/496d8e9d2d1e402f7246b6f3adb85c4c6c1865ca))
+
+# [1.6.0-dev.6](https://github.com/MorpheApp/morphe-cli/compare/v1.6.0-dev.5...v1.6.0-dev.6) (2026-03-20)
+
+
+### Features
+
+* Inform user if cli is outdated ([#81](https://github.com/MorpheApp/morphe-cli/issues/81)) ([5bcd4f7](https://github.com/MorpheApp/morphe-cli/commit/5bcd4f7c612ec3aad732e83ea131a019424b3bb8))
+
+# [1.6.0-dev.5](https://github.com/MorpheApp/morphe-cli/compare/v1.6.0-dev.4...v1.6.0-dev.5) (2026-03-16)
+
+
+### Bug Fixes
+
+* Update to latest patcher dev ([1356259](https://github.com/MorpheApp/morphe-cli/commit/135625917a54eb5e0a9464c40d0ce504619b4845))
+
+# [1.6.0-dev.4](https://github.com/MorpheApp/morphe-cli/compare/v1.6.0-dev.3...v1.6.0-dev.4) (2026-03-15)
+
+
+### Bug Fixes
+
+* Update to latest patcher dev ([fb8a4ff](https://github.com/MorpheApp/morphe-cli/commit/fb8a4ffe70ae24c74c497608b9eb9aa2d76f2a8a))
+
+# [1.6.0-dev.3](https://github.com/MorpheApp/morphe-cli/compare/v1.6.0-dev.2...v1.6.0-dev.3) (2026-03-15)
+
+
+### Bug Fixes
+
+* Update to latest patcher dev ([1551c8e](https://github.com/MorpheApp/morphe-cli/commit/1551c8ef81bd4d267833c1dc543d13c1d1def29f))
+
+# [1.6.0-dev.2](https://github.com/MorpheApp/morphe-cli/compare/v1.6.0-dev.1...v1.6.0-dev.2) (2026-03-15)
+
+
+### Bug Fixes
+
+* Dispatch error when launching app ([#79](https://github.com/MorpheApp/morphe-cli/issues/79)) ([989e72a](https://github.com/MorpheApp/morphe-cli/commit/989e72a04c9ea1b512d556ff8db48b99a4817d98))
+
+# [1.6.0-dev.1](https://github.com/MorpheApp/morphe-cli/compare/v1.5.1-dev.3...v1.6.0-dev.1) (2026-03-14)
+
+
+### Features
+
+* Add desktop GUI ([#42](https://github.com/MorpheApp/morphe-cli/issues/42)) ([cd627e6](https://github.com/MorpheApp/morphe-cli/commit/cd627e6a4320084403beacd414278b3b75f469da))
+
+## [1.5.1-dev.3](https://github.com/MorpheApp/morphe-cli/compare/v1.5.1-dev.2...v1.5.1-dev.3) (2026-03-13)
+
+
+### Bug Fixes
+
+* Use more logging verbosity when updating options.json ([#72](https://github.com/MorpheApp/morphe-cli/issues/72)) ([4d223f2](https://github.com/MorpheApp/morphe-cli/commit/4d223f299b690c100ff74ece7e4415f562c6ac96))
+
+## [1.5.1-dev.2](https://github.com/MorpheApp/morphe-cli/compare/v1.5.1-dev.1...v1.5.1-dev.2) (2026-03-13)
+
+
+### Bug Fixes
+
+* Bump arsclib version, remove APKEditor ([412847e](https://github.com/MorpheApp/morphe-cli/commit/412847e5a0b990321b7443fe774f7420189035d6))
+
+## [1.5.1-dev.1](https://github.com/MorpheApp/morphe-cli/compare/v1.5.0...v1.5.1-dev.1) (2026-03-13)
+
+
+### Bug Fixes
+
+* Update to Patcher 1.3.0 ([19c0846](https://github.com/MorpheApp/morphe-cli/commit/19c084612310cb590c90b809403450abf6a81560))
+
+# [1.5.0](https://github.com/MorpheApp/morphe-cli/compare/v1.4.0...v1.5.0) (2026-03-07)
+
+
+### Bug Fixes
+
+* Use latest library dev release ([b60ea86](https://github.com/MorpheApp/morphe-cli/commit/b60ea86c72b8a62e2220b3a76dba01d47c494750))
+* Use latest patcher and library dev release ([2f21880](https://github.com/MorpheApp/morphe-cli/commit/2f21880c49705b3e5153b7e636f01cf578d7b1c0))
+* Use latest patcher dev release ([ea6e231](https://github.com/MorpheApp/morphe-cli/commit/ea6e2313268a8111c8a21faf425bda1eda534f35))
+* Use latest patcher dev release ([2b33a6c](https://github.com/MorpheApp/morphe-cli/commit/2b33a6cc0523be29cb7dcd86990de7e0e08c0c87))
+* Use latest patcher dev release ([baf34de](https://github.com/MorpheApp/morphe-cli/commit/baf34de0857f1c94b044aedbac33485b51ab3f2c))
+* Use latest patcher dev release ([9cf07f9](https://github.com/MorpheApp/morphe-cli/commit/9cf07f922fb5129aeeee2de0a3e990fecadae4fb))
+* Use latest patcher dev release ([791257c](https://github.com/MorpheApp/morphe-cli/commit/791257c48983c1a006eca87abd458331141252f1))
+* Use latest patcher dev release ([7cc195a](https://github.com/MorpheApp/morphe-cli/commit/7cc195a59d37521751fcbe5f15d267b3efbeeb0a))
+* Use latest patcher dev release ([f8bd235](https://github.com/MorpheApp/morphe-cli/commit/f8bd2354438dd3a1e969610d43dca224e9d3ef63))
+
+
+### Features
+
+* Add `--out` and `--patches` arguments to `list-patches` command ([#60](https://github.com/MorpheApp/morphe-cli/issues/60)) ([ef9fc48](https://github.com/MorpheApp/morphe-cli/commit/ef9fc482fcc6de2e51741b23ce12729991d6b36d))
+* Add ARSCLib support ([#55](https://github.com/MorpheApp/morphe-cli/issues/55)) ([07c3f7e](https://github.com/MorpheApp/morphe-cli/commit/07c3f7ec50d52739ee2695f52c3c7182f2287ecf))
+
+# [1.5.0-dev.11](https://github.com/MorpheApp/morphe-cli/compare/v1.5.0-dev.10...v1.5.0-dev.11) (2026-03-05)
+
+
+### Bug Fixes
+
+* Use latest patcher dev release ([ea6e231](https://github.com/MorpheApp/morphe-cli/commit/ea6e2313268a8111c8a21faf425bda1eda534f35))
+
+# [1.5.0-dev.10](https://github.com/MorpheApp/morphe-cli/compare/v1.5.0-dev.9...v1.5.0-dev.10) (2026-03-05)
+
+
+### Bug Fixes
+
+* Use latest patcher dev release ([2b33a6c](https://github.com/MorpheApp/morphe-cli/commit/2b33a6cc0523be29cb7dcd86990de7e0e08c0c87))
+
+# [1.5.0-dev.9](https://github.com/MorpheApp/morphe-cli/compare/v1.5.0-dev.8...v1.5.0-dev.9) (2026-03-02)
+
+
+### Bug Fixes
+
+* Use latest patcher dev release ([baf34de](https://github.com/MorpheApp/morphe-cli/commit/baf34de0857f1c94b044aedbac33485b51ab3f2c))
+
+# [1.5.0-dev.8](https://github.com/MorpheApp/morphe-cli/compare/v1.5.0-dev.7...v1.5.0-dev.8) (2026-03-02)
+
+
+### Bug Fixes
+
+* Use latest patcher dev release ([9cf07f9](https://github.com/MorpheApp/morphe-cli/commit/9cf07f922fb5129aeeee2de0a3e990fecadae4fb))
+
+# [1.5.0-dev.7](https://github.com/MorpheApp/morphe-cli/compare/v1.5.0-dev.6...v1.5.0-dev.7) (2026-02-28)
+
+
+### Bug Fixes
+
+* Use latest patcher and library dev release ([2f21880](https://github.com/MorpheApp/morphe-cli/commit/2f21880c49705b3e5153b7e636f01cf578d7b1c0))
+
+# [1.5.0-dev.6](https://github.com/MorpheApp/morphe-cli/compare/v1.5.0-dev.5...v1.5.0-dev.6) (2026-02-27)
+
+
+### Bug Fixes
+
+* Use latest library dev release ([b60ea86](https://github.com/MorpheApp/morphe-cli/commit/b60ea86c72b8a62e2220b3a76dba01d47c494750))
+
+# [1.5.0-dev.5](https://github.com/MorpheApp/morphe-cli/compare/v1.5.0-dev.4...v1.5.0-dev.5) (2026-02-26)
+
+
+### Features
+
+* Add `--out` and `--patches` arguments to `list-patches` command ([#60](https://github.com/MorpheApp/morphe-cli/issues/60)) ([ef9fc48](https://github.com/MorpheApp/morphe-cli/commit/ef9fc482fcc6de2e51741b23ce12729991d6b36d))
+
+# [1.5.0-dev.4](https://github.com/MorpheApp/morphe-cli/compare/v1.5.0-dev.3...v1.5.0-dev.4) (2026-02-26)
+
+
+### Bug Fixes
+
+* Use latest patcher dev release ([791257c](https://github.com/MorpheApp/morphe-cli/commit/791257c48983c1a006eca87abd458331141252f1))
+
+# [1.5.0-dev.3](https://github.com/MorpheApp/morphe-cli/compare/v1.5.0-dev.2...v1.5.0-dev.3) (2026-02-25)
+
+
+### Bug Fixes
+
+* Use latest patcher dev release ([7cc195a](https://github.com/MorpheApp/morphe-cli/commit/7cc195a59d37521751fcbe5f15d267b3efbeeb0a))
+
+# [1.5.0-dev.2](https://github.com/MorpheApp/morphe-cli/compare/v1.5.0-dev.1...v1.5.0-dev.2) (2026-02-24)
+
+
+### Bug Fixes
+
+* Use latest patcher dev release ([f8bd235](https://github.com/MorpheApp/morphe-cli/commit/f8bd2354438dd3a1e969610d43dca224e9d3ef63))
+
+# [1.5.0-dev.1](https://github.com/MorpheApp/morphe-cli/compare/v1.4.0...v1.5.0-dev.1) (2026-02-21)
+
+
+### Features
+
+* Add ARSCLib support ([#55](https://github.com/MorpheApp/morphe-cli/issues/55)) ([07c3f7e](https://github.com/MorpheApp/morphe-cli/commit/07c3f7ec50d52739ee2695f52c3c7182f2287ecf))
+
+# [1.4.0](https://github.com/MorpheApp/morphe-cli/compare/v1.3.0...v1.4.0) (2026-02-21)
+
+
+### Bug Fixes
+
+* Allow enabling/disabling patches using case insensitive patch names ([#48](https://github.com/MorpheApp/morphe-cli/issues/48)) ([03a280a](https://github.com/MorpheApp/morphe-cli/commit/03a280abea6c9187eec22548707eb889b0252c3f))
+* Do not log patch name more than once if disabled ([#49](https://github.com/MorpheApp/morphe-cli/issues/49)) ([b980bb8](https://github.com/MorpheApp/morphe-cli/commit/b980bb8e0b3bf8eb4c7af1fe289ff1b63c437fa3))
+
+
+### Features
+
+* Add `--continue-on-error` argument, return non zero exit code if patching fails ([#47](https://github.com/MorpheApp/morphe-cli/issues/47)) ([255646b](https://github.com/MorpheApp/morphe-cli/commit/255646b250237087ab7d7f9733daa6751b7e4016))
+* Add `--options-file` json patch/option configuration ([#53](https://github.com/MorpheApp/morphe-cli/issues/53)) ([44943da](https://github.com/MorpheApp/morphe-cli/commit/44943da5f40f8ec37364d4f67b9d2e82d2b5e98f))
+* Add `--striplibs` argument to strip unwanted architectures ([#46](https://github.com/MorpheApp/morphe-cli/issues/46)) ([7442d94](https://github.com/MorpheApp/morphe-cli/commit/7442d942d392b3e1e9ce959c30db8460bffee8d6))
+* Support patching APKM bundles ([#40](https://github.com/MorpheApp/morphe-cli/issues/40)) ([bfe43d0](https://github.com/MorpheApp/morphe-cli/commit/bfe43d0b747d0e336a3f36f048e85907a140f1fc))
+
+# [1.4.0-dev.6](https://github.com/MorpheApp/morphe-cli/compare/v1.4.0-dev.5...v1.4.0-dev.6) (2026-02-19)
+
+
+### Features
+
+* Add `--options-file` json patch/option configuration ([#53](https://github.com/MorpheApp/morphe-cli/issues/53)) ([44943da](https://github.com/MorpheApp/morphe-cli/commit/44943da5f40f8ec37364d4f67b9d2e82d2b5e98f))
+
+# [1.4.0-dev.5](https://github.com/MorpheApp/morphe-cli/compare/v1.4.0-dev.4...v1.4.0-dev.5) (2026-02-14)
+
+
+### Bug Fixes
+
+* Do not log patch name more than once if disabled ([#49](https://github.com/MorpheApp/morphe-cli/issues/49)) ([b980bb8](https://github.com/MorpheApp/morphe-cli/commit/b980bb8e0b3bf8eb4c7af1fe289ff1b63c437fa3))
+
+# [1.4.0-dev.4](https://github.com/MorpheApp/morphe-cli/compare/v1.4.0-dev.3...v1.4.0-dev.4) (2026-02-14)
+
+
+### Bug Fixes
+
+* Allow enabling/disabling patches using case insensitive patch names ([#48](https://github.com/MorpheApp/morphe-cli/issues/48)) ([03a280a](https://github.com/MorpheApp/morphe-cli/commit/03a280abea6c9187eec22548707eb889b0252c3f))
+
+# [1.4.0-dev.3](https://github.com/MorpheApp/morphe-cli/compare/v1.4.0-dev.2...v1.4.0-dev.3) (2026-02-12)
+
+
+### Features
+
+* Add `--continue-on-error` argument, return non zero exit code if patching fails ([#47](https://github.com/MorpheApp/morphe-cli/issues/47)) ([255646b](https://github.com/MorpheApp/morphe-cli/commit/255646b250237087ab7d7f9733daa6751b7e4016))
+
+# [1.4.0-dev.2](https://github.com/MorpheApp/morphe-cli/compare/v1.4.0-dev.1...v1.4.0-dev.2) (2026-02-10)
+
+
+### Features
+
+* Add `--striplibs` argument to strip unwanted architectures ([#46](https://github.com/MorpheApp/morphe-cli/issues/46)) ([7442d94](https://github.com/MorpheApp/morphe-cli/commit/7442d942d392b3e1e9ce959c30db8460bffee8d6))
+
+# [1.4.0-dev.1](https://github.com/MorpheApp/morphe-cli/compare/v1.3.0...v1.4.0-dev.1) (2026-02-07)
+
+
+### Features
+
+* Support patching APKM bundles ([#40](https://github.com/MorpheApp/morphe-cli/issues/40)) ([bfe43d0](https://github.com/MorpheApp/morphe-cli/commit/bfe43d0b747d0e336a3f36f048e85907a140f1fc))
+
+# [1.3.0](https://github.com/MorpheApp/morphe-cli/compare/v1.2.0...v1.3.0) (2026-02-04)
+
+
+### Features
+
+* Update to Morphe patcher 1.1.1 ([6162983](https://github.com/MorpheApp/morphe-cli/commit/616298302dfa922226acf1135c0583a094dac5ea))
+
+# [1.3.0-dev.1](https://github.com/MorpheApp/morphe-cli/compare/v1.2.0...v1.3.0-dev.1) (2026-02-04)
+
+
+### Features
+
+* Update to Morphe patcher 1.1.1 ([6162983](https://github.com/MorpheApp/morphe-cli/commit/616298302dfa922226acf1135c0583a094dac5ea))
+
+# [1.2.0](https://github.com/MorpheApp/morphe-cli/compare/v1.1.0...v1.2.0) (2026-02-02)
+
+
+### Features
+
+* Add ability to write patching results to JSON file ([#25](https://github.com/MorpheApp/morphe-cli/issues/25)) ([304b3ea](https://github.com/MorpheApp/morphe-cli/commit/304b3ea4a9ed266d4a02f290dfda24218f3b098a))
+* Update to Morphe patcher / library 1.1.0 ([ef8e95d](https://github.com/MorpheApp/morphe-cli/commit/ef8e95debbcd29ecfed76b4a740d7c05ffa01709))
+
+# [1.2.0-dev.2](https://github.com/MorpheApp/morphe-cli/compare/v1.2.0-dev.1...v1.2.0-dev.2) (2026-02-02)
+
+
+### Features
+
+* Update to Morphe patcher / library 1.1.0 ([ef8e95d](https://github.com/MorpheApp/morphe-cli/commit/ef8e95debbcd29ecfed76b4a740d7c05ffa01709))
+
+# [1.2.0-dev.1](https://github.com/MorpheApp/morphe-cli/compare/v1.1.0...v1.2.0-dev.1) (2026-01-11)
+
+
+### Features
+
+* Add ability to write patching results to JSON file ([#25](https://github.com/MorpheApp/morphe-cli/issues/25)) ([304b3ea](https://github.com/MorpheApp/morphe-cli/commit/304b3ea4a9ed266d4a02f290dfda24218f3b098a))
 
 # [1.1.0](https://github.com/MorpheApp/morphe-cli/compare/v1.0.0...v1.1.0) (2026-01-10)
 

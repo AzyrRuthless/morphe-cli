@@ -1,9 +1,11 @@
 /*
  * Copyright 2026 Morphe.
- * https://github.com/MorpheApp/morphe-cli
+ * https://github.com/MorpheApp/morphe-desktop
  */
 
 package app.morphe.gui.ui.screens.patches
+
+import app.morphe.gui.ui.icons.MorpheIcons
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
@@ -21,12 +23,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.ArrowDropUp
-import androidx.compose.material.icons.filled.FolderOpen
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -48,6 +44,7 @@ import cafe.adriel.voyager.koin.koinScreenModel
 import app.morphe.gui.ui.components.ErrorDialog
 import app.morphe.gui.ui.components.DeviceIndicator
 import app.morphe.gui.ui.components.SettingsButton
+import app.morphe.gui.ui.components.ToolsButton
 import app.morphe.gui.ui.components.morpheScrollbarStyle
 import app.morphe.gui.ui.components.getErrorType
 import app.morphe.gui.ui.components.getFriendlyErrorMessage
@@ -153,7 +150,7 @@ fun PatchesScreenContent(viewModel: PatchesViewModel) {
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    imageVector = MorpheIcons.ArrowBack,
                     contentDescription = "Back",
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.size(16.dp)
@@ -209,7 +206,7 @@ fun PatchesScreenContent(viewModel: PatchesViewModel) {
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Refresh,
+                        imageVector = MorpheIcons.Refresh,
                         contentDescription = "Refresh",
                         tint = if (uiState.isLoading) MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f)
                         else MaterialTheme.colorScheme.onSurfaceVariant,
@@ -221,7 +218,9 @@ fun PatchesScreenContent(viewModel: PatchesViewModel) {
 
             DeviceIndicator()
             Spacer(modifier = Modifier.width(6.dp))
-            SettingsButton(allowCacheClear = true)
+            ToolsButton(allowCacheClear = true)
+            Spacer(modifier = Modifier.width(6.dp))
+            SettingsButton()
         }
 
         // ── Content area ──
@@ -682,7 +681,7 @@ private fun ReleaseCard(
                                     letterSpacing = 0.5.sp
                                 )
                                 Icon(
-                                    imageVector = if (isExpanded) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
+                                    imageVector = if (isExpanded) MorpheIcons.ArrowDropUp else MorpheIcons.ArrowDropDown,
                                     contentDescription = null,
                                     tint = accentColor,
                                     modifier = Modifier.size(14.dp)
@@ -850,8 +849,8 @@ private fun BottomActionBar(
                     .fillMaxWidth()
                     .height(3.dp)
                     .clip(RoundedCornerShape(1.dp)),
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                trackColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f)
+                color = accents.primary,
+                trackColor = accents.primary.copy(alpha = 0.15f)
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
@@ -980,7 +979,7 @@ private fun LocalSourceBanner(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Icon(
-                    imageVector = Icons.Default.FolderOpen,
+                    imageVector = MorpheIcons.FolderOpen,
                     contentDescription = null,
                     tint = accents.primary,
                     modifier = Modifier.size(20.dp)

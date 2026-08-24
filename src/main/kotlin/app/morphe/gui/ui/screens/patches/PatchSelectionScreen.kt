@@ -1,4 +1,11 @@
+/*
+ * Copyright 2026 Morphe.
+ * https://github.com/MorpheApp/morphe-desktop
+ */
+
 package app.morphe.gui.ui.screens.patches
+
+import app.morphe.gui.ui.icons.MorpheIcons
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
@@ -18,21 +25,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.AutoAwesome
-import androidx.compose.material.icons.filled.Bookmark
-import androidx.compose.material.icons.filled.ContentCopy
-import androidx.compose.material.icons.filled.DoneAll
-import androidx.compose.material.icons.filled.PlaylistRemove
-import androidx.compose.material.icons.filled.RemoveDone
-import androidx.compose.material.icons.filled.Terminal
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -42,6 +34,9 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import app.morphe.gui.ui.components.MorpheDialogButton
+import app.morphe.gui.ui.components.MorpheDialogCard
+import app.morphe.gui.ui.components.MorpheDialogText
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -58,6 +53,7 @@ import app.morphe.gui.ui.components.ErrorDialog
 import app.morphe.gui.ui.components.DeviceIndicator
 import app.morphe.gui.ui.components.MorpheSwitch
 import app.morphe.gui.ui.components.SettingsButton
+import app.morphe.gui.ui.components.ToolsButton
 import app.morphe.gui.ui.components.morpheScrollbarStyle
 import app.morphe.gui.ui.components.getErrorType
 import app.morphe.gui.ui.components.getFriendlyErrorMessage
@@ -70,6 +66,8 @@ import app.morphe.gui.util.DeviceMonitor
 import java.awt.FileDialog
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
+import app.morphe.gui.util.MorpheFilePicker
+import kotlinx.coroutines.launch
 import java.io.File
 
 /**
@@ -91,13 +89,25 @@ data class PatchSelectionScreen(
     /** Parallel to [patchesFilePaths] — display name per source. Drives badging
      *  in the patch list. Empty disables badging (legacy single-source). */
     val patchSourceNames: List<String> = emptyList(),
+    /** One-click repatch seed (source/bundle name → patch uniqueIds). Empty =
+     *  normal flow. Set when entering from a "Your apps" / patched-row Repatch. */
+    val initialSelectionByBundle: Map<String, Set<String>> = emptyMap(),
+    /** One-click repatch option seed ("patchName.optionKey" → value). */
+    val initialPatchOptions: Map<String, String> = emptyMap(),
+    /** The app's versionName (parsed from the APK), threaded to the output-name helper so
+     *  the filename is unique by app version even for renamed bundles. Blank = not supplied. */
+    val apkVersion: String = "",
 ) : Screen {
 
     @Composable
     override fun Content() {
         val effectiveList = patchesFilePaths.takeIf { it.isNotEmpty() } ?: listOf(patchesFilePath)
         val viewModel = koinScreenModel<PatchSelectionViewModel> {
-            parametersOf(apkPath, apkName, patchesFilePath, packageName, apkArchitectures, effectiveList, patchSourceNames)
+            parametersOf(
+                apkPath, apkName, patchesFilePath, packageName, apkArchitectures,
+                effectiveList, patchSourceNames, initialSelectionByBundle, initialPatchOptions,
+                apkVersion,
+            )
         }
         PatchSelectionScreenContent(viewModel = viewModel)
     }
@@ -112,6 +122,7 @@ fun PatchSelectionScreenContent(viewModel: PatchSelectionViewModel) {
     val navigator = LocalNavigator.currentOrThrow
     val configRepository: ConfigRepository = koinInject()
     val uiState by viewModel.uiState.collectAsState()
+    val targetPackage = viewModel.targetPackage()
 
     // Load keystore config for CLI preview
     var keystorePath by remember { mutableStateOf<String?>(null) }
@@ -194,7 +205,7 @@ fun PatchSelectionScreenContent(viewModel: PatchSelectionViewModel) {
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    imageVector = MorpheIcons.ArrowBack,
                     contentDescription = "Back",
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.size(16.dp)
@@ -228,7 +239,7 @@ fun PatchSelectionScreenContent(viewModel: PatchSelectionViewModel) {
             }
 
             // Command preview toggle
-            if (!uiState.isLoading && uiState.allPatches.isNotEmpty()) {
+            if (!uiState.isLoading && uiState.bundles.isNotEmpty()) {
                 val cmdHover = remember { MutableInteractionSource() }
                 val isCmdHovered by cmdHover.collectIsHoveredAsState()
                 val cmdActive = showCommandPreview
@@ -257,7 +268,7 @@ fun PatchSelectionScreenContent(viewModel: PatchSelectionViewModel) {
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Terminal,
+                        imageVector = MorpheIcons.Terminal,
                         contentDescription = "Command Preview",
                         tint = if (cmdActive) accents.secondary
                                else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
@@ -280,7 +291,7 @@ fun PatchSelectionScreenContent(viewModel: PatchSelectionViewModel) {
                 )
 
                 TooltipBox(
-                    positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
+                    positionProvider = TooltipDefaults.rememberTooltipPositionProvider(TooltipAnchorPosition.Above),
                     tooltip = {
                         PlainTooltip {
                             Text(
@@ -308,7 +319,7 @@ fun PatchSelectionScreenContent(viewModel: PatchSelectionViewModel) {
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            imageVector = Icons.Default.PlaylistRemove,
+                            imageVector = MorpheIcons.PlaylistRemove,
                             contentDescription = "Continue on error",
                             tint = if (continueOnError) MaterialTheme.colorScheme.error
                                    else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
@@ -322,15 +333,16 @@ fun PatchSelectionScreenContent(viewModel: PatchSelectionViewModel) {
 
             DeviceIndicator()
             Spacer(modifier = Modifier.width(6.dp))
+            ToolsButton(allowCacheClear = false)
+            Spacer(modifier = Modifier.width(6.dp))
             SettingsButton(
-                allowCacheClear = false,
                 onDismiss = { viewModel.refreshStripLibsStatus() }
             )
         }
 
         // Command preview — collapsible
-        if (!uiState.isLoading && uiState.allPatches.isNotEmpty()) {
-            val commandPreview = remember(uiState.selectedPatches, uiState.stripLibsStatus, cleanMode, continueOnError, keystorePath) {
+        if (!uiState.isLoading && uiState.bundles.isNotEmpty()) {
+            val commandPreview = remember(uiState.selectedByBundle, uiState.stripLibsStatus, cleanMode, continueOnError, keystorePath) {
                 viewModel.getCommandPreview(cleanMode, continueOnError, keystorePath, keystorePassword, keystoreAlias, keystoreEntryPassword)
             }
             AnimatedVisibility(
@@ -503,6 +515,7 @@ fun PatchSelectionScreenContent(viewModel: PatchSelectionViewModel) {
                                     isSelected = selectedInBundle.contains(patch.uniqueId),
                                     onToggle = { viewModel.togglePatch(bundleId, patch.uniqueId) },
                                     sourceName = null,
+                                    packageName = targetPackage,
                                     getOptionValue = { optionKey, default ->
                                         viewModel.getOptionValue(patch.name, optionKey, default)
                                     },
@@ -526,6 +539,7 @@ fun PatchSelectionScreenContent(viewModel: PatchSelectionViewModel) {
                                 item(key = "bundle-${bundle.bundleId}") {
                                     BundleBox(
                                         bundle = bundle,
+                                        packageName = targetPackage,
                                         selectedInBundle = uiState.selectedByBundle[bundle.bundleId].orEmpty(),
                                         selectionMode = uiState.selectionModeFor(bundle.bundleId),
                                         hasSavedForBundle = uiState.savedSelectedByBundle?.containsKey(bundle.bundleId) == true,
@@ -575,7 +589,7 @@ fun PatchSelectionScreenContent(viewModel: PatchSelectionViewModel) {
                 ) {
                     val patchHover = remember { MutableInteractionSource() }
                     val isPatchHovered by patchHover.collectIsHoveredAsState()
-                    val patchEnabled = uiState.selectedPatches.isNotEmpty()
+                    val patchEnabled = uiState.selectedCount > 0
                     val patchBg by animateColorAsState(
                         when {
                             !patchEnabled -> accents.primary.copy(alpha = 0.1f)
@@ -646,7 +660,7 @@ private fun PatchSearchBar(
         Row(
             modifier = Modifier
                 .weight(1f)
-                .height(38.dp)
+                .height(32.dp)
                 .clip(RoundedCornerShape(corners.small))
                 .border(1.dp, searchBorderColor, RoundedCornerShape(corners.small))
                 .padding(horizontal = 10.dp),
@@ -654,17 +668,18 @@ private fun PatchSearchBar(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Icon(
-                imageVector = Icons.Default.Search,
+                imageVector = MorpheIcons.Search,
                 contentDescription = "Search",
                 tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
                 modifier = Modifier.size(16.dp)
             )
 
-            Box(modifier = Modifier.weight(1f)) {
+            Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterStart) {
                 if (query.isEmpty()) {
                     Text(
                         "Search patches…",
                         fontSize = 11.sp,
+                        lineHeight = 15.sp,
                         fontFamily = mono,
                         color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.35f)
                     )
@@ -675,6 +690,7 @@ private fun PatchSearchBar(
                     singleLine = true,
                     textStyle = LocalTextStyle.current.copy(
                         fontSize = 12.sp,
+                        lineHeight = 15.sp,
                         fontFamily = mono,
                         color = MaterialTheme.colorScheme.onSurface
                     ),
@@ -694,7 +710,7 @@ private fun PatchSearchBar(
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Clear,
+                        imageVector = MorpheIcons.Clear,
                         contentDescription = "Clear",
                         tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
                         modifier = Modifier.size(14.dp)
@@ -737,7 +753,7 @@ private fun PatchSearchBar(
             ) {
                 if (showOnlySelected) {
                     Icon(
-                        imageVector = Icons.Default.Check,
+                        imageVector = MorpheIcons.Check,
                         contentDescription = null,
                         tint = accents.primary,
                         modifier = Modifier.size(14.dp)
@@ -765,6 +781,7 @@ private fun PatchListItem(
     isSelected: Boolean,
     onToggle: () -> Unit,
     sourceName: String? = null,
+    packageName: String = "",
     getOptionValue: (optionKey: String, default: String?) -> String = { _, d -> d ?: "" },
     onOptionValueChange: (optionKey: String, value: String) -> Unit = { _, _ -> }
 ) {
@@ -827,7 +844,7 @@ private fun PatchListItem(
             ) {
                 if (isSelected) {
                     Icon(
-                        imageVector = Icons.Default.Check,
+                        imageVector = MorpheIcons.Check,
                         contentDescription = null,
                         tint = Color.White,
                         modifier = Modifier.size(12.dp)
@@ -956,7 +973,7 @@ private fun PatchListItem(
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Settings,
+                            imageVector = MorpheIcons.Settings,
                             contentDescription = "Configure options",
                             tint = when {
                                 showOptions -> accents.secondary
@@ -1014,6 +1031,7 @@ private fun PatchListItem(
                         PatchOptionEditor(
                             option = option,
                             value = getOptionValue(option.key, option.default),
+                            packageName = packageName,
                             onValueChange = { onOptionValueChange(option.key, it) }
                         )
                     }
@@ -1025,10 +1043,107 @@ private fun PatchListItem(
 
 // ── Patch Option Editor ──
 
+/** Launcher for the `customIcon` option: shows status + opens the Icon Studio,
+ *  which exports the mipmap folder and sets the option to that folder path. */
+@Composable
+private fun IconStudioOption(
+    value: String,
+    packageName: String,
+    onValueChange: (String) -> Unit,
+) {
+    val accents = LocalMorpheAccents.current
+    val mono = LocalMorpheFont.current
+    val corners = LocalMorpheCorners.current
+    val shape = RoundedCornerShape(corners.small)
+    val hasIcon = value.isNotBlank()
+    var showStudio by remember { mutableStateOf(false) }
+    var showDeleteConfirm by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        // Edit/design first (accent-filled), then import, then delete — all on the left.
+        IconActionPill(MorpheIcons.Edit, if (hasIcon) "EDIT ICON" else "DESIGN ICON", accents.secondary, filled = true, shape = shape, mono = mono) { showStudio = true }
+        // Import an already-prepared folder (e.g. one made in the Manager).
+        IconActionPill(MorpheIcons.FolderOpen, "IMPORT FOLDER", accents.secondary.copy(alpha = 0.8f), filled = false, shape = shape, mono = mono) {
+            scope.launch {
+                MorpheFilePicker.pickDirectory(title = "Select an icon folder")
+                    ?.let { onValueChange(it.absolutePath) }
+            }
+        }
+        if (hasIcon) {
+            IconActionPill(MorpheIcons.Delete, "DELETE", MaterialTheme.colorScheme.error, filled = false, shape = shape, mono = mono) { showDeleteConfirm = true }
+        }
+        Text(
+            text = if (hasIcon) "Custom icon ready" else "No custom icon set",
+            fontSize = 11.sp,
+            fontFamily = mono,
+            color = if (hasIcon) accents.secondary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+        )
+    }
+
+    if (showStudio) {
+        app.morphe.gui.icon.IconStudioDialog(
+            packageName = packageName,
+            onSave = { folder -> onValueChange(folder) },
+            onDismiss = { showStudio = false },
+        )
+    }
+
+    if (showDeleteConfirm) {
+        MorpheDialogCard(onDismiss = { showDeleteConfirm = false }, title = "Delete custom icon?") {
+            MorpheDialogText(
+                "This clears the icon and removes its saved project and generated files. This can't be undone."
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
+                MorpheDialogButton("CANCEL", MaterialTheme.colorScheme.onSurfaceVariant, filled = false) {
+                    showDeleteConfirm = false
+                }
+                MorpheDialogButton("DELETE", Color(0xFFE0504D), filled = true) {
+                    runCatching { app.morphe.gui.icon.IconExporter.projectDir(packageName).deleteRecursively() }
+                    onValueChange("")
+                    showDeleteConfirm = false
+                }
+            }
+        }
+    }
+}
+
+/** A small icon+label pill used by the customIcon row (edit / import / delete). */
+@Composable
+private fun IconActionPill(
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    text: String,
+    color: androidx.compose.ui.graphics.Color,
+    filled: Boolean,
+    shape: androidx.compose.ui.graphics.Shape,
+    mono: androidx.compose.ui.text.font.FontFamily,
+    onClick: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .clip(shape)
+            .then(if (filled) Modifier.background(color.copy(alpha = 0.15f)) else Modifier)
+            .border(1.dp, color.copy(alpha = if (filled) 0.5f else 0.35f), shape)
+            .clickable(onClick = onClick)
+            .padding(horizontal = 12.dp, vertical = 6.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(5.dp)) {
+            Icon(imageVector = icon, contentDescription = null, tint = color, modifier = Modifier.size(11.dp))
+            Text(text, fontSize = 9.sp, fontWeight = FontWeight.Bold, fontFamily = mono, color = color, letterSpacing = 1.sp)
+        }
+    }
+}
+
 @Composable
 private fun PatchOptionEditor(
     option: app.morphe.gui.data.model.PatchOption,
     value: String,
+    packageName: String = "",
     onValueChange: (String) -> Unit
 ) {
     val corners = LocalMorpheCorners.current
@@ -1057,13 +1172,28 @@ private fun PatchOptionEditor(
             }
         }
         if (option.description.isNotBlank()) {
+            // customIcon's description is a long multi-line folder spec with a blank
+            // line after the first sentence — that blank line rendered as a gap. Show
+            // just its summary line (the full spec is handled by the studio / import).
+            val descText = if (option.key.equals("customIcon", ignoreCase = true))
+                option.description.lineSequence().firstOrNull { it.isNotBlank() }?.trim() ?: option.description
+            else option.description
             Text(
-                text = option.description,
+                text = descText,
                 fontSize = 10.sp,
                 fontFamily = mono,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
+            )
+        }
+        // For customIcon, add our own note: the Icon Studio builds this folder for you.
+        if (option.key.equals("customIcon", ignoreCase = true)) {
+            Text(
+                text = "You don't have to build this folder yourself! Click on the DESIGN/EDIT ICON to create it in the Icon Studio or import it from the Manager!).",
+                fontSize = 10.sp,
+                fontFamily = mono,
+                color = accents.secondary.copy(alpha = 0.75f),
             )
         }
         when (option.type) {
@@ -1094,6 +1224,9 @@ private fun PatchOptionEditor(
                 }
             }
             app.morphe.gui.data.model.PatchOptionType.FILE -> {
+                if (option.key.equals("customIcon", ignoreCase = true)) {
+                    IconStudioOption(value = value, packageName = packageName, onValueChange = onValueChange)
+                } else {
                 var localPath by remember(option.key) { mutableStateOf(value) }
                 LaunchedEffect(value) {
                     if (localPath != value) localPath = value
@@ -1131,11 +1264,12 @@ private fun PatchOptionEditor(
                             .padding(horizontal = 10.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Box(modifier = Modifier.weight(1f)) {
+                        Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterStart) {
                             if (localPath.isEmpty()) {
                                 Text(
                                     text = if (isImage) "Select image…" else "Select file…",
                                     fontSize = 11.sp,
+                                    lineHeight = 14.sp,
                                     fontFamily = mono,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f)
                                 )
@@ -1149,6 +1283,7 @@ private fun PatchOptionEditor(
                                 singleLine = true,
                                 textStyle = LocalTextStyle.current.copy(
                                     fontSize = 11.sp,
+                                    lineHeight = 14.sp,
                                     fontFamily = mono,
                                     color = MaterialTheme.colorScheme.onSurface
                                 ),
@@ -1207,6 +1342,7 @@ private fun PatchOptionEditor(
                         )
                     }
                 }
+                }
             }
             else -> {
                 var localText by remember(option.key) { mutableStateOf(value) }
@@ -1230,11 +1366,12 @@ private fun PatchOptionEditor(
                         .padding(horizontal = 10.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Box(modifier = Modifier.weight(1f)) {
+                    Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterStart) {
                         if (localText.isEmpty()) {
                             Text(
                                 text = option.default ?: option.type.name.lowercase(),
                                 fontSize = 11.sp,
+                                lineHeight = 14.sp,
                                 fontFamily = mono,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f)
                             )
@@ -1248,6 +1385,7 @@ private fun PatchOptionEditor(
                             singleLine = true,
                             textStyle = LocalTextStyle.current.copy(
                                 fontSize = 11.sp,
+                                lineHeight = 14.sp,
                                 fontFamily = mono,
                                 color = MaterialTheme.colorScheme.onSurface
                             ),
@@ -1294,7 +1432,7 @@ private fun SelectionModeChips(
         // (which is set after applySavedDefaults by virtue of the chip being clicked).
         SelectionModeChip(
             label = "YOUR DEFAULTS",
-            icon = Icons.Default.Bookmark,
+            icon = MorpheIcons.Bookmark,
             active = activeMode == SelectionMode.SAVED,
             enabled = hasSavedSelection,
             onClick = onApplySaved,
@@ -1302,21 +1440,21 @@ private fun SelectionModeChips(
         )
         SelectionModeChip(
             label = "PATCH DEFAULTS",
-            icon = Icons.Default.AutoAwesome,
+            icon = MorpheIcons.AutoAwesome,
             active = activeMode == SelectionMode.DEFAULTS,
             onClick = onApplyDefaults,
             modifier = Modifier.weight(1f)
         )
         SelectionModeChip(
             label = "ALL",
-            icon = Icons.Default.DoneAll,
+            icon = MorpheIcons.DoneAll,
             active = activeMode == SelectionMode.ALL,
             onClick = onApplyAll,
             modifier = Modifier.weight(1f)
         )
         SelectionModeChip(
             label = "NONE",
-            icon = Icons.Default.RemoveDone,
+            icon = MorpheIcons.RemoveDone,
             active = activeMode == SelectionMode.NONE,
             onClick = onApplyNone,
             modifier = Modifier.weight(1f)
@@ -1449,7 +1587,7 @@ private fun CommandPreview(
                 horizontalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 Icon(
-                    imageVector = Icons.Default.Terminal,
+                    imageVector = MorpheIcons.Terminal,
                     contentDescription = null,
                     tint = terminalGreen.copy(alpha = 0.7f),
                     modifier = Modifier.size(14.dp)
@@ -1487,7 +1625,7 @@ private fun CommandPreview(
                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
                         Icon(
-                            imageVector = Icons.Default.ContentCopy,
+                            imageVector = MorpheIcons.ContentCopy,
                             contentDescription = "Copy",
                             tint = if (showCopied) terminalGreen
                                    else terminalGreen.copy(alpha = if (isCopyHovered) 0.8f else 0.4f),
@@ -1753,6 +1891,7 @@ private data class BannerDisplay(
 @Composable
 private fun BundleBox(
     bundle: BundlePatches,
+    packageName: String = "",
     selectedInBundle: Set<String>,
     selectionMode: SelectionMode,
     hasSavedForBundle: Boolean,
@@ -1869,6 +2008,7 @@ private fun BundleBox(
                                 onToggle = { onTogglePatch(patch.uniqueId) },
                                 // Bundle context is implicit from the box header
                                 sourceName = null,
+                                packageName = packageName,
                                 getOptionValue = { optionKey, default ->
                                     getOptionValue(patch.name, optionKey, default)
                                 },

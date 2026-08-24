@@ -1,9 +1,11 @@
 /*
  * Copyright 2026 Morphe.
- * https://github.com/MorpheApp/morphe-cli
+ * https://github.com/MorpheApp/morphe-desktop
  */
 
 package app.morphe.gui.ui.components
+
+import app.morphe.gui.ui.icons.MorpheIcons
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
@@ -16,8 +18,6 @@ import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,7 +25,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.text.font.FontWeight
@@ -36,11 +35,10 @@ import app.morphe.gui.ui.theme.LocalMorpheAccents
 import app.morphe.gui.ui.theme.LocalMorpheCorners
 import app.morphe.gui.ui.theme.LocalMorpheDimens
 import app.morphe.gui.ui.theme.LocalMorpheFont
-import app.morphe.gui.ui.theme.MorpheAccentColors
 import app.morphe.gui.util.EnabledSourcesLoader
 
 /** Per-source LED state surfaced in [SourcesCountPill]. */
-enum class SourceLedState { DISABLED, STABLE_LATEST, OLDER, DEV }
+enum class SourceLedState { DISABLED, STABLE_LATEST, STABLE_OLDER, DEV_LATEST, DEV_OLDER, LOCAL, ERROR }
 
 /**
  * Header pill showing source count + per-source channel LEDs + trailing "+".
@@ -98,12 +96,12 @@ fun SourcesCountPill(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(3.dp),
             ) {
-                sourceStates.forEach { state -> SourceLed(state = state, accents = accents) }
+                sourceStates.forEach { state -> SourceLed(state = state) }
             }
         }
         if (interactive) {
             Icon(
-                imageVector = Icons.Default.Add,
+                imageVector = MorpheIcons.Add,
                 contentDescription = "Manage patch sources",
                 tint = tint,
                 modifier = Modifier.size(12.dp),
@@ -113,12 +111,15 @@ fun SourcesCountPill(
 }
 
 @Composable
-private fun SourceLed(state: SourceLedState, accents: MorpheAccentColors) {
+private fun SourceLed(state: SourceLedState) {
     val color = when (state) {
         SourceLedState.DISABLED -> MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f)
-        SourceLedState.STABLE_LATEST -> accents.primary
-        SourceLedState.OLDER -> accents.warning
-        SourceLedState.DEV -> Color(0xFFFFD43B)
+        SourceLedState.STABLE_LATEST -> app.morphe.gui.ui.theme.channelColor(EnabledSourcesLoader.Channel.STABLE_LATEST)
+        SourceLedState.STABLE_OLDER -> app.morphe.gui.ui.theme.channelColor(EnabledSourcesLoader.Channel.STABLE_OLDER)
+        SourceLedState.DEV_LATEST -> app.morphe.gui.ui.theme.channelColor(EnabledSourcesLoader.Channel.DEV_LATEST)
+        SourceLedState.DEV_OLDER -> app.morphe.gui.ui.theme.channelColor(EnabledSourcesLoader.Channel.DEV_OLDER)
+        SourceLedState.LOCAL -> app.morphe.gui.ui.theme.channelColor(EnabledSourcesLoader.Channel.LOCAL)
+        SourceLedState.ERROR -> MaterialTheme.colorScheme.error
     }
     Box(
         modifier = Modifier
@@ -131,13 +132,18 @@ private fun SourceLed(state: SourceLedState, accents: MorpheAccentColors) {
 fun sourceLedState(
     source: PatchSource,
     channel: EnabledSourcesLoader.Channel?,
+    hasError: Boolean = false,
 ): SourceLedState {
     if (!source.enabled) return SourceLedState.DISABLED
+    // Error wins over channel: a source that resolved (so it still carries a channel, e.g.
+    // LOCAL) but failed to load should read red, not its channel color.
+    if (hasError) return SourceLedState.ERROR
     return when (channel) {
         EnabledSourcesLoader.Channel.STABLE_LATEST -> SourceLedState.STABLE_LATEST
-        EnabledSourcesLoader.Channel.STABLE_OLDER -> SourceLedState.OLDER
-        EnabledSourcesLoader.Channel.DEV_LATEST,
-        EnabledSourcesLoader.Channel.DEV_OLDER -> SourceLedState.DEV
+        EnabledSourcesLoader.Channel.STABLE_OLDER -> SourceLedState.STABLE_OLDER
+        EnabledSourcesLoader.Channel.DEV_LATEST -> SourceLedState.DEV_LATEST
+        EnabledSourcesLoader.Channel.DEV_OLDER -> SourceLedState.DEV_OLDER
+        EnabledSourcesLoader.Channel.LOCAL -> SourceLedState.LOCAL
         // No load yet — assume latest until we know otherwise.
         null, EnabledSourcesLoader.Channel.UNKNOWN -> SourceLedState.STABLE_LATEST
     }
