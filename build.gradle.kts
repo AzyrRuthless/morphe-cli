@@ -255,26 +255,6 @@ tasks {
                 )
             }
         }
-
-        mergeServiceFiles()
-
-        // Concatenate every META-INF/NOTICE (and .txt/.md variants) from all dep JARs
-        // plus our own into a single merged file. Satisfies Apache 2.0 §4(d) which
-        // requires preserving attribution NOTICEs of Apache-licensed dependencies.
-        //
-        // Shadow's built-in ApacheNoticeResourceTransformer hardcodes ASF-branded
-        // copyright text that cannot be fully disabled, which would falsely attribute
-        // this GPL project to the Apache Software Foundation. NoticeMergeTransformer
-        // (in buildSrc) is a minimal verbatim concatenator with no boilerplate.
-        transform(NoticeMergeTransformer::class.java)
-    }
-
-    distTar {
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    }
-
-    distZip {
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
 
     processResources {
