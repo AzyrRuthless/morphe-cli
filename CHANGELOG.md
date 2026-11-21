@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/AzyrRuthless/morphe-cli/compare/v2.3.0...v2.4.0) (2026-11-21)
+
+
+### Features
+
+* **cli:** preserve downstream zipalign and --rip-lib support ([5e12568](https://github.com/AzyrRuthless/morphe-cli/commit/5e125680b916dfa933975f354678d0d51bde4243))
+
 # [2.3.0](https://github.com/MorpheApp/morphe-desktop/compare/v2.2.0...v2.3.0) (2026-11-21)
 
 
