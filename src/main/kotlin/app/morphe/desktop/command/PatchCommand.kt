@@ -260,6 +260,18 @@ internal object PatchCommand : Callable<Int> {
     )
     private var unsigned: Boolean = false
 
+    @CommandLine.Option(
+        names = ["--custom-zipalign-binary"],
+        description = ["Path to a custom zipalign binary."],
+    )
+    private var zipalignBinaryPath: File? = null
+
+    @CommandLine.Option(
+        names = ["--rip-lib"],
+        description = ["Remove native libraries for specific architectures (e.g., x86, x86_64)."],
+    )
+    private var ripLibs: List<String> = emptyList()
+
     private var keepArchitectures: Set<CpuArchitecture> = emptySet()
     @CommandLine.Option(
         names = ["--striplibs"],
@@ -476,6 +488,9 @@ internal object PatchCommand : Callable<Int> {
             optionsFile = optionsFilePath,
             updateOptions = updateOptions,
             recordHistory = true,
+            ripLibs = ripLibs,
+            runZipalign = !mount && !unsigned,
+            zipalignBinaryPath = zipalignBinaryPath,
         )
 
         try {

@@ -53,6 +53,7 @@ import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import java.io.File
+import java.io.FileOutputStream
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.nio.file.Files
@@ -61,6 +62,9 @@ import java.util.logging.Handler
 import java.util.logging.Level
 import java.util.logging.LogRecord
 import java.util.logging.Logger as JulLogger
+import java.util.zip.ZipEntry
+import java.util.zip.ZipFile
+import java.util.zip.ZipOutputStream
 
 /** Executes APK modification and patching pipeline. */
 object PatchEngine {
@@ -137,6 +141,9 @@ object PatchEngine {
         val recordHistory: Boolean = true,
         val appDisplayName: String? = null,
         val historyMetadata: HistoryMetadata? = null,
+        val ripLibs: List<String> = emptyList(),
+        val runZipalign: Boolean = false,
+        val zipalignBinaryPath: File? = null,
     ) {
         /** The steps a run with this config goes through, see [PatchEvent.StepStarted]. */
         val steps: List<PatchStep>
@@ -619,6 +626,33 @@ object PatchEngine {
                     info("Rebuilding APK...")
                     // Compiles the patched files and writes the unsigned APK in one pass
                     patcher.writeApk(rebuiltApk)
+
+                    if (config.ripLibs.isNotEmpty()) {
+                        ripLibraries(rebuiltApk, config.ripLibs, ::info)
+                    }
+
+                    if (config.runZipalign && !config.unsigned) {
+                        info("Running zipalign")
+                        val alignedApk = File.createTempFile("aligned", ".apk", tempDir)
+                        val zipalign = config.zipalignBinaryPath?.absolutePath ?: "zipalign"
+
+                        val process = ProcessBuilder(
+                            zipalign, "-p", "-f", "4",
+                            rebuiltApk.absolutePath,
+                            alignedApk.absolutePath,
+                        ).redirectErrorStream(true).start()
+
+                        val output = process.inputStream.bufferedReader().use { it.readText() }
+                        val exitCode = process.waitFor()
+
+                        if (exitCode != 0) {
+                            throw RuntimeException("zipalign failed (exit code $exitCode):\n$output")
+                        }
+
+                        Files.move(alignedApk.toPath(), rebuiltApk.toPath(), StandardCopyOption.REPLACE_EXISTING)
+                        info("zipalign completed")
+                    }
+
                     stepResults.add(StepResult(PatchStep.REBUILDING, true))
                 } catch (e: CancellationException) {
                     throw e
@@ -899,6 +933,49 @@ object PatchEngine {
                 file.isDirectory && file.name.startsWith(prefix, ignoreCase = true)
             }?.forEach { it.deleteRecursivelyInParallel() }
         }
+    }
+
+    private fun ripLibraries(apkFile: File, archsToRemove: List<String>, log: (String) -> Unit) {
+        if (archsToRemove.isEmpty()) return
+
+        log("Ripping libraries for architectures: $archsToRemove")
+
+        val tempFile = File.createTempFile("temp-rip", ".apk", apkFile.parentFile)
+
+        ZipFile(apkFile).use { zip ->
+            ZipOutputStream(FileOutputStream(tempFile).buffered()).use { out ->
+                val entries = zip.entries()
+                while (entries.hasMoreElements()) {
+                    val entry = entries.nextElement()
+
+                    val shouldRemove = archsToRemove.any { arch ->
+                        entry.name.startsWith("lib/$arch/")
+                    }
+
+                    if (!shouldRemove) {
+                        val newEntry = ZipEntry(entry.name).apply {
+                            if (entry.method == ZipEntry.STORED) {
+                                method = ZipEntry.STORED
+                                size = entry.size
+                                compressedSize = entry.compressedSize
+                                crc = entry.crc
+                            }
+                            entry.extra?.let { extra = it }
+                        }
+                        out.putNextEntry(newEntry)
+                        zip.getInputStream(entry).use { it.copyTo(out) }
+                        out.closeEntry()
+                    }
+                }
+            }
+        }
+
+        Files.move(
+            tempFile.toPath(),
+            apkFile.toPath(),
+            StandardCopyOption.REPLACE_EXISTING,
+            StandardCopyOption.ATOMIC_MOVE,
+        )
     }
 
     private class PatchFailedException(message: String, cause: Throwable) : Exception(message, cause)
